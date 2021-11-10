@@ -19,23 +19,31 @@ const NewTimeForm = styled.div`
   background-color: #15151e;
   padding: 10px;
 
-  input {
-    display: block;
-    width: 100%;
-    margin: 0 0 10px;
-    line-height: normal;
-    padding: 5px;
-    border: 0;
-    border-radius: 0;
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+    input {
+      display: block;
+      width: 100%;
+      margin: 0 0 10px;
+      line-height: normal;
+      padding: 5px;
+      border: 0;
+      border-radius: 0;
+      font-size: 16px;
+    }
   }
+
   .button {
     background-color: #e30600;
     color: #fff;
     text-align: center;
     line-height: normal;
     padding: 5px;
-    
+    font-size: 16px;
   }
+
 `;
 
 const addNewTime = async (gamertag: string, circuit: string, time: string) => {
@@ -88,8 +96,10 @@ const Circuit: NextPage<Response> = (data): ReactElement => {
         </table>
       </main>
       <NewTimeForm>
-        <input type="text" placeholder="Gamertag" ref={gamertagRef} onChange={() => setNewTime({ ...newTime, gamertag: gamertagRef.current.value })} />
-        <input type="text" placeholder="Time" ref={timeRef} onChange={() => setNewTime({ ...newTime, time: timeRef.current.value })} />
+        <div className="grid">
+          <input type="text" placeholder="Gamertag" ref={gamertagRef} onChange={() => setNewTime({ ...newTime, gamertag: gamertagRef.current.value })} />
+          <input type="text" placeholder="Time" ref={timeRef} onChange={() => setNewTime({ ...newTime, time: timeRef.current.value })} />
+        </div>
         <div onClick={() => addNewTime(newTime.gamertag, newTime.circuit, newTime.time)} className="button">Add time</div>
       </NewTimeForm>
     </>
