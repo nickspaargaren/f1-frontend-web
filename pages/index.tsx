@@ -1,3 +1,4 @@
+import axios from 'axios';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -41,11 +42,6 @@ const Home: NextPage<Response> = ({ data }: Response): ReactElement => (
     </main>
   </>
 );
-Home.getInitialProps = async () => {
-  const res = await fetch('https://f1-api.vercel.app/api/circuits');
-  const data = await res.json();
-
-  return data;
-};
+Home.getInitialProps = () => axios.get('https://f1-api.vercel.app/api/circuits').then((response) => response.data);
 
 export default Home;

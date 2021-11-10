@@ -1,3 +1,4 @@
+import axios from 'axios';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { ReactElement } from 'react';
@@ -57,13 +58,10 @@ const Circuit: NextPage<Response> = (data): ReactElement => {
   );
 };
 
-Circuit.getInitialProps = async (ctx) => {
+Circuit.getInitialProps = (ctx) => {
   const { circuit } = ctx.query;
 
-  const res = await fetch(`https://f1-api.vercel.app/api/circuits/${circuit}?times=true`);
-  const data = await res.json();
-
-  return data;
+  return axios.get(`https://f1-api.vercel.app/api/circuits/${circuit}?times=true`).then((response) => response.data);
 };
 
 export default Circuit;
