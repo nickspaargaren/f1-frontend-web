@@ -1,7 +1,8 @@
 import axios from 'axios';
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import { ReactElement } from 'react';
+import { ReactElement, useRef, useState } from 'react';
+import styled from 'styled-components';
 
 import Header from '../../components/header';
 import { Circuit, Time } from '../../types';
@@ -13,6 +14,34 @@ export type Response = {
     times: Time[]
   }
 }
+
+const NewTimeForm = styled.div`
+  background-color: #15151e;
+  padding: 10px;
+
+  input {
+    display: block;
+    width: 100%;
+    margin: 0 0 10px;
+    line-height: normal;
+    padding: 5px;
+    border: 0;
+    border-radius: 0;
+  }
+  .button {
+    background-color: #e30600;
+    color: #fff;
+    text-align: center;
+    line-height: normal;
+    padding: 5px;
+    
+  }
+`;
+
+const addNewTime = async (gamertag: string, circuit: string, time: string) => {
+  await axios.post(`https://f1-api.vercel.app/api/times/${gamertag}?circuit=${circuit}&time=${time}`);
+  window.location.reload();
+};
 
 const Circuit: NextPage<Response> = (data): ReactElement => {
   const sortedTimes = data.data.times.sort((a, b) => {
@@ -26,6 +55,11 @@ const Circuit: NextPage<Response> = (data): ReactElement => {
   if (sortedTimes.length) {
     winner = sortedTimes[0].gamertag;
   }
+
+  const [newTime, setNewTime] = useState({ gamertag: '', circuit: data.data.circuit.name, time: '' });
+
+  const gamertagRef = useRef<any>(null);
+  const timeRef = useRef<any>(null);
 
   return (
     <>
@@ -53,7 +87,11 @@ const Circuit: NextPage<Response> = (data): ReactElement => {
           </tbody>
         </table>
       </main>
-
+      <NewTimeForm>
+        <input type="text" placeholder="Gamertag" ref={gamertagRef} onChange={() => setNewTime({ ...newTime, gamertag: gamertagRef.current.value })} />
+        <input type="text" placeholder="Time" ref={timeRef} onChange={() => setNewTime({ ...newTime, time: timeRef.current.value })} />
+        <div onClick={() => addNewTime(newTime.gamertag, newTime.circuit, newTime.time)} className="button">Add time</div>
+      </NewTimeForm>
     </>
   );
 };
