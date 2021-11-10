@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { ReactElement } from 'react';
 
-import styles from '../../styles/Home.module.css';
+import Header from '../../components/header';
 import { Circuit, Time } from '../../types';
 
 export type Response = {
@@ -21,31 +21,36 @@ const Circuit: NextPage<Response> = (data): ReactElement => {
     return 0;
   });
 
+  const winner = sortedTimes[0].gamertag;
+
   return (
-    <div className={styles.container}>
+    <>
       <Head>
         <title>F1 web</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>{data.data.circuit.name}</h1>
-        <table style={{ textAlign: 'left' }}>
-          <tbody>
+      <Header title={data.data.circuit.name} winner={winner} />
 
+      <main>
+        <table cellSpacing="0" cellPadding="0" style={{ textAlign: 'left' }}>
+          <tbody>
             {sortedTimes.map((item) => (
               <tr key={item._id}>
                 <td>{item.gamertag}</td>
-                <td style={{ textAlign: 'right' }}>{item.time}</td>
+                <td style={{
+                  textAlign: 'right', fontFamily: 'monospace', fontWeight: 'bold', fontSize: '14px', letterSpacing: '1.5px',
+                }}
+                >
+                  {item.time}
+                </td>
               </tr>
             ))}
-
           </tbody>
         </table>
-        <Link href="/">Back</Link>
       </main>
 
-    </div>
+    </>
   );
 };
 

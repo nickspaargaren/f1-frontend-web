@@ -14,3 +14,7 @@ a {
 * {
   box-sizing: border-box;
 }
+
+table {width: 100%; background-color: #f3f3f3;}
+table tr td {padding: 5px 10px; border-bottom: 1px solid #fff;}
+table tr td a {display: block;}

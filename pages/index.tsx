@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { ReactElement } from 'react';
 
-import styles from '../styles/Home.module.css';
+import Header from '../components/header';
 import { Circuit } from '../types';
 
 export type Response = {
@@ -11,22 +11,26 @@ export type Response = {
 }
 
 const Home: NextPage<Response> = ({ data }: Response): ReactElement => (
-  <div className={styles.container}>
+  <>
     <Head>
       <title>F1 web</title>
       <link rel="icon" href="/favicon.ico" />
     </Head>
 
-    <main className={styles.main}>
-      <h1 className={styles.title}>F1 stats</h1>
+    <Header title="F1 stats" />
 
-      {data.map((item) => (
-        <div><Link href={`/circuits/${item.name}`}><a>{item.name}</a></Link></div>
-      ))}
-
+    <main>
+      <table cellSpacing="0" cellPadding="0" style={{ textAlign: 'left' }}>
+        <tbody>
+          {data.map((item) => (
+            <tr key={item._id}>
+              <td><Link href={`/circuits/${item.name}`}><a>{item.name}</a></Link></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </main>
-
-  </div>
+  </>
 );
 Home.getInitialProps = async () => {
   const res = await fetch('https://f1-api.vercel.app/api/circuits');
