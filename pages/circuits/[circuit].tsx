@@ -36,7 +36,7 @@ const Circuit: NextPage<Response> = (data): ReactElement => {
       <Header title={data.data.circuit.name} winner={winner} />
 
       <main>
-        <table cellSpacing="0" cellPadding="0" style={{ textAlign: 'left' }}>
+        <table cellSpacing="0" cellPadding="0" style={{ textAlign: 'left' }} className="times">
           <tbody>
             {sortedTimes.map((item) => (
               <tr key={item._id}>

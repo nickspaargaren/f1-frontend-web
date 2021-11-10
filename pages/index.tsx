@@ -24,7 +24,16 @@ const Home: NextPage<Response> = ({ data }: Response): ReactElement => (
         <tbody>
           {data.map((item) => (
             <tr key={item._id}>
-              <td><Link href={`/circuits/${item.name}`}><a>{item.name}</a></Link></td>
+              <td>
+                <Link href={`/circuits/${item.name}`}>
+                  <a>
+                    {item.name}
+                    <br />
+                    <small>{item.description}</small>
+                  </a>
+                </Link>
+
+              </td>
             </tr>
           ))}
         </tbody>

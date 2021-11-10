@@ -16,5 +16,9 @@ a {
 }
 
 table {width: 100%; background-color: #f3f3f3;}
-table tr td {padding: 5px 10px; border-bottom: 1px solid #fff;}
+table tr td {padding: 10px; border-bottom: 1px solid #fff;}
 table tr td a {display: block;}
+
+table.times tr td {padding: 5px 10px;}
+
+small {opacity: .75;}

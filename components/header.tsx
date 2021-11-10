@@ -6,9 +6,9 @@ import styled from 'styled-components';
 const StyledHeader = styled.div`
   border-top: 10px solid #fff;
   background-color: #e10600;
-  color: #fff;
-  padding: 10px;
-  display: flex;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 
   .title {
     font-size: 1.5em;
@@ -16,6 +16,14 @@ const StyledHeader = styled.div`
     font-weight: bold;
   }
 
+`;
+
+const Bar = styled.div`
+  color: #fff;
+  padding: 10px;
+  display: flex;
+  display: flex;
+  background-color: ${(props) => (props.color)};
 `;
 
 const Icons = styled.div`
@@ -58,27 +66,29 @@ const Header = ({ title, winner }: HeaderTitleProps): ReactElement => (
   <>
 
     <StyledHeader>
-      <div className="title">Racetijden.nl</div>
-      <Icons>
-        <Link href="/">
-          <a><Icon><ImHome2 /></Icon></a>
-        </Link>
-        <Icon disabled><ImUser /></Icon>
-      </Icons>
+      <Bar color="#e20600">
+        <div className="title">Racetijden.nl</div>
+        <Icons>
+          <Link href="/">
+            <a><Icon><ImHome2 /></Icon></a>
+          </Link>
+          <Icon disabled><ImUser /></Icon>
+        </Icons>
+      </Bar>
+      <Bar color="#15151e">
+        {title}
+        {winner && (
+        <Winner>
+          {winner}
+
+          <ImTrophy />
+
+        </Winner>
+
+        )}
+      </Bar>
+
     </StyledHeader>
-
-    <Title>
-      {title}
-      {winner && (
-      <Winner>
-        {winner}
-
-        <ImTrophy />
-
-      </Winner>
-
-      )}
-    </Title>
 
   </>
 );
