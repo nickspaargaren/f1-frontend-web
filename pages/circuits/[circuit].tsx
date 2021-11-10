@@ -1,6 +1,5 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import Link from 'next/link';
 import { ReactElement } from 'react';
 
 import Header from '../../components/header';
@@ -21,7 +20,11 @@ const Circuit: NextPage<Response> = (data): ReactElement => {
     return 0;
   });
 
-  const winner = sortedTimes[0].gamertag;
+  let winner = '';
+
+  if (sortedTimes.length) {
+    winner = sortedTimes[0].gamertag;
+  }
 
   return (
     <>
@@ -59,6 +62,7 @@ Circuit.getInitialProps = async (ctx) => {
 
   const res = await fetch(`https://f1-api.vercel.app/api/circuits/${circuit}?times=true`);
   const data = await res.json();
+
   return data;
 };
 
