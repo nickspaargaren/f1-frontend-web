@@ -1,11 +1,21 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
+import { ReactElement } from 'react';
 
 import styles from '../../styles/Home.module.css';
+import { Circuit, Time } from '../../types';
 
-const Circuit: NextPage = ({ data }) => {
-  const sortedTimes = data.times.sort((a, b) => {
+export type Response = {
+  success: boolean,
+  data:{
+    circuit: Circuit,
+    times: Time[]
+  }
+}
+
+const Circuit: NextPage<Response> = (data): ReactElement => {
+  const sortedTimes = data.data.times.sort((a, b) => {
     if (a.time > b.time) return 1;
     if (a.time < b.time) return -1;
     return 0;
@@ -19,7 +29,7 @@ const Circuit: NextPage = ({ data }) => {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>{data.circuit.name}</h1>
+        <h1 className={styles.title}>{data.data.circuit.name}</h1>
         <table style={{ textAlign: 'left' }}>
           <tbody>
 
@@ -40,10 +50,6 @@ const Circuit: NextPage = ({ data }) => {
 };
 
 Circuit.getInitialProps = async (ctx) => {
-  // console.log(ctx.query.circuit);
-
-  // const router = useRouter();
-
   const { circuit } = ctx.query;
 
   const res = await fetch(`https://f1-api.vercel.app/api/circuits/${circuit}?times=true`);
