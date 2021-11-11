@@ -2,6 +2,7 @@ import axios from 'axios';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { ReactElement, useRef, useState } from 'react';
+import NumberFormat from 'react-number-format';
 import styled from 'styled-components';
 
 import Header from '@/components/header';
@@ -99,7 +100,7 @@ const Circuit: NextPage<Response> = (data): ReactElement => {
       <NewTimeForm>
         <div className="grid">
           <input type="text" placeholder="Gamertag" ref={gamertagRef} onChange={() => setNewTime({ ...newTime, gamertag: gamertagRef.current.value })} />
-          <input type="text" placeholder="Time" ref={timeRef} onChange={() => setNewTime({ ...newTime, time: timeRef.current.value })} />
+          <NumberFormat format="##:##.###" mask="_" type="text" placeholder="Time" getInputRef={timeRef} ref={timeRef} onChange={() => setNewTime({ ...newTime, time: timeRef.current.value })} />
         </div>
         <div onClick={() => addNewTime(newTime.gamertag, newTime.circuit, newTime.time)} className="button">Add time</div>
       </NewTimeForm>
