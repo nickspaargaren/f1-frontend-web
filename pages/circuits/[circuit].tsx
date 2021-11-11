@@ -85,7 +85,7 @@ const Circuit: NextPage<Response> = (data): ReactElement => {
           <tbody>
             {sortedTimes.map((item) => (
               <tr key={item._id}>
-                <td>{item.gamertag}</td>
+                <td onClick={() => setNewTime({ ...newTime, gamertag: item.gamertag })}>{item.gamertag}</td>
                 <td style={{
                   textAlign: 'right', fontFamily: 'monospace', fontWeight: 'bold', fontSize: '14px', letterSpacing: '1.5px',
                 }}
@@ -99,8 +99,9 @@ const Circuit: NextPage<Response> = (data): ReactElement => {
       </main>
       <NewTimeForm>
         <div className="grid">
-          <input type="text" placeholder="Gamertag" ref={gamertagRef} onChange={() => setNewTime({ ...newTime, gamertag: gamertagRef.current.value })} />
-          <NumberFormat format="##:##.###" mask="_" type="text" placeholder="Time" getInputRef={timeRef} ref={timeRef} onChange={() => setNewTime({ ...newTime, time: timeRef.current.value })} />
+          <input type="text" placeholder="Gamertag" ref={gamertagRef} value={newTime.gamertag} onChange={() => setNewTime({ ...newTime, gamertag: gamertagRef.current.value })} />
+          <input type="hidden" ref={timeRef} />
+          <NumberFormat format="##:##.###" mask="_" type="text" placeholder="Time" getInputRef={timeRef} onChange={() => setNewTime({ ...newTime, time: timeRef.current.value })} />
         </div>
         <div onClick={() => addNewTime(newTime.gamertag, newTime.circuit, newTime.time)} className="button">Add time</div>
       </NewTimeForm>
