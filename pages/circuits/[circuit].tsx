@@ -4,7 +4,8 @@ import Head from 'next/head';
 import { ReactElement, useRef, useState } from 'react';
 import styled from 'styled-components';
 
-import Header from '../../components/header';
+import Header from '@/components/header';
+
 import { Circuit, Time } from '../../types';
 
 export type Response = {
