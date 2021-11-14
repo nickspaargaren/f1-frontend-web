@@ -24,20 +24,22 @@ const Home: NextPage<Response> = ({ data }: Response): ReactElement => (
     <main>
       <table cellSpacing="0" cellPadding="0" style={{ textAlign: 'left' }}>
         <tbody>
-          {data.map((item) => (
-            <tr key={item._id}>
-              <td>
-                <Link href={`/circuits/${item.name}`}>
-                  <a>
-                    {item.name}
-                    <br />
-                    <small>{item.description}</small>
-                  </a>
-                </Link>
+          {data
+            .sort((a, b) => a.name.localeCompare(b.name))
+            .map((item) => (
+              <tr key={item._id}>
+                <td>
+                  <Link href={`/circuits/${item.name}`}>
+                    <a>
+                      {item.name}
+                      <br />
+                      <small>{item.description}</small>
+                    </a>
+                  </Link>
 
-              </td>
-            </tr>
-          ))}
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </main>
