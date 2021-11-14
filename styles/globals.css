@@ -23,6 +23,6 @@ table.times tr td {padding: 5px 10px;}
 
 small {opacity: .75;}
 
-.circuit > a {background-color: #f3f3f3; padding: 10px; border-bottom: 1px solid #fff; display: grid; grid-template-columns: 30px 1fr; grid-gap: 10px;}
+.circuit > a {background-color: #f3f3f3; padding: 10px; line-height: 1; border-bottom: 1px solid #fff; display: grid; grid-template-columns: 30px 1fr; grid-gap: 10px;}
 .circuit > a .image {display: flex;}
-.circuit > a .image > span {margin: auto !important;}
+.circuit > a .image > span {margin: auto !important; border-radius: 1px;}
