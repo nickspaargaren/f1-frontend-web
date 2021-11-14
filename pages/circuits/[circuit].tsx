@@ -49,7 +49,7 @@ const NewTimeForm = styled.div`
 `;
 
 const addNewTime = async (gamertag: string, circuit: string, time: string) => {
-  await axios.post(`https://f1-api.vercel.app/api/times/${gamertag}?apikey=${process.env.API_KEY}&circuit=${circuit}&time=${time}`);
+  await axios.post(`https://f1-api.vercel.app/api/times/${gamertag}&circuit=${circuit}&time=${time}`);
   window.location.reload();
 };
 
@@ -112,7 +112,11 @@ const Circuit: NextPage<Response> = (data): ReactElement => {
 Circuit.getInitialProps = (ctx) => {
   const { circuit } = ctx.query;
 
-  return axios.get(`https://f1-api.vercel.app/api/circuits/${circuit}?apikey=${process.env.API_KEY}&times=true`).then((response) => response.data);
+  return axios.get(`https://f1-api.vercel.app/api/circuits/${circuit}?times=true`, {
+    params: {
+      apikey: process.env.API_KEY,
+    },
+  }).then((response) => response.data);
 };
 
 export default Circuit;

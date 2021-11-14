@@ -45,6 +45,10 @@ const Home: NextPage<Response> = ({ data }: Response): ReactElement => (
     </main>
   </>
 );
-Home.getInitialProps = () => axios.get(`https://f1-api.vercel.app/api/circuits?apikey=${process.env.API_KEY}`).then((response) => response.data);
+Home.getInitialProps = () => axios.get('https://f1-api.vercel.app/api/circuits', {
+  params: {
+    apikey: process.env.API_KEY,
+  },
+}).then((response) => response.data);
 
 export default Home;
