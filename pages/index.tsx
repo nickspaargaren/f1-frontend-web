@@ -1,6 +1,7 @@
 import axios from 'axios';
 import type { NextPage } from 'next';
 import Head from 'next/head';
+import Image from 'next/image';
 import Link from 'next/link';
 import { ReactElement } from 'react';
 
@@ -22,26 +23,25 @@ const Home: NextPage<Response> = ({ data }: Response): ReactElement => (
     <Header title="F1 stats" />
 
     <main>
-      <table cellSpacing="0" cellPadding="0" style={{ textAlign: 'left' }}>
-        <tbody>
-          {data
-            .sort((a, b) => a.name.localeCompare(b.name))
-            .map((item) => (
-              <tr key={item._id}>
-                <td>
-                  <Link href={`/circuits/${item.name}`}>
-                    <a>
-                      {item.name}
-                      <br />
-                      <small>{item.description}</small>
-                    </a>
-                  </Link>
-
-                </td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
+      {data
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .map((item) => (
+          <div key={item._id} className="circuit">
+            <Link href={`/circuits/${item.name}`}>
+              <a>
+                <div className="image">
+                  {item.flag
+                      && <Image src={`/images/flags/${item.flag}.png`} alt={item.flag} width={30} height={18} />}
+                </div>
+                <div>
+                  {item.name}
+                  <br />
+                  <small>{item.description}</small>
+                </div>
+              </a>
+            </Link>
+          </div>
+        ))}
     </main>
   </>
 );

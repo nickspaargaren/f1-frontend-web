@@ -3,6 +3,7 @@ export type Circuit = {
   name: string,
   description: string,
   location: string,
+  flag: string,
   creationDate: string,
   times: Time[]
 }
