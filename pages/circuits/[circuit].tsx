@@ -49,7 +49,7 @@ const NewTimeForm = styled.div`
 `;
 
 const addNewTime = async (gamertag: string, circuit: string, time: string) => {
-  await axios.post(`https://f1-api.vercel.app/api/times/${gamertag}&circuit=${circuit}&time=${time}`);
+  await axios.post(`https://f1-api.vercel.app/api/times/${gamertag}?apikey=${process.env.API_KEY}&circuit=${circuit}&time=${time}`);
   window.location.reload();
 };
 
