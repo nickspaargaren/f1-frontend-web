@@ -4,7 +4,6 @@ import { ImHome2, ImTrophy, ImUser } from 'react-icons/im';
 import styled from 'styled-components';
 
 const StyledHeader = styled.div`
-  border-top: 10px solid #fff;
   background-color: #e10600;
   position: sticky;
   top: 0;
