@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { Circuit } from 'types';
+
+import { Circuit } from '../types';
 
 const useCircuits = () => {
   const [circuits, setCircuits] = useState<{
