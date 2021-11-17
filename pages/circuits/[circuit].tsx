@@ -5,7 +5,7 @@ import { ReactElement, useRef, useState } from 'react';
 import NumberFormat from 'react-number-format';
 import styled from 'styled-components';
 
-import Header from '@/components/header';
+import Header from '@/components/Header';
 
 import { Circuit, Time } from '../../types';
 

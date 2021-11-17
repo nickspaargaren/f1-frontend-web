@@ -1,11 +1,10 @@
-import axios from 'axios';
 import type { NextPage } from 'next';
-import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ReactElement } from 'react';
 
-import Header from '@/components/header';
+import Layout from '@/components/Layout';
+import useCircuits from '@/hooks/useCircuits';
 
 import { Circuit } from '../types';
 
@@ -13,17 +12,20 @@ export type Response = {
   data: Circuit[]
 }
 
-const Home: NextPage<Response> = ({ data }: Response): ReactElement => (
-  <>
-    <Head>
-      <title>F1 web</title>
-      <link rel="icon" href="/favicon.ico" />
-    </Head>
+const Home: NextPage = (): ReactElement => {
+  const circuits = useCircuits();
 
-    <Header title="F1 stats" />
+  if (circuits.error) {
+    return <Layout title="Circuits error" description="Circuits error">{circuits.error}</Layout>;
+  }
 
-    <main>
-      {data
+  if (circuits.loading) {
+    return <Layout title="Circuits laden.." description="Circuits laden..">Circuits laden...</Layout>;
+  }
+
+  return (
+    <Layout title="bal" description="bla">
+      {circuits.data
         .sort((a, b) => a.name.localeCompare(b.name))
         .map((item) => (
           <div key={item._id} className="circuit">
@@ -42,13 +44,8 @@ const Home: NextPage<Response> = ({ data }: Response): ReactElement => (
             </Link>
           </div>
         ))}
-    </main>
-  </>
-);
-Home.getInitialProps = () => axios.get('https://f1-api.vercel.app/api/circuits', {
-  params: {
-    apikey: process.env.API_KEY,
-  },
-}).then((response) => response.data);
+    </Layout>
+  );
+};
 
 export default Home;
