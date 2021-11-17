@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import React from 'react';
 
-import Header from '@/components/header';
+import Header from '@/components/Headerr';
 
 interface LayoutProps {
   children: any;
