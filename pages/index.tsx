@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { ReactElement } from 'react';
 
 import Layout from '@/components/Layout';
+import Loading from '@/components/Loading';
 import useCircuits from '@/hooks/useCircuits';
 
 import { Circuit } from '../types';
@@ -20,7 +21,7 @@ const Home: NextPage = (): ReactElement => {
   }
 
   if (circuits.loading) {
-    return <Layout title="Circuits laden.." description="Circuits laden..">Circuits laden...</Layout>;
+    return <Layout title="Circuits laden.." description="Circuits laden.."><Loading /></Layout>;
   }
 
   return (
