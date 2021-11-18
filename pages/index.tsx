@@ -17,15 +17,15 @@ const Home: NextPage = (): ReactElement => {
   const circuits = useCircuits();
 
   if (circuits.error) {
-    return <Layout title="Circuits error" description="Circuits error">{circuits.error}</Layout>;
+    return <Layout title="F1 stats" description="Circuits">{circuits.error}</Layout>;
   }
 
   if (circuits.loading) {
-    return <Layout title="Circuits laden.." description="Circuits laden.."><Loading /></Layout>;
+    return <Layout title="F1 stats" description="Circuits"><Loading /></Layout>;
   }
 
   return (
-    <Layout title="bal" description="bla">
+    <Layout title="F1 stats" description="Circuits">
       {circuits.data
         .sort((a, b) => a.name.localeCompare(b.name))
         .map((item) => (

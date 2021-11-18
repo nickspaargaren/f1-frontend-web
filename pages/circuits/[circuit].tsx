@@ -1,11 +1,11 @@
 import axios from 'axios';
 import type { NextPage } from 'next';
-import Head from 'next/head';
 import { ReactElement, useRef, useState } from 'react';
 import NumberFormat from 'react-number-format';
 import styled from 'styled-components';
 
 import Header from '@/components/Header';
+import Layout from '@/components/Layout';
 
 import { Circuit, Time } from '../../types';
 
@@ -72,13 +72,7 @@ const Circuit: NextPage<Response> = (data): ReactElement => {
   const timeRef = useRef<any>(null);
 
   return (
-    <>
-      <Head>
-        <title>F1 web</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <Header title={data.data.circuit.name} winner={winner} />
+    <Layout title={data.data.circuit.name} description={data.data.circuit.description} winner={winner}>
 
       <main>
         <table cellSpacing="0" cellPadding="0" style={{ textAlign: 'left' }} className="times">
@@ -105,7 +99,7 @@ const Circuit: NextPage<Response> = (data): ReactElement => {
         </div>
         <div onClick={() => addNewTime(newTime.gamertag, newTime.circuit, newTime.time)} className="button">Add time</div>
       </NewTimeForm>
-    </>
+    </Layout>
   );
 };
 
