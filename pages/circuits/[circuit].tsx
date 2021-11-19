@@ -1,13 +1,16 @@
 import axios from 'axios';
 import type { NextPage } from 'next';
-import { ReactElement, useRef, useState } from 'react';
+import {
+  ReactElement, useRef, useState,
+} from 'react';
 import NumberFormat from 'react-number-format';
 import styled from 'styled-components';
 
 import Layout from '@/components/Layout';
+import Loading from '@/components/Loading';
+import useCircuits from '@/hooks/useCircuits';
 
 import getwinner from '../../getwinner';
-import { ResponseType } from '../../types';
 
 const NewTimeForm = styled.div`
   background-color: #15151e;
@@ -45,8 +48,21 @@ const addNewTime = async (gamertag: string, circuit: string, time: string) => {
   window.location.reload();
 };
 
-const Circuit: NextPage<ResponseType> = (data): ReactElement => {
-  const sortedTimes = data.data.times.sort((a, b) => {
+const Circuit: NextPage = ({ circuit }: any): ReactElement => {
+  const circuits = useCircuits(`https://f1-api.vercel.app/api/circuits/${circuit}?times=true`);
+  const [newTime, setNewTime] = useState({ gamertag: '', circuit, time: '' });
+  const gamertagRef = useRef<any>(null);
+  const timeRef = useRef<any>(null);
+
+  if (circuits.error) {
+    return <Layout title="F1 stats" description="Circuits">{circuits.error}</Layout>;
+  }
+
+  if (circuits.loading) {
+    return <Layout title={circuit} description="Loading..."><Loading /></Layout>;
+  }
+
+  const sortedTimes = circuits.data.times.sort((a, b) => {
     if (a.time > b.time) return 1;
     if (a.time < b.time) return -1;
     return 0;
@@ -54,13 +70,8 @@ const Circuit: NextPage<ResponseType> = (data): ReactElement => {
 
   const winner = getwinner(sortedTimes);
 
-  const [newTime, setNewTime] = useState({ gamertag: '', circuit: data.data.circuits[0].name, time: '' });
-
-  const gamertagRef = useRef<any>(null);
-  const timeRef = useRef<any>(null);
-
   return (
-    <Layout title={data.data.circuits[0].name} description={data.data.circuits[0].description} winner={winner}>
+    <Layout title={circuits.data.circuits[0].name} description={circuits.data.circuits[0].description} winner={winner}>
       <main>
         {winner ? (
           <table cellSpacing="0" cellPadding="0" style={{ textAlign: 'left' }} className="times">
@@ -96,11 +107,7 @@ const Circuit: NextPage<ResponseType> = (data): ReactElement => {
 Circuit.getInitialProps = (ctx) => {
   const { circuit } = ctx.query;
 
-  return axios.get(`https://f1-api.vercel.app/api/circuits/${circuit}?times=true`, {
-    params: {
-      apikey: process.env.API_KEY,
-    },
-  }).then((response) => response.data);
+  return { circuit };
 };
 
 export default Circuit;
