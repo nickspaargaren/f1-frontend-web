@@ -11,6 +11,7 @@ module.exports = {
     ecmaVersion: 13,
   },
   plugins: [
+    'import',
     '@typescript-eslint',
     'simple-import-sort',
   ],
@@ -27,6 +28,7 @@ module.exports = {
       node: {
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
       },
+      typescript: {},
     },
   },
 };
