@@ -12,6 +12,13 @@ import useCircuits from '@/hooks/useCircuits';
 
 import getwinner from '../../getwinner';
 
+const TextButton = styled.button`
+  border: 0;
+  background: none;
+  font-family: inherit;
+  padding: 0;
+`;
+
 const NewTimeForm = styled.div`
   background-color: #15151e;
   padding: 10px;
@@ -82,7 +89,9 @@ const Circuit: NextPage = ({ circuit }: any): ReactElement => {
             <tbody>
               {sortedTimes.map((item) => (
                 <tr key={item._id}>
-                  <td onClick={() => setNewTime({ ...newTime, gamertag: item.gamertag })} onKeyDown={() => setNewTime({ ...newTime, gamertag: item.gamertag })} role="button" tabIndex={0}>{item.gamertag}</td>
+                  <td>
+                    <TextButton type="button" onClick={() => setNewTime({ ...newTime, gamertag: item.gamertag })} onKeyDown={() => setNewTime({ ...newTime, gamertag: item.gamertag })}>{item.gamertag}</TextButton>
+                  </td>
                   <td style={{
                     textAlign: 'right', fontFamily: 'monospace', fontWeight: 'bold', fontSize: '14px', letterSpacing: '1.5px',
                   }}
