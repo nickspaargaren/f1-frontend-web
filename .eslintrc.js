@@ -23,6 +23,12 @@ module.exports = {
     'max-len': 'off',
     'simple-import-sort/imports': 'error',
     'react/jsx-props-no-spreading': 'off',
+    'no-underscore-dangle': 'off',
+    'jsx-a11y/anchor-is-valid': ['error', {
+      components: ['Link'],
+      specialLink: ['hrefLeft', 'hrefRight'],
+      aspects: ['invalidHref', 'preferButton'],
+    }],
   },
   settings: {
     'import/resolver': {

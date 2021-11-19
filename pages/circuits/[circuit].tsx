@@ -78,7 +78,7 @@ const Circuit: NextPage = ({ circuit }: any): ReactElement => {
             <tbody>
               {sortedTimes.map((item) => (
                 <tr key={item._id}>
-                  <td onClick={() => setNewTime({ ...newTime, gamertag: item.gamertag })}>{item.gamertag}</td>
+                  <td onClick={() => setNewTime({ ...newTime, gamertag: item.gamertag })} onKeyDown={() => setNewTime({ ...newTime, gamertag: item.gamertag })} role="button" tabIndex={0}>{item.gamertag}</td>
                   <td style={{
                     textAlign: 'right', fontFamily: 'monospace', fontWeight: 'bold', fontSize: '14px', letterSpacing: '1.5px',
                   }}
@@ -98,7 +98,7 @@ const Circuit: NextPage = ({ circuit }: any): ReactElement => {
           <input type="hidden" ref={timeRef} />
           <NumberFormat format="##:##.###" mask="_" type="text" placeholder="Time" getInputRef={timeRef} onChange={() => setNewTime({ ...newTime, time: timeRef.current.value })} />
         </div>
-        <div onClick={() => addNewTime(newTime.gamertag, newTime.circuit, newTime.time)} className="button">Add time</div>
+        <div onClick={() => addNewTime(newTime.gamertag, newTime.circuit, newTime.time)} onKeyDown={() => addNewTime(newTime.gamertag, newTime.circuit, newTime.time)} className="button" role="button" tabIndex={0}>Add time</div>
       </NewTimeForm>
     </Layout>
   );
