@@ -22,6 +22,7 @@ module.exports = {
     'no-use-before-define': 'off',
     'max-len': 'off',
     'simple-import-sort/imports': 'error',
+    'react/jsx-props-no-spreading': 'off',
   },
   settings: {
     'import/resolver': {
