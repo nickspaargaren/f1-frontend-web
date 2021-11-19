@@ -16,7 +16,9 @@ const TextButton = styled.button`
   border: 0;
   background: none;
   font-family: inherit;
+  font-size: inherit;
   padding: 0;
+  color: inherit;
 `;
 
 const NewTimeForm = styled.div`
