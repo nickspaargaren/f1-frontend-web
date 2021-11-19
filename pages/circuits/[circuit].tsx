@@ -6,6 +6,7 @@ import styled from 'styled-components';
 
 import Layout from '@/components/Layout';
 
+import getwinner from '../../getwinner';
 import { ResponseType } from '../../types';
 
 const NewTimeForm = styled.div`
@@ -51,11 +52,7 @@ const Circuit: NextPage<ResponseType> = (data): ReactElement => {
     return 0;
   });
 
-  let winner = '';
-
-  if (sortedTimes.length) {
-    winner = sortedTimes[0].gamertag;
-  }
+  const winner = getwinner(sortedTimes);
 
   const [newTime, setNewTime] = useState({ gamertag: '', circuit: data.data.circuits[0].name, time: '' });
 
@@ -64,23 +61,25 @@ const Circuit: NextPage<ResponseType> = (data): ReactElement => {
 
   return (
     <Layout title={data.data.circuits[0].name} description={data.data.circuits[0].description} winner={winner}>
-
       <main>
-        <table cellSpacing="0" cellPadding="0" style={{ textAlign: 'left' }} className="times">
-          <tbody>
-            {sortedTimes.map((item) => (
-              <tr key={item._id}>
-                <td onClick={() => setNewTime({ ...newTime, gamertag: item.gamertag })}>{item.gamertag}</td>
-                <td style={{
-                  textAlign: 'right', fontFamily: 'monospace', fontWeight: 'bold', fontSize: '14px', letterSpacing: '1.5px',
-                }}
-                >
-                  {item.time}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        {winner ? (
+          <table cellSpacing="0" cellPadding="0" style={{ textAlign: 'left' }} className="times">
+            <tbody>
+              {sortedTimes.map((item) => (
+                <tr key={item._id}>
+                  <td onClick={() => setNewTime({ ...newTime, gamertag: item.gamertag })}>{item.gamertag}</td>
+                  <td style={{
+                    textAlign: 'right', fontFamily: 'monospace', fontWeight: 'bold', fontSize: '14px', letterSpacing: '1.5px',
+                  }}
+                  >
+                    {item.time}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : <div style={{ padding: '10px', textAlign: 'center' }}>Nog geen tijden</div>}
+
       </main>
       <NewTimeForm>
         <div className="grid">
