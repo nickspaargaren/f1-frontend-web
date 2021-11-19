@@ -7,14 +7,8 @@ import Layout from '@/components/Layout';
 import Loading from '@/components/Loading';
 import useCircuits from '@/hooks/useCircuits';
 
-import { Circuit } from '../types';
-
-export type Response = {
-  data: Circuit[]
-}
-
 const Home: NextPage = (): ReactElement => {
-  const circuits = useCircuits();
+  const circuits = useCircuits('https://f1-api.vercel.app/api/circuits');
 
   if (circuits.error) {
     return <Layout title="F1 stats" description="Circuits">{circuits.error}</Layout>;
@@ -26,7 +20,7 @@ const Home: NextPage = (): ReactElement => {
 
   return (
     <Layout title="F1 stats" description="Circuits">
-      {circuits.data
+      {circuits.data.circuits
         .sort((a, b) => a.name.localeCompare(b.name))
         .map((item) => (
           <div key={item._id} className="circuit">

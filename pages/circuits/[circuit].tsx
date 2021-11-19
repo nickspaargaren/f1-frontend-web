@@ -4,18 +4,9 @@ import { ReactElement, useRef, useState } from 'react';
 import NumberFormat from 'react-number-format';
 import styled from 'styled-components';
 
-import Header from '@/components/Header';
 import Layout from '@/components/Layout';
 
-import { Circuit, Time } from '../../types';
-
-export type Response = {
-  success: boolean,
-  data:{
-    circuit: Circuit,
-    times: Time[]
-  }
-}
+import { ResponseType } from '../../types';
 
 const NewTimeForm = styled.div`
   background-color: #15151e;
@@ -53,7 +44,7 @@ const addNewTime = async (gamertag: string, circuit: string, time: string) => {
   window.location.reload();
 };
 
-const Circuit: NextPage<Response> = (data): ReactElement => {
+const Circuit: NextPage<ResponseType> = (data): ReactElement => {
   const sortedTimes = data.data.times.sort((a, b) => {
     if (a.time > b.time) return 1;
     if (a.time < b.time) return -1;
@@ -66,13 +57,13 @@ const Circuit: NextPage<Response> = (data): ReactElement => {
     winner = sortedTimes[0].gamertag;
   }
 
-  const [newTime, setNewTime] = useState({ gamertag: '', circuit: data.data.circuit.name, time: '' });
+  const [newTime, setNewTime] = useState({ gamertag: '', circuit: data.data.circuits[0].name, time: '' });
 
   const gamertagRef = useRef<any>(null);
   const timeRef = useRef<any>(null);
 
   return (
-    <Layout title={data.data.circuit.name} description={data.data.circuit.description} winner={winner}>
+    <Layout title={data.data.circuits[0].name} description={data.data.circuits[0].description} winner={winner}>
 
       <main>
         <table cellSpacing="0" cellPadding="0" style={{ textAlign: 'left' }} className="times">

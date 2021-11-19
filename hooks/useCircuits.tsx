@@ -1,15 +1,14 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-import { Circuit } from '../types';
+import { ResponseType } from '../types';
 
-const useCircuits = () => {
-  const [circuits, setCircuits] = useState<{
-    data: Circuit[];
-    loading: boolean;
-    error: string | null;
-  }>({
-    data: [],
+const useCircuits = (url: string) => {
+  const [circuits, setCircuits] = useState<ResponseType>({
+    data: {
+      circuits: [],
+      times: [],
+    },
     loading: true,
     error: null,
   });
@@ -18,7 +17,7 @@ const useCircuits = () => {
     const LoadData = async () => {
       try {
         const res = await
-        axios.get('https://f1-api.vercel.app/api/circuits', {
+        axios.get(url, {
           params: {
             apikey: process.env.API_KEY,
           },
@@ -26,7 +25,7 @@ const useCircuits = () => {
         const { data } = res;
         setCircuits({ ...data, loading: false, error: null });
       } catch (err: any) {
-        setCircuits({ data: [], loading: false, error: err.message });
+        setCircuits({ data: { circuits: [], times: [] }, loading: false, error: err.message });
       }
     };
 
