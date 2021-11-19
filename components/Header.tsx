@@ -42,13 +42,6 @@ const Icon = styled.div<IconProps>`
   opacity: ${(props) => (props.disabled ? '.5' : '1')};
 `;
 
-const Title = styled.div`
-  background: #15151e;
-  color: #fff;
-  padding: 10px;
-  display: flex;
-`;
-
 const Winner = styled.div`
   display: flex;
   margin-left: auto;
