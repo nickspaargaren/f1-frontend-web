@@ -23,6 +23,7 @@ module.exports = {
     'max-len': 'off',
     'simple-import-sort/imports': 'error',
     'react/jsx-props-no-spreading': 'off',
+    'react/require-default-props': 'off',
     'no-underscore-dangle': 'off',
     'jsx-a11y/anchor-is-valid': ['error', {
       components: ['Link'],

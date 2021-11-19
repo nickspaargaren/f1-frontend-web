@@ -39,6 +39,10 @@ const NewTimeForm = styled.div`
     line-height: normal;
     padding: 5px;
     font-size: 16px;
+    display: block;
+    width: 100%;
+    outline: none;
+    border: 0;
   }
 
 `;
@@ -98,7 +102,7 @@ const Circuit: NextPage = ({ circuit }: any): ReactElement => {
           <input type="hidden" ref={timeRef} />
           <NumberFormat format="##:##.###" mask="_" type="text" placeholder="Time" getInputRef={timeRef} onChange={() => setNewTime({ ...newTime, time: timeRef.current.value })} />
         </div>
-        <div onClick={() => addNewTime(newTime.gamertag, newTime.circuit, newTime.time)} onKeyDown={() => addNewTime(newTime.gamertag, newTime.circuit, newTime.time)} className="button" role="button" tabIndex={0}>Add time</div>
+        <button type="button" onClick={() => addNewTime(newTime.gamertag, newTime.circuit, newTime.time)} onKeyDown={() => addNewTime(newTime.gamertag, newTime.circuit, newTime.time)} className="button">Add time</button>
       </NewTimeForm>
     </Layout>
   );
