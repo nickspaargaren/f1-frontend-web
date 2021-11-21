@@ -28,3 +28,10 @@ small {opacity: .75;}
 .circuit > a .image > span {margin: auto !important; border-radius: 1px;}
 .circuit > a .title {margin: auto 10px;}
 .circuit > a .winner {margin: auto 0 auto auto;}
+
+@media (prefers-color-scheme: dark) {
+  body {background: linear-gradient(to bottom, #1a1b24 0%, #191a25 100%); color: #fff;}
+  table {background: transparent;}
+  table tr td {border-bottom: 1px solid rgba(255,255,255,.2);}
+  .circuit > a {border-bottom: 1px solid rgba(255,255,255,.2); background: transparent;}
+}
