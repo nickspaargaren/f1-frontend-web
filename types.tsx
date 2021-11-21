@@ -12,7 +12,8 @@ export type CircuitType = {
   name: string,
   description: string,
   location: string,
-  flag: string,
+  flag: string | null,
+  winner: string | null,
   creationDate: string
 }
 

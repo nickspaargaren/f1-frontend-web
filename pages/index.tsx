@@ -5,6 +5,7 @@ import { ReactElement } from 'react';
 
 import Layout from '@/components/Layout';
 import Loading from '@/components/Loading';
+import Winner from '@/components/Winner';
 import useCircuits from '@/hooks/useCircuits';
 
 const Home: NextPage = (): ReactElement => {
@@ -30,10 +31,15 @@ const Home: NextPage = (): ReactElement => {
                   {item.flag
                       && <Image src={`/images/flags/${item.flag}.png`} alt={item.flag} width={30} height={18} />}
                 </div>
-                <div>
+                <div className="title">
                   {item.name}
                   <br />
                   <small>{item.description}</small>
+                </div>
+                <div className="winner">
+                  {item.winner && (
+                    <Winner title={item.winner} />
+                  )}
                 </div>
               </a>
             </Link>

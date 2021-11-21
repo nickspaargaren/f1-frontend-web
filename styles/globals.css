@@ -23,6 +23,8 @@ table.times tr td {padding: 5px 10px;}
 
 small {opacity: .75;}
 
-.circuit > a {background-color: #f3f3f3; padding: 10px; line-height: 1; border-bottom: 1px solid #fff; display: grid; grid-template-columns: 30px 1fr; grid-gap: 10px;}
-.circuit > a .image {display: flex;}
+.circuit > a {background-color: #f3f3f3; padding: 10px; line-height: 1; border-bottom: 1px solid #fff; display: flex;}
+.circuit > a .image {display: flex; min-width: 30px;}
 .circuit > a .image > span {margin: auto !important; border-radius: 1px;}
+.circuit > a .title {margin: auto 10px;}
+.circuit > a .winner {margin: auto 0 auto auto;}
