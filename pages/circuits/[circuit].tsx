@@ -10,7 +10,7 @@ import Layout from '@/components/Layout';
 import Loading from '@/components/Loading';
 import useCircuits from '@/hooks/useCircuits';
 
-import getwinner from '../../getwinner';
+import getwinner from '../../utils/getwinner';
 
 const TextButton = styled.button`
   border: 0;

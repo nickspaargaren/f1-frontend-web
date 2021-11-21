@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-import { ResponseType } from '../types';
+import { ResponseType } from '@/types';
 
 const useCircuits = (url: string) => {
   const [circuits, setCircuits] = useState<ResponseType>({
