@@ -119,10 +119,6 @@ const Circuit: NextPage = ({ circuit }: any): ReactElement => {
   );
 };
 
-Circuit.getInitialProps = (ctx) => {
-  const { circuit } = ctx.query;
-
-  return { circuit };
-};
+Circuit.getInitialProps = (ctx) => ({ circuit: ctx.query.circuit });
 
 export default Circuit;
