@@ -3,6 +3,8 @@ import { ReactElement } from 'react';
 import { ImHome2, ImTrophy, ImUser } from 'react-icons/im';
 import styled from 'styled-components';
 
+import Winner from './Winner';
+
 const StyledHeader = styled.div`
   background-color: #e10600;
   position: sticky;
@@ -42,13 +44,6 @@ const Icon = styled.div<IconProps>`
   opacity: ${(props) => (props.disabled ? '.5' : '1')};
 `;
 
-const Winner = styled.div`
-  display: flex;
-  margin-left: auto;
-
-  svg {color: #c99128; margin-left: 5px; position: relative; top: 1px;}
-`;
-
 type HeaderTitleProps = {
   title: string,
   winner?: string
@@ -70,13 +65,7 @@ const Header = ({ title, winner }: HeaderTitleProps): ReactElement => (
       <Bar color="#15151e">
         {title}
         {winner && (
-        <Winner>
-          {winner}
-
-          <ImTrophy />
-
-        </Winner>
-
+          <Winner title={winner} />
         )}
       </Bar>
 
