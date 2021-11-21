@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { ReactElement } from 'react';
-import { ImHome2, ImTrophy, ImUser } from 'react-icons/im';
+import { ImHome2, ImUser } from 'react-icons/im';
 import styled from 'styled-components';
 
 import Winner from './Winner';
