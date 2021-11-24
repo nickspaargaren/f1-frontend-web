@@ -37,5 +37,8 @@ small {opacity: .75;}
   table {background: transparent;}
   table tr td {border-bottom: 1px solid rgba(255,255,255,.1);}
   .circuit > a {border-bottom: 1px solid rgba(255,255,255,.1); background: transparent;}
+}
+
+@media screen and (min-width: 768px) {
   .circuit > a:hover {background: rgba(255,255,255,.05); border-bottom-color: rgba(255,255,255,.05);}
 }
