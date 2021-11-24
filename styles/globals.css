@@ -15,6 +15,9 @@ a {
   box-sizing: border-box;
 }
 
+h1 {margin: 0; font-size: 20px;}
+p {margin: 0 0 10px;}
+
 table {width: 100%; background-color: #f3f3f3;}
 table tr td {padding: 10px; border-bottom: 1px solid #fff;}
 table tr td a {display: block;}
@@ -32,6 +35,7 @@ small {opacity: .75;}
 @media (prefers-color-scheme: dark) {
   body {background: linear-gradient(to bottom, #1a1b24 0%, #191a25 100%); color: #fff;}
   table {background: transparent;}
-  table tr td {border-bottom: 1px solid rgba(255,255,255,.2);}
-  .circuit > a {border-bottom: 1px solid rgba(255,255,255,.2); background: transparent;}
+  table tr td {border-bottom: 1px solid rgba(255,255,255,.1);}
+  .circuit > a {border-bottom: 1px solid rgba(255,255,255,.1); background: transparent;}
+  .circuit > a:hover {background: rgba(255,255,255,.05); border-bottom-color: rgba(255,255,255,.05);}
 }
