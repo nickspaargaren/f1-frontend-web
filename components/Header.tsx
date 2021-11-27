@@ -75,7 +75,7 @@ const Header = ({ title, winner }: HeaderTitleProps): ReactElement => {
           <Bar color="#15151e">
             {title}
             {winner && (
-            <Winner title={winner} />
+            <Winner title={winner} animate />
             )}
           </Bar>
         </motion.div>
