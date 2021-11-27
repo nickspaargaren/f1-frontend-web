@@ -21,14 +21,12 @@ const StyledLatestTimeUpdate = styled.div`
     display: flex;
     gap: 10px;
 
-    .title {
-      display: flex;
-      margin: auto auto auto 0;
+    > div {flex: 1;}
 
-      .icon {
-        margin: auto 6px auto auto;
-        line-height: 0;
-      }
+    .vhr {
+      flex: 0;
+      border-right: 1px solid rgba(255,255,255,.1);
+      border-left: 1px solid rgba(0,0,0,.2);
     }
 
     p {
@@ -50,14 +48,11 @@ const LatestTimeUpdate = () => {
     return (
       <StyledLatestTimeUpdate>
         <a>
-          <div className="title">
-            <div className="icon"><ImStopwatch /></div>
-            <TextLoader width="120px" height="20px" />
-          </div>
           <div>
             <p><TextLoader width="50px" height="14px" /></p>
             <p><small><TextLoader width="90px" height="14px" /></small></p>
           </div>
+          <div className="vhr" />
           <div>
             <p><TextLoader width="50px" height="14px" /></p>
             <p><small><TextLoader width="90px" height="14px" /></small></p>
@@ -71,14 +66,11 @@ const LatestTimeUpdate = () => {
     <StyledLatestTimeUpdate>
       <Link href={`/circuits/${latestTime.data.times[0].circuit}`}>
         <a>
-          <div className="title">
-            <div className="icon"><ImStopwatch /></div>
-            Latest time set
-          </div>
           <div>
             <p>{latestTime.data.times[0].circuit}</p>
             <p><small>{latestTime.data.times[0].gamertag}</small></p>
           </div>
+          <div className="vhr" />
           <div>
             <p>{latestTime.data.times[0].time}</p>
             <p><small>{dayjs(latestTime.data.times[0].creationDate).fromNow()}</small></p>
