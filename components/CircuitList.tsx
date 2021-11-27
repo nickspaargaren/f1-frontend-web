@@ -14,7 +14,7 @@ const CircuitList = () => {
   if (circuits.loading) {
     return (
       <>
-        {[...Array(10)].map(() => <CircuitItem loading />)}
+        {[...Array(10)].map((index) => <CircuitItem key={index} loading />)}
       </>
     );
   }
@@ -24,7 +24,7 @@ const CircuitList = () => {
       {circuits.data.circuits
         .sort((a, b) => a.name.localeCompare(b.name))
         .map((item) => (
-          <CircuitItem item={item} />
+          <CircuitItem key={item._id} item={item} />
         ))}
     </>
   );
