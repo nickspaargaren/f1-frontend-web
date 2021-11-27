@@ -16,6 +16,9 @@ a {
 }
 
 h1 {margin: 0; font-size: 20px;}
+h2 {margin: 0;}
+h3 {margin: 0 0 10px;}
+
 p {margin: 0 0 10px;}
 
 table {width: 100%; background-color: #f3f3f3;}
@@ -27,8 +30,8 @@ table.times tr td {padding: 5px 10px;}
 small {opacity: .75;}
 
 .circuit > a {background-color: #f3f3f3; padding: 10px; line-height: 1; border-bottom: 1px solid #fff; display: flex;}
-.circuit > a .image {display: flex; min-width: 30px;}
-.circuit > a .image > span {margin: auto !important; border-radius: 1px;}
+.circuit > a .image {display: flex; min-width: 30px; align-items: center; justify-content: center;}
+.circuit > a .image > span {border-radius: 1px;}
 .circuit > a .title {margin: auto 10px;}
 .circuit > a .winner {margin: auto 0 auto auto;}
 
