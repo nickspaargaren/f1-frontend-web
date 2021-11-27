@@ -25,7 +25,6 @@ const StyledLatestTimeUpdate = styled.div`
     .vhr {
       flex: 0;
       border-right: 1px solid rgba(255,255,255,.1);
-      border-left: 1px solid rgba(0,0,0,.2);
     }
 
     p {
