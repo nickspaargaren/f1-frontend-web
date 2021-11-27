@@ -12,7 +12,11 @@ const CircuitList = () => {
   }
 
   if (circuits.loading) {
-    return [...Array(10)].map(() => <CircuitItem loading />);
+    return (
+      <>
+        {[...Array(10)].map(() => <CircuitItem loading />)}
+      </>
+    );
   }
 
   return (
