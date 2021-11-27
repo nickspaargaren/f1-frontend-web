@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { ImStopwatch } from 'react-icons/im';
 import styled from 'styled-components';
 
 import TextLoader from '@/components/TextLoader';
