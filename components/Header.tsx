@@ -1,3 +1,4 @@
+import { motion, useTransform, useViewportScroll } from 'framer-motion';
 import Link from 'next/link';
 import { ReactElement } from 'react';
 import { ImHome2, ImUser } from 'react-icons/im';
@@ -6,10 +7,11 @@ import styled from 'styled-components';
 import Winner from './Winner';
 
 const StyledHeader = styled.div`
-  background-color: #e10600;
   position: sticky;
   top: 0;
   z-index: 1;
+
+  >div:first-child {z-index: 1;}
 
   .title {
     font-size: 1.5em;
@@ -20,6 +22,7 @@ const StyledHeader = styled.div`
 `;
 
 const Bar = styled.div`
+  position: relative;
   color: #fff;
   padding: 10px;
   display: flex;
@@ -49,30 +52,37 @@ type HeaderTitleProps = {
   winner?: string
 }
 
-const Header = ({ title, winner }: HeaderTitleProps): ReactElement => (
-  <>
+const Header = ({ title, winner }: HeaderTitleProps): ReactElement => {
+  const { scrollY } = useViewportScroll();
+  const y = useTransform(scrollY, [0, 200], [0, -54]);
 
-    <StyledHeader>
-      <Bar color="#e20600">
-        <Link href="/">
-          <a className="title">Racetijden</a>
-        </Link>
-        <Icons>
+  return (
+    <>
+
+      <StyledHeader>
+        <Bar color="#e20600">
           <Link href="/">
-            <a><Icon><ImHome2 /></Icon></a>
+            <a className="title">Racetijden</a>
           </Link>
-          <Icon disabled><ImUser /></Icon>
-        </Icons>
-      </Bar>
-      <Bar color="#15151e">
-        {title}
-        {winner && (
-          <Winner title={winner} />
-        )}
-      </Bar>
+          <Icons>
+            <Link href="/">
+              <a><Icon><ImHome2 /></Icon></a>
+            </Link>
+            <Icon disabled><ImUser /></Icon>
+          </Icons>
+        </Bar>
+        <motion.div style={{ y }}>
+          <Bar color="#15151e">
+            {title}
+            {winner && (
+            <Winner title={winner} animate />
+            )}
+          </Bar>
+        </motion.div>
 
-    </StyledHeader>
+      </StyledHeader>
 
-  </>
-);
+    </>
+  );
+};
 export default Header;

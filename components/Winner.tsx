@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { ImTrophy } from 'react-icons/im';
 import styled from 'styled-components';
 
@@ -10,12 +11,18 @@ const StyledWinner = styled.div`
 
 type WinnerType = {
   title: string;
+  animate?: boolean;
 }
 
-const Winner = ({ title }: WinnerType) => (
+const Winner = ({ title, animate }: WinnerType) => (
   <StyledWinner>
     {title}
-    <ImTrophy />
+    {animate ? (
+      <motion.div animate={{ scale: [1, 1.3, 1], rotate: [0, 5, -10, 0] }}>
+        <ImTrophy />
+      </motion.div>
+    ) : <ImTrophy />}
+
   </StyledWinner>
 );
 
