@@ -13,7 +13,7 @@ dayjs.extend(relativeTime);
 const StyledLatestTimeUpdate = styled.div`
   margin: 10px;
   padding: 10px;
-  background: #f3f3f3;
+  background: rgba(255,255,255,.05);
   border-radius: 3px;
   min-height: 56px;
 
@@ -35,12 +35,6 @@ const StyledLatestTimeUpdate = styled.div`
       margin: 0;
     }
   }
-
-
-  @media (prefers-color-scheme: dark) {
-    background: rgba(255,255,255,.05);
-  }
-
 `;
 
 const LatestTimeUpdate = () => {
