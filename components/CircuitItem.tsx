@@ -55,7 +55,7 @@ const CircuitItem = ({ item, loading }: CircuitItemType) => {
   }
 
   return (
-    <StyledCircuitItem key={item._id}>
+    <StyledCircuitItem>
       <Link href={`/circuits/${item.name}`}>
         <a>
           <div className="image">
