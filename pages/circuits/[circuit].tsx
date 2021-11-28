@@ -1,8 +1,7 @@
 import axios from 'axios';
 import type { NextPage } from 'next';
-import {
-  ReactElement, useRef, useState,
-} from 'react';
+import { ReactElement } from 'react';
+import { useForm } from 'react-hook-form';
 import NumberFormat from 'react-number-format';
 import styled from 'styled-components';
 
@@ -56,16 +55,30 @@ const NewTimeForm = styled.div`
 
 `;
 
-const addNewTime = async (gamertag: string, circuit: string, time: string) => {
-  await axios.post(`https://api.racetijden.nl/api/times/${gamertag}?apikey=${process.env.API_KEY}&circuit=${circuit}&time=${time}`);
-  window.location.reload();
-};
+type newtimeProps = {
+  gamertag: string,
+  circuit: string,
+  time: string
+}
 
 const Circuit: NextPage = ({ circuit }: any): ReactElement => {
+  const addNewTime = async (data: newtimeProps) => {
+    if (data.gamertag !== '' && data.time !== '99:99.999' && !data.time.includes('_')) {
+      await axios.post(`https://api.racetijden.nl/api/times/${data.gamertag}?apikey=${process.env.API_KEY}&circuit=${data.circuit}&time=${data.time}`);
+      window.location.reload();
+    } else {
+      alert('Controleer je gamertag en tijd.');
+    }
+  };
+
   const circuits = useCircuits(`https://api.racetijden.nl/api/circuits/${circuit}?times=true`);
-  const [newTime, setNewTime] = useState({ gamertag: '', circuit, time: '' });
-  const gamertagRef = useRef<any>(null);
-  const timeRef = useRef<any>(null);
+  const { register, setValue, handleSubmit } = useForm({
+    defaultValues: {
+      circuit,
+      time: '99:99.999',
+      gamertag: '',
+    },
+  });
 
   if (circuits.error) {
     return <Layout title="F1 stats" description="Circuits">{circuits.error}</Layout>;
@@ -92,7 +105,7 @@ const Circuit: NextPage = ({ circuit }: any): ReactElement => {
               {sortedTimes.map((item) => (
                 <tr key={item._id}>
                   <td>
-                    <TextButton type="button" onClick={() => setNewTime({ ...newTime, gamertag: item.gamertag })} onKeyDown={() => setNewTime({ ...newTime, gamertag: item.gamertag })}>{item.gamertag}</TextButton>
+                    <TextButton type="button" onClick={() => setValue('gamertag', item.gamertag)}>{item.gamertag}</TextButton>
                   </td>
                   <td style={{
                     textAlign: 'right', fontFamily: 'monospace', fontWeight: 'bold', fontSize: '14px', letterSpacing: '1.5px',
@@ -108,12 +121,19 @@ const Circuit: NextPage = ({ circuit }: any): ReactElement => {
 
       </main>
       <NewTimeForm>
-        <div className="grid">
-          <input type="text" placeholder="Gamertag" ref={gamertagRef} value={newTime.gamertag} onChange={() => setNewTime({ ...newTime, gamertag: gamertagRef.current.value })} />
-          <input type="hidden" ref={timeRef} />
-          <NumberFormat format="##:##.###" mask="_" type="text" placeholder="Time" getInputRef={timeRef} onChange={() => setNewTime({ ...newTime, time: timeRef.current.value })} />
-        </div>
-        <button type="button" onClick={() => addNewTime(newTime.gamertag, newTime.circuit, newTime.time)} onKeyDown={() => addNewTime(newTime.gamertag, newTime.circuit, newTime.time)} className="button">Add time</button>
+        <form onSubmit={handleSubmit(addNewTime)}>
+          <div className="grid">
+            <input type="text" placeholder="Gamertag" {...register('gamertag')} />
+            <NumberFormat
+              format="##:##.###"
+              mask="_"
+              type="text"
+              placeholder="Time"
+              onValueChange={(v) => setValue('time', v.formattedValue)}
+            />
+          </div>
+          <input type="submit" className="button" value="Add time" />
+        </form>
       </NewTimeForm>
     </Layout>
   );
