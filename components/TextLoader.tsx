@@ -7,28 +7,22 @@ type LoaderType = {
 
 const StyledTextLoader = styled.div<LoaderType>`
   margin: 2px 0;
-  background: linear-gradient( 90deg, rgba(0,0,0,.1), rgba(0,0,0,.2));
+  background: linear-gradient(90deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.35) 33%, rgba(0,0,0,0.15) 66%);
   background-size: 200%;
   border-radius: 3px;
-  height: ${(props) => (props.height)};
-  width: ${(props) => (props.width)};
+  height: ${({ height }) => (height)};
+  width: ${({ width }) => (width)};
   animation: portfolio 1s linear infinite;
 
   @keyframes portfolio {
     0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
+      background-position: 200%;
     }
     100% {
-      background-position: 0% 50%;
+      background-position: 0%;
     }
   }
 
-  @media (prefers-color-scheme: dark) {
-    background: linear-gradient( 90deg, rgba(0,0,0,.2), rgba(0,0,0,.4));
-  }
 `;
 
 const TextLoader = ({ width, height }: LoaderType) => (<StyledTextLoader width={width} height={height} />);
