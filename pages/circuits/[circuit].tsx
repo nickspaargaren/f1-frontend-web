@@ -52,6 +52,7 @@ const NewTimeForm = styled.div`
     outline: none;
     border: 0;
     border-radius: 0;
+    -webkit-appearance: none;
   }
 
 `;
