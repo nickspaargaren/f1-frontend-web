@@ -35,7 +35,7 @@ const StyledLatestTimeUpdate = styled.div`
 `;
 
 const LatestTimeUpdate = (): ReactElement => {
-  const latestTime = useCircuits('https://f1-api.vercel.app/api/times/latest');
+  const latestTime = useCircuits('https://api.racetijden.nl/api/times/latest');
 
   if (latestTime.error) {
     return (

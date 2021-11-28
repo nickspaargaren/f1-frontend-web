@@ -57,12 +57,12 @@ const NewTimeForm = styled.div`
 `;
 
 const addNewTime = async (gamertag: string, circuit: string, time: string) => {
-  await axios.post(`https://f1-api.vercel.app/api/times/${gamertag}?apikey=${process.env.API_KEY}&circuit=${circuit}&time=${time}`);
+  await axios.post(`https://api.racetijden.nl/api/times/${gamertag}?apikey=${process.env.API_KEY}&circuit=${circuit}&time=${time}`);
   window.location.reload();
 };
 
 const Circuit: NextPage = ({ circuit }: any): ReactElement => {
-  const circuits = useCircuits(`https://f1-api.vercel.app/api/circuits/${circuit}?times=true`);
+  const circuits = useCircuits(`https://api.racetijden.nl/api/circuits/${circuit}?times=true`);
   const [newTime, setNewTime] = useState({ gamertag: '', circuit, time: '' });
   const gamertagRef = useRef<any>(null);
   const timeRef = useRef<any>(null);

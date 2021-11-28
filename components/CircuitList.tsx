@@ -5,7 +5,7 @@ import useCircuits from '@/hooks/useCircuits';
 import CircuitItem from './CircuitItem';
 
 const CircuitList = (): ReactElement => {
-  const circuits = useCircuits('https://f1-api.vercel.app/api/circuits');
+  const circuits = useCircuits('https://api.racetijden.nl/api/circuits');
 
   if (circuits.error) {
     return (
