@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 import { ResponseType } from '@/types';
 
-const useCircuits = (url: string) => {
+const useCircuits = (url: string): ResponseType => {
   const [circuits, setCircuits] = useState<ResponseType>({
     data: {
       circuits: [],

@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { ReactElement } from 'react';
 import { ImTrophy } from 'react-icons/im';
 import styled from 'styled-components';
 
@@ -14,7 +15,7 @@ type WinnerType = {
   animate?: boolean;
 }
 
-const Winner = ({ title, animate }: WinnerType) => (
+const Winner = ({ title, animate }: WinnerType): ReactElement => (
   <StyledWinner>
     {title}
     {animate ? (
