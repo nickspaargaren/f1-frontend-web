@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import React from 'react';
+import React, { ReactElement } from 'react';
 
 import Header from '@/components/Header';
 
@@ -12,7 +12,7 @@ interface LayoutProps {
 
 const Layout = ({
   children, title, description, winner,
-}: LayoutProps) => (
+}: LayoutProps): ReactElement => (
   <>
     <Head>
       <title>

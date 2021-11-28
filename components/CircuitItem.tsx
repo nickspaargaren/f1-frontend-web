@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { ReactElement } from 'react';
 import styled from 'styled-components';
 
 import TextLoader from '@/components/TextLoader';
@@ -34,7 +35,7 @@ const StyledCircuitItem = styled.div`
 
 `;
 
-const CircuitItem = ({ item, loading }: CircuitItemType) => {
+const CircuitItem = ({ item, loading }: CircuitItemType): ReactElement => {
   if (loading || !item) {
     return (
       <StyledCircuitItem>

@@ -1,3 +1,4 @@
+import { ReactElement } from 'react';
 import styled from 'styled-components';
 
 type LoaderType = {
@@ -25,6 +26,6 @@ const StyledTextLoader = styled.div<LoaderType>`
 
 `;
 
-const TextLoader = ({ width, height }: LoaderType) => (<StyledTextLoader width={width} height={height} />);
+const TextLoader = ({ width, height }: LoaderType): ReactElement => (<StyledTextLoader width={width} height={height} />);
 
 export default TextLoader;

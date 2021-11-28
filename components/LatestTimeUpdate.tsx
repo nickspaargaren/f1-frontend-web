@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { ReactElement } from 'react';
 import styled from 'styled-components';
 
 import TextLoader from '@/components/TextLoader';
@@ -33,7 +34,7 @@ const StyledLatestTimeUpdate = styled.div`
   }
 `;
 
-const LatestTimeUpdate = () => {
+const LatestTimeUpdate = (): ReactElement => {
   const latestTime = useCircuits('https://f1-api.vercel.app/api/times/latest');
 
   if (latestTime.error) {
