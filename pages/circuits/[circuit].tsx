@@ -130,11 +130,11 @@ const Circuit: NextPage = ({ circuit }: any): ReactElement => {
               format="##:##.###"
               mask="_"
               type="text"
-              placeholder="Time"
+              placeholder="Tijd"
               onValueChange={(v) => setValue('time', v.formattedValue)}
             />
           </div>
-          <input type="submit" className="button" value="Add time" />
+          <input type="submit" className="button" value="Toevoegen" />
         </form>
       </NewTimeForm>
     </Layout>

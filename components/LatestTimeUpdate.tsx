@@ -1,3 +1,5 @@
+import 'dayjs/locale/nl';
+
 import Link from 'next/link';
 import { ReactElement } from 'react';
 import styled from 'styled-components';
@@ -6,6 +8,8 @@ import TextLoader from '@/components/TextLoader';
 import useCircuits from '@/hooks/useCircuits';
 
 const dayjs = require('dayjs');
+
+dayjs.locale('nl');
 const relativeTime = require('dayjs/plugin/relativeTime');
 
 dayjs.extend(relativeTime);
