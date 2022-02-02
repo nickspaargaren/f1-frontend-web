@@ -8,8 +8,7 @@ import styled from 'styled-components';
 import Layout from '@/components/Layout';
 import Loading from '@/components/Loading';
 import useCircuits from '@/hooks/useCircuits';
-
-import getwinner from '../../utils/getwinner';
+import { getwinner } from '@/utils';
 
 const TextButton = styled.button`
   border: 0;
