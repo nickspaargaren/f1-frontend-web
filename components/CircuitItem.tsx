@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import TextLoader from '@/components/TextLoader';
 import { CircuitType } from '@/types';
 
+import SlideAnimation from './SlideAnimation';
 import Winner from './Winner';
 
 type CircuitItemType = {
@@ -56,26 +57,28 @@ const CircuitItem = ({ item, loading }: CircuitItemType): ReactElement => {
   }
 
   return (
-    <StyledCircuitItem>
-      <Link href={`/circuits/${item.name}`}>
-        <a>
-          <div className="image">
-            {item.flag
+    <SlideAnimation>
+      <StyledCircuitItem>
+        <Link href={`/circuits/${item.name}`}>
+          <a>
+            <div className="image">
+              {item.flag
               && <Image src={`/images/flags/${item.flag}.png`} alt={item.flag} width={30} height={18} />}
-          </div>
-          <div className="title">
-            {item.name}
-            <br />
-            <small>{item.description}</small>
-          </div>
-          <div className="winner">
-            {item.winner && (
-            <Winner title={item.winner} />
-            )}
-          </div>
-        </a>
-      </Link>
-    </StyledCircuitItem>
+            </div>
+            <div className="title">
+              {item.name}
+              <br />
+              <small>{item.description}</small>
+            </div>
+            <div className="winner">
+              {item.winner && (
+              <Winner title={item.winner} />
+              )}
+            </div>
+          </a>
+        </Link>
+      </StyledCircuitItem>
+    </SlideAnimation>
   );
 };
 
