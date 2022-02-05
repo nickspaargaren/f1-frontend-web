@@ -17,10 +17,12 @@ type CircuitItemType = {
 const StyledCircuitItem = styled.div`
 
   > a {
-    padding: 10px;
+    padding: 10px 15px 10px 10px;
     line-height: 1;
-    border-bottom: 1px solid rgba(255,255,255,.1);
+    background: rgba(255,255,255,.05);
     display: flex;
+    margin: 0 0 10px;
+    border-radius: 3px;
 
     .image {display: flex; min-width: 30px; align-items: center; justify-content: center;}
     .image > span {border-radius: 1px;}
@@ -30,8 +32,7 @@ const StyledCircuitItem = styled.div`
   }
 
   @media screen and (min-width: 768px) {
-    > a:hover {background: rgba(255,255,255,.05);
-      border-bottom-color: rgba(255,255,255,.05);}
+    > a:hover {background: rgba(255,255,255,.075);}
   }
 
 `;
