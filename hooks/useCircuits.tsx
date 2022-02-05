@@ -24,8 +24,10 @@ const useCircuits = (url: string): ResponseType => {
         });
         const { data } = res;
         setCircuits({ ...data, loading: false, error: null });
-      } catch (err: any) {
-        setCircuits({ data: { circuits: [], times: [] }, loading: false, error: err.message });
+      } catch (err) {
+        if (axios.isAxiosError(err)) {
+          setCircuits({ data: { circuits: [], times: [] }, loading: false, error: err.message });
+        }
       }
     };
 

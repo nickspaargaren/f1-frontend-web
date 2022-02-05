@@ -4,7 +4,7 @@ import React, { ReactElement } from 'react';
 import Header from '@/components/Header';
 
 interface LayoutProps {
-  children: any;
+  children: ReactElement | ReactElement[] | string;
   title: string;
   description: string;
   winner?: string;
