@@ -73,7 +73,7 @@ const CircuitItem = ({ item, loading }: CircuitItemType): ReactElement => {
             </div>
             <div className="winner">
               {item.winner && (
-              <Winner title={item.winner} />
+              <small><Winner title={item.winner} /></small>
               )}
             </div>
           </a>
