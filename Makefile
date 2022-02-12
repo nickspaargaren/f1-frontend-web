@@ -25,7 +25,8 @@ dev:
 
 update: do-update-dependencies
 
-reset: do-remove-nodemodules \
+reset: \
+	do-remove-nodemodules
 	@docker-compose down -v
 
 # Installing dependencies
@@ -45,5 +46,4 @@ do-remove-nodemodules:
 	@echo ""
 	@echo "Removing all node_modules folders.."
 	sudo rm -rf node_modules
-	@echo ""
 	@echo "All node_modules folders removed.."
