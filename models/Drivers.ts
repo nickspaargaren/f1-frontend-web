@@ -1,8 +1,6 @@
 import mongoose from 'mongoose';
 
-const { Schema } = mongoose;
-
-const DriverSchema = new Schema({
+const DriverSchema = new mongoose.Schema({
   gamertag: {
     type: String,
     required: true,

@@ -1,8 +1,6 @@
 import mongoose from 'mongoose';
 
-const { Schema } = mongoose;
-
-const TimesSchema = new Schema({
+const TimesSchema = new mongoose.Schema({
   time: {
     type: String,
     required: true,

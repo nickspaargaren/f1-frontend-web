@@ -4,14 +4,10 @@ import database from '@/config';
 import Drivers from '@/models/Drivers';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { apikey } = req.query;
-
-  if (apikey === process.env.API_KEY) {
-    const { method } = req;
-
+  if (req.query.apikey === process.env.API_KEY) {
     await database();
 
-    switch (method) {
+    switch (req.method) {
       case 'GET':
         try {
           const drivers = await Drivers.find({});

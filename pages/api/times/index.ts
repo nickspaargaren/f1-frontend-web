@@ -4,16 +4,14 @@ import database from '@/config';
 import Times from '@/models/Times';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { apikey } = req.query;
-  if (apikey === process.env.API_KEY) {
-    const { method } = req;
-
+  if (req.query.apikey === process.env.API_KEY) {
     await database();
 
-    switch (method) {
+    switch (req.method) {
       case 'GET':
         try {
           const times = await Times.find({});
+
           res.status(200).json({ success: true, data: { times } });
         } catch (error) {
           res.status(400).json({ success: false });

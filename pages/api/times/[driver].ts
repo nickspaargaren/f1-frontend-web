@@ -10,11 +10,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   } = req.query;
 
   if (apikey === process.env.API_KEY) {
-    const { method } = req;
-
     await database();
 
-    switch (method) {
+    switch (req.method) {
       case 'GET':
         try {
           const times = await Times.find({ gamertag: driver });

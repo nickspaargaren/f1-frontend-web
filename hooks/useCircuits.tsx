@@ -16,8 +16,7 @@ const useCircuits = (url: string): ResponseType => {
   useEffect(() => {
     const LoadData = async () => {
       try {
-        const res = await
-        axios.get(url, {
+        const res = await axios.get(url, {
           params: {
             apikey: process.env.API_KEY,
           },

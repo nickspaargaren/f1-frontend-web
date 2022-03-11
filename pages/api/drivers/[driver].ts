@@ -7,11 +7,9 @@ import Times from '@/models/Times';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { apikey, driver, times } = req.query;
   if (apikey === process.env.API_KEY) {
-    const { method } = req;
-
     await database();
 
-    switch (method) {
+    switch (req.method) {
       case 'GET':
         try {
           const drivers = await Drivers.find({ gamertag: driver });
@@ -20,12 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             if (times === 'true') {
               const timesData = await Times.find({ gamertag: driver });
 
-              const driverData = {
-                driver: drivers[0],
-                times: timesData,
-              };
-
-              res.status(200).json({ success: true, data: driverData });
+              res.status(200).json({ success: true, data: { driver: drivers[0], times: timesData } });
             } else {
               res.status(200).json({ success: true, data: { driver: drivers[0] } });
             }
@@ -39,6 +32,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       case 'POST':
         try {
           const createDriver = await Drivers.create({ gamertag: driver });
+
           res.status(201).json({ success: true, data: createDriver });
         } catch (error) {
           res.status(400).json({ success: false });
