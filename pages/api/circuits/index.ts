@@ -4,17 +4,14 @@ import database from '@/config';
 import Circuits from '@/models/Circuits';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { apikey } = req.query;
-
-  if (apikey === process.env.API_KEY) {
-    const { method } = req;
-
+  if (req.query.apikey === process.env.API_KEY) {
     await database();
 
-    switch (method) {
+    switch (req.method) {
       case 'GET':
         try {
           const circuits = await Circuits.find({});
+
           res.status(200).json({ success: true, data: { circuits } });
         } catch (error) {
           res.status(400).json({ success: false });
@@ -23,6 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       case 'POST':
         try {
           const user = await Circuits.create(req.body);
+
           res.status(201).json({ success: true, data: user });
         } catch (error) {
           res.status(400).json({ success: false });
