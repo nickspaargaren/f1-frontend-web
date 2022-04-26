@@ -1,10 +1,9 @@
 import Head from 'next/head';
-import React, { ReactElement } from 'react';
+import React, { PropsWithChildren, ReactElement } from 'react';
 
 import Header from '@/components/Header';
 
 interface LayoutProps {
-  children: ReactElement | ReactElement[] | string;
   title: string;
   description: string;
   winner?: string;
@@ -12,7 +11,7 @@ interface LayoutProps {
 
 const Layout = ({
   children, title, description, winner,
-}: LayoutProps): ReactElement => (
+}: PropsWithChildren<LayoutProps>): ReactElement => (
   <>
     <Head>
       <title>
