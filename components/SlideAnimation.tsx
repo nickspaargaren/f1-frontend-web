@@ -1,9 +1,14 @@
 import { motion, useTransform, useViewportScroll } from 'framer-motion';
 import {
+  PropsWithChildren,
   ReactElement, useEffect, useRef, useState,
 } from 'react';
 
-const SlideAnimation = ({ children, easing = [0.4, 0, 0.5, 1] }: any): ReactElement => {
+type SlideAnimationProps = {
+  easing?: any;
+}
+
+const SlideAnimation = ({ children, easing = [0.4, 0, 0.5, 1] }: PropsWithChildren<SlideAnimationProps>): ReactElement => {
   const ref = useRef<HTMLInputElement | null>(null);
   const [elementTop, setElementTop] = useState(0);
   const [windowHeight, setWindowHeight] = useState(0);
