@@ -1,0 +1,28 @@
+datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_URL")
+}
+
+model Users {
+  id String @id @default(cuid())
+  gamertag String @unique
+  createdAt DateTime @default(now())
+}
+
+model Circuits {
+  id String @id @default(cuid())
+  name String
+  description String
+  location String
+  flag String
+  winner String
+  createdAt DateTime @default(now())
+}
+
+model Times {
+  id String @id @default(cuid())
+  time String
+  gamertag String
+  circuit String
+  createdAt DateTime @default(now())
+}
