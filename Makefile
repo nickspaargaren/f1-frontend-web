@@ -13,6 +13,8 @@ build: \
 
 start:
 	@docker-compose up -d
+	@docker-compose exec frontend sh -c "yarn prisma:setup && yarn prisma:generate"
+	@docker-compose exec frontend sh -c "yarn prisma db seed"
 	@echo ""
 	@echo "  The project is running on http://localhost:3000/."
 	@echo ""
@@ -27,6 +29,7 @@ update: do-update-dependencies
 
 reset: \
 	do-remove-nodemodules
+	sudo rm -rf postgres-data
 	@docker-compose down -v
 
 # Installing dependencies

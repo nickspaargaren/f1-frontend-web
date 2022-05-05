@@ -6,9 +6,15 @@
     "start": "next start",
     "lint": "eslint '**/*.tsx'",
     "prepare": "husky install",
-    "setup": "prisma migrate dev"
+    "prisma:setup": "prisma migrate dev",
+    "prisma:generate": "prisma generate",
+    "prisma:reset": "npx prisma migrate reset"
+  },
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "dependencies": {
+    "@prisma/client": "^3.13.0",
     "axios": "^0.27.1",
     "dayjs": "^1.11.1",
     "framer-motion": "^6.3.2",
