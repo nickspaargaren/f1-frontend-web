@@ -6,6 +6,8 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: frontend
+    depends_on:
+        - "postgres"
     restart: always
     volumes:
       - ./:/app
