@@ -15,7 +15,7 @@ model Users {
 
 model Circuits {
   id String @id @default(cuid())
-  name String
+  name String @unique
   description String
   location String
   flag String
