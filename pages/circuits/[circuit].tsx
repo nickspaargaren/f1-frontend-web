@@ -72,7 +72,7 @@ const Circuit: NextPage = ({ circuit }: any): ReactElement => {
     }
   };
 
-  const circuits = useCircuits(`https://f1.racetijden.nl/api/circuits/${circuit}?times=true`);
+  const circuits = useCircuits(`/api/circuits/${circuit}?times=true`);
   const { register, setValue, handleSubmit } = useForm({
     defaultValues: {
       circuit,
