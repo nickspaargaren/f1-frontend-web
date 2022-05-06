@@ -1,9 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import database from '@/config';
-import Times from '@/models/Times';
-
 const prisma = new PrismaClient();
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -11,8 +8,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   if (apikey === process.env.API_KEY) {
     const { method } = req;
-
-    await database();
 
     switch (method) {
       case 'GET':
@@ -25,7 +20,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
           if (circuits) {
             if (times === 'true') {
-              const timesData = await Times.find({ circuit: circuits.name });
+              const timesData = await prisma.times.findMany({
+                where: {
+                  circuit: circuits.name,
+                },
+              });
 
               const circuitData = {
                 circuits: [circuits],
