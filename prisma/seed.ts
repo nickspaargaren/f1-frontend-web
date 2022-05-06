@@ -179,7 +179,37 @@ async function main() {
     skipDuplicates: true,
   });
 
-  console.log({ newCircuits });
+  console.log('Added circuits', { newCircuits });
+
+  const times = [
+    {
+      time: '01:17.571',
+      circuit: 'Austrian GP',
+      gamertag: 'CSI-SNIPER',
+    },
+    {
+      time: '01:16.126',
+      gamertag: 'nickspaargaren25',
+      circuit: 'Austrian GP',
+    },
+    {
+      time: '01:08.404',
+      gamertag: 'CSI-SNIPER',
+      circuit: 'Portuguese GP',
+    },
+    {
+      time: '01:10.213',
+      gamertag: 'nickspaargaren25',
+      circuit: 'Portuguese GP',
+    },
+  ];
+
+  const newTimes = await prisma.times.createMany({
+    data: times,
+    skipDuplicates: true,
+  });
+
+  console.log('Added times', { newTimes });
 }
 
 main()
