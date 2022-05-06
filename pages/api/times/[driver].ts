@@ -1,8 +1,11 @@
+import { PrismaClient } from '@prisma/client';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 import database from '@/config';
 import Circuits from '@/models/Circuits';
 import Times from '@/models/Times';
+
+const prisma = new PrismaClient();
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const {
@@ -15,7 +18,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     switch (req.method) {
       case 'GET':
         try {
-          const times = await Times.find({ gamertag: driver });
+          const times = await prisma.times.findMany({
+            where: {
+              gamertag: driver as string,
+            },
+          });
 
           if (times.length) {
             res.status(200).json({ success: true, data: { times } });

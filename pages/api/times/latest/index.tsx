@@ -1,18 +1,21 @@
+import { PrismaClient } from '@prisma/client';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import database from '@/config';
-import Times from '@/models/Times';
+const prisma = new PrismaClient();
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.query.apikey === process.env.API_KEY) {
-    await database();
-
     switch (req.method) {
       case 'GET':
         try {
-          const time = await Times.findOne().sort({ creationDate: 'desc' });
+          const time = await prisma.times.findMany({
+            take: 1,
+            orderBy: {
+              createdAt: 'desc',
+            },
+          });
 
-          res.status(200).json({ success: true, data: { times: [time] } });
+          res.status(200).json({ success: true, data: { times: [time[0]] } });
         } catch (error) {
           res.status(400).json({ success: false });
         }
