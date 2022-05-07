@@ -65,7 +65,7 @@ type newtimeProps = {
 const Circuit: NextPage = ({ circuit }: any): ReactElement => {
   const addNewTime = async (data: newtimeProps) => {
     if (data.gamertag !== '' && data.time !== '99:99.999' && !data.time.includes('_')) {
-      await axios.post(`https://f1.racetijden.nl/api/times/${data.gamertag}?apikey=${process.env.API_KEY}&circuit=${data.circuit}&time=${data.time}`);
+      await axios.post(`/api/times/${data.gamertag}?apikey=${process.env.API_KEY}&circuit=${data.circuit}&time=${data.time}`);
       window.location.reload();
     } else {
       alert('Controleer je gamertag en tijd.');
