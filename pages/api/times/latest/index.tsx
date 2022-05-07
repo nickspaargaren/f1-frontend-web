@@ -10,9 +10,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         try {
           const time = await prisma.times.findMany({
             take: 1,
-            orderBy: {
-              createdAt: 'desc',
-            },
+            orderBy: [
+              {
+                updatedAt: 'desc',
+              },
+              {
+                createdAt: 'desc',
+              },
+            ],
           });
 
           res.status(200).json({ success: true, data: { times: [time[0]] } });
