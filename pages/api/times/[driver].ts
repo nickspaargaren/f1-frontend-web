@@ -32,8 +32,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           const newtime = await prisma.times.upsert({
             where: {
               gamertag_circuit: {
-                gamertag: driver,
-                circuit,
+                gamertag: driver as string,
+                circuit: circuit as string,
               },
             },
             update: {
