@@ -31,6 +31,7 @@ update: do-update-dependencies
 reset: \
 	do-remove-nodemodules
 	sudo rm -rf postgres-data
+	sudo rm -rf build
 	@docker-compose down -v
 
 # Installing dependencies

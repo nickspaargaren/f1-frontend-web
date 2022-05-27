@@ -5,6 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      target: local
     container_name: frontend
     depends_on:
         - "postgres"

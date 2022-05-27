@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
   reactStrictMode: true,
+  distDir: 'build',
   env: {
     API_KEY: process.env.API_KEY,
   },
