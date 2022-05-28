@@ -179,7 +179,7 @@ async function main() {
     skipDuplicates: true,
   });
 
-  console.log('Added circuits', { newCircuits });
+  console.log(`Added ${newCircuits.count} circuits`);
 
   const times = [
     {
@@ -209,7 +209,7 @@ async function main() {
     skipDuplicates: true,
   });
 
-  console.log('Added times', { newTimes });
+  console.log(`Added ${newTimes.count} times`);
 }
 
 main()
