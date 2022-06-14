@@ -39,7 +39,7 @@ const StyledLatestTimeUpdate = styled.div`
 `;
 
 const LatestTimeUpdate = (): ReactElement => {
-  const latestTime = useCircuits('https://f1.racetijden.nl/api/times/latest');
+  const latestTime = useCircuits('/api/times/latest');
 
   if (latestTime.error) {
     return (

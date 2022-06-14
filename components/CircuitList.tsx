@@ -11,7 +11,7 @@ const StyledCircuitList = styled.div`
 `;
 
 const CircuitList = (): ReactElement => {
-  const circuits = useCircuits('https://f1.racetijden.nl/api/circuits');
+  const circuits = useCircuits('/api/circuits');
 
   if (circuits.error) {
     return (
