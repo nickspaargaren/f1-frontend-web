@@ -1,16 +1,17 @@
-import { PrismaClient } from '@prisma/client';
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { PrismaClient } from "@prisma/client";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 const prisma = new PrismaClient();
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const {
-    apikey, driver, time, circuit,
-  } = req.query;
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  const { apikey, driver, time, circuit } = req.query;
 
   if (apikey === process.env.API_KEY) {
     switch (req.method) {
-      case 'GET':
+      case "GET":
         try {
           const times = await prisma.times.findMany({
             where: {
@@ -21,13 +22,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           if (times.length) {
             res.status(200).json({ success: true, data: { times } });
           } else {
-            res.status(200).json({ success: false, data: { times: `No times set for user ${driver}` } });
+            res.status(200).json({
+              success: false,
+              data: { times: `No times set for user ${driver}` },
+            });
           }
         } catch (error) {
           res.status(400).json({ success: false });
         }
         break;
-      case 'POST':
+      case "POST":
         try {
           const newtime = await prisma.times.upsert({
             where: {
@@ -54,7 +58,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             },
             take: 1,
             orderBy: {
-              time: 'asc',
+              time: "asc",
             },
           });
 
@@ -80,6 +84,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         break;
     }
   } else {
-    res.status(400).json({ success: false, data: 'Invalid API key' });
+    res.status(400).json({ success: false, data: "Invalid API key" });
   }
 }

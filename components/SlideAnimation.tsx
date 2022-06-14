@@ -1,14 +1,20 @@
-import { motion, useTransform, useViewportScroll } from 'framer-motion';
+import { motion, useTransform, useViewportScroll } from "framer-motion";
 import {
   PropsWithChildren,
-  ReactElement, useEffect, useRef, useState,
-} from 'react';
+  ReactElement,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 type SlideAnimationProps = {
   easing?: any;
-}
+};
 
-const SlideAnimation = ({ children, easing = [0.4, 0, 0.5, 1] }: PropsWithChildren<SlideAnimationProps>): ReactElement => {
+const SlideAnimation = ({
+  children,
+  easing = [0.4, 0, 0.5, 1],
+}: PropsWithChildren<SlideAnimationProps>): ReactElement => {
   const ref = useRef<HTMLInputElement | null>(null);
   const [elementTop, setElementTop] = useState(0);
   const [windowHeight, setWindowHeight] = useState(0);
@@ -21,8 +27,18 @@ const SlideAnimation = ({ children, easing = [0.4, 0, 0.5, 1] }: PropsWithChildr
     setWindowHeight(window.innerHeight);
   }, []);
 
-  const opacity = useTransform(scrollY, [elementTop - windowHeight, elementTop - windowHeight + 70], [0, 1], easing);
-  const y = useTransform(scrollY, [elementTop - windowHeight, elementTop - windowHeight + 70], [20, 0], easing);
+  const opacity = useTransform(
+    scrollY,
+    [elementTop - windowHeight, elementTop - windowHeight + 70],
+    [0, 1],
+    easing
+  );
+  const y = useTransform(
+    scrollY,
+    [elementTop - windowHeight, elementTop - windowHeight + 70],
+    [20, 0],
+    easing
+  );
 
   return (
     <motion.div ref={ref} style={{ opacity, y }}>

@@ -1,18 +1,23 @@
-import { ReactElement } from 'react';
-import styled from 'styled-components';
+import { ReactElement } from "react";
+import styled from "styled-components";
 
 type LoaderType = {
   width: string;
   height: string;
-}
+};
 
 const StyledTextLoader = styled.div<LoaderType>`
   margin: 2px 0;
-  background: linear-gradient(90deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.35) 33%, rgba(0,0,0,0.15) 66%);
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.15) 0%,
+    rgba(0, 0, 0, 0.35) 33%,
+    rgba(0, 0, 0, 0.15) 66%
+  );
   background-size: 200%;
   border-radius: 3px;
-  height: ${({ height }) => (height)};
-  width: ${({ width }) => (width)};
+  height: ${({ height }) => height};
+  width: ${({ width }) => width};
   animation: portfolio 1s linear infinite;
 
   @keyframes portfolio {
@@ -23,9 +28,10 @@ const StyledTextLoader = styled.div<LoaderType>`
       background-position: 0%;
     }
   }
-
 `;
 
-const TextLoader = ({ width, height }: LoaderType): ReactElement => (<StyledTextLoader width={width} height={height} />);
+const TextLoader = ({ width, height }: LoaderType): ReactElement => (
+  <StyledTextLoader width={width} height={height} />
+);
 
 export default TextLoader;

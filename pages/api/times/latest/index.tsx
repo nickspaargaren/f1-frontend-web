@@ -1,21 +1,24 @@
-import { PrismaClient } from '@prisma/client';
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { PrismaClient } from "@prisma/client";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 const prisma = new PrismaClient();
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   if (req.query.apikey === process.env.API_KEY) {
     switch (req.method) {
-      case 'GET':
+      case "GET":
         try {
           const time = await prisma.times.findMany({
             take: 1,
             orderBy: [
               {
-                updatedAt: 'desc',
+                updatedAt: "desc",
               },
               {
-                createdAt: 'desc',
+                createdAt: "desc",
               },
             ],
           });
@@ -30,6 +33,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         break;
     }
   } else {
-    res.status(400).json({ success: false, data: 'Invalid API key' });
+    res.status(400).json({ success: false, data: "Invalid API key" });
   }
 }
