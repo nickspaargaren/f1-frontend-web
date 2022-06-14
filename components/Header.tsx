@@ -1,24 +1,25 @@
-import { motion, useTransform, useViewportScroll } from 'framer-motion';
-import Link from 'next/link';
-import { ReactElement } from 'react';
-import { ImHome2 } from 'react-icons/im';
-import styled from 'styled-components';
+import { motion, useTransform, useViewportScroll } from "framer-motion";
+import Link from "next/link";
+import { ReactElement } from "react";
+import { ImHome2 } from "react-icons/im";
+import styled from "styled-components";
 
-import Winner from './Winner';
+import Winner from "./Winner";
 
 const StyledHeader = styled.div`
   position: sticky;
   top: 0;
   z-index: 1;
 
-  >div:first-child {z-index: 1;}
+  > div:first-child {
+    z-index: 1;
+  }
 
   .title {
     font-size: 1.5em;
     margin: auto 0;
     font-weight: bold;
   }
-
 `;
 
 const Bar = styled.div`
@@ -27,7 +28,7 @@ const Bar = styled.div`
   padding: 10px;
   display: flex;
   display: flex;
-  background-color: ${(props) => (props.color)};
+  background-color: ${(props) => props.color};
 `;
 
 const Icons = styled.div`
@@ -36,21 +37,21 @@ const Icons = styled.div`
 `;
 
 type IconProps = {
-  disabled?: boolean
-}
+  disabled?: boolean;
+};
 
 const Icon = styled.div<IconProps>`
   margin-left: 10px;
   padding: 5px;
   text-align: center;
   font-size: 20px;
-  opacity: ${(props) => (props.disabled ? '.5' : '1')};
+  opacity: ${(props) => (props.disabled ? ".5" : "1")};
 `;
 
 type HeaderTitleProps = {
-  title: string,
-  winner?: string
-}
+  title: string;
+  winner?: string;
+};
 
 const Header = ({ title, winner }: HeaderTitleProps): ReactElement => {
   const { scrollY } = useViewportScroll();
@@ -58,7 +59,6 @@ const Header = ({ title, winner }: HeaderTitleProps): ReactElement => {
 
   return (
     <>
-
       <StyledHeader>
         <Bar color="#e20600">
           <Link href="/">
@@ -66,21 +66,21 @@ const Header = ({ title, winner }: HeaderTitleProps): ReactElement => {
           </Link>
           <Icons>
             <Link href="/">
-              <a><Icon><ImHome2 /></Icon></a>
+              <a>
+                <Icon>
+                  <ImHome2 />
+                </Icon>
+              </a>
             </Link>
           </Icons>
         </Bar>
         <motion.div style={{ y }}>
           <Bar color="#15151e">
             {title}
-            {winner && (
-            <Winner title={winner} animate />
-            )}
+            {winner && <Winner title={winner} animate />}
           </Bar>
         </motion.div>
-
       </StyledHeader>
-
     </>
   );
 };

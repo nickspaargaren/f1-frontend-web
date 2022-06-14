@@ -1,16 +1,19 @@
-import { PrismaClient } from '@prisma/client';
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { PrismaClient } from "@prisma/client";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 const prisma = new PrismaClient();
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   const { apikey, circuit, times } = req.query;
 
   if (apikey === process.env.API_KEY) {
     const { method } = req;
 
     switch (method) {
-      case 'GET':
+      case "GET":
         try {
           const circuits = await prisma.circuits.findUnique({
             where: {
@@ -19,7 +22,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           });
 
           if (circuits) {
-            if (times === 'true') {
+            if (times === "true") {
               const timesData = await prisma.times.findMany({
                 where: {
                   circuit: circuits.name,
@@ -33,10 +36,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
               res.status(200).json({ success: true, data: circuitData });
             } else {
-              res.status(200).json({ success: true, data: { circuits: [circuits] } });
+              res
+                .status(200)
+                .json({ success: true, data: { circuits: [circuits] } });
             }
           } else {
-            res.status(400).json({ success: false, data: 'Circuit not found' });
+            res.status(400).json({ success: false, data: "Circuit not found" });
           }
         } catch (error) {
           res.status(400).json({ success: false });
@@ -47,6 +52,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         break;
     }
   } else {
-    res.status(400).json({ success: false, data: 'Invalid API key' });
+    res.status(400).json({ success: false, data: "Invalid API key" });
   }
 }

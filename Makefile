@@ -26,6 +26,10 @@ stop:
 dev:
 	@docker-compose up
 
+lint: ## Run the project codestyle check.
+	@make start
+	@make do-frontend-lint
+
 update: do-update-dependencies
 
 reset: \
@@ -58,3 +62,7 @@ database-seed:
 
 database-reset:
 	@docker-compose exec frontend sh -c "yarn prisma:reset --force"
+
+do-frontend-lint:
+	@echo "Starting frontend codestyle check.."
+	@docker-compose exec frontend sh -c "yarn lint"

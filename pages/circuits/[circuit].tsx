@@ -1,14 +1,14 @@
-import axios from 'axios';
-import type { NextPage } from 'next';
-import { ReactElement } from 'react';
-import { useForm } from 'react-hook-form';
-import NumberFormat from 'react-number-format';
-import styled from 'styled-components';
+import axios from "axios";
+import type { NextPage } from "next";
+import { ReactElement } from "react";
+import { useForm } from "react-hook-form";
+import NumberFormat from "react-number-format";
+import styled from "styled-components";
 
-import Layout from '@/components/Layout';
-import Loading from '@/components/Loading';
-import useCircuits from '@/hooks/useCircuits';
-import { getwinner } from '@/utils';
+import Layout from "@/components/Layout";
+import Loading from "@/components/Loading";
+import useCircuits from "@/hooks/useCircuits";
+import { getwinner } from "@/utils";
 
 const TextButton = styled.button`
   border: 0;
@@ -53,22 +53,27 @@ const NewTimeForm = styled.div`
     border-radius: 0;
     -webkit-appearance: none;
   }
-
 `;
 
 type newtimeProps = {
-  gamertag: string,
-  circuit: string,
-  time: string
-}
+  gamertag: string;
+  circuit: string;
+  time: string;
+};
 
 const Circuit: NextPage = ({ circuit }: any): ReactElement => {
   const addNewTime = async (data: newtimeProps) => {
-    if (data.gamertag !== '' && data.time !== '99:99.999' && !data.time.includes('_')) {
-      await axios.post(`/api/times/${data.gamertag}?apikey=${process.env.API_KEY}&circuit=${data.circuit}&time=${data.time}`);
+    if (
+      data.gamertag !== "" &&
+      data.time !== "99:99.999" &&
+      !data.time.includes("_")
+    ) {
+      await axios.post(
+        `/api/times/${data.gamertag}?apikey=${process.env.API_KEY}&circuit=${data.circuit}&time=${data.time}`
+      );
       window.location.reload();
     } else {
-      alert('Controleer je gamertag en tijd.');
+      alert("Controleer je gamertag en tijd.");
     }
   };
 
@@ -76,17 +81,25 @@ const Circuit: NextPage = ({ circuit }: any): ReactElement => {
   const { register, setValue, handleSubmit } = useForm({
     defaultValues: {
       circuit,
-      time: '99:99.999',
-      gamertag: '',
+      time: "99:99.999",
+      gamertag: "",
     },
   });
 
   if (circuits.error) {
-    return <Layout title="F1 stats" description="Circuits">{circuits.error}</Layout>;
+    return (
+      <Layout title="F1 stats" description="Circuits">
+        {circuits.error}
+      </Layout>
+    );
   }
 
   if (circuits.loading) {
-    return <Layout title={circuit} description="Loading..."><Loading /></Layout>;
+    return (
+      <Layout title={circuit} description="Loading...">
+        <Loading />
+      </Layout>
+    );
   }
 
   const sortedTimes = circuits.data.times.sort((a, b) => {
@@ -98,19 +111,38 @@ const Circuit: NextPage = ({ circuit }: any): ReactElement => {
   const winner = getwinner(sortedTimes);
 
   return (
-    <Layout title={circuits.data.circuits[0].name} description={circuits.data.circuits[0].description} winner={winner}>
+    <Layout
+      title={circuits.data.circuits[0].name}
+      description={circuits.data.circuits[0].description}
+      winner={winner}
+    >
       <main>
         {winner ? (
-          <table cellSpacing="0" cellPadding="0" style={{ textAlign: 'left' }} className="times">
+          <table
+            cellSpacing="0"
+            cellPadding="0"
+            style={{ textAlign: "left" }}
+            className="times"
+          >
             <tbody>
               {sortedTimes.map((item) => (
                 <tr key={item._id}>
                   <td>
-                    <TextButton type="button" onClick={() => setValue('gamertag', item.gamertag)}>{item.gamertag}</TextButton>
+                    <TextButton
+                      type="button"
+                      onClick={() => setValue("gamertag", item.gamertag)}
+                    >
+                      {item.gamertag}
+                    </TextButton>
                   </td>
-                  <td style={{
-                    textAlign: 'right', fontFamily: 'monospace', fontWeight: 'bold', fontSize: '14px', letterSpacing: '1.5px',
-                  }}
+                  <td
+                    style={{
+                      textAlign: "right",
+                      fontFamily: "monospace",
+                      fontWeight: "bold",
+                      fontSize: "14px",
+                      letterSpacing: "1.5px",
+                    }}
                   >
                     {item.time}
                   </td>
@@ -118,19 +150,26 @@ const Circuit: NextPage = ({ circuit }: any): ReactElement => {
               ))}
             </tbody>
           </table>
-        ) : <div style={{ padding: '10px', textAlign: 'center' }}>Nog geen tijden</div>}
-
+        ) : (
+          <div style={{ padding: "10px", textAlign: "center" }}>
+            Nog geen tijden
+          </div>
+        )}
       </main>
       <NewTimeForm>
         <form onSubmit={handleSubmit(addNewTime)}>
           <div className="grid">
-            <input type="text" placeholder="Gamertag" {...register('gamertag')} />
+            <input
+              type="text"
+              placeholder="Gamertag"
+              {...register("gamertag")}
+            />
             <NumberFormat
               format="##:##.###"
               mask="_"
               type="text"
               placeholder="Tijd"
-              onValueChange={(v) => setValue('time', v.formattedValue)}
+              onValueChange={(v) => setValue("time", v.formattedValue)}
             />
           </div>
           <input type="submit" className="button" value="Toevoegen" />

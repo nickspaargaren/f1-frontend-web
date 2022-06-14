@@ -1,7 +1,7 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import axios from "axios";
+import { useEffect, useState } from "react";
 
-import { ResponseType } from '@/types';
+import { ResponseType } from "@/types";
 
 const useCircuits = (url: string): ResponseType => {
   const [circuits, setCircuits] = useState<ResponseType>({
@@ -25,7 +25,11 @@ const useCircuits = (url: string): ResponseType => {
         setCircuits({ ...data, loading: false, error: null });
       } catch (err) {
         if (axios.isAxiosError(err)) {
-          setCircuits({ data: { circuits: [], times: [] }, loading: false, error: err.message });
+          setCircuits({
+            data: { circuits: [], times: [] },
+            loading: false,
+            error: err.message,
+          });
         }
       }
     };

@@ -1,7 +1,7 @@
-import Head from 'next/head';
-import React, { PropsWithChildren, ReactElement } from 'react';
+import Head from "next/head";
+import React, { PropsWithChildren, ReactElement } from "react";
 
-import Header from '@/components/Header';
+import Header from "@/components/Header";
 
 interface LayoutProps {
   title: string;
@@ -10,17 +10,14 @@ interface LayoutProps {
 }
 
 const Layout = ({
-  children, title, description, winner,
+  children,
+  title,
+  description,
+  winner,
 }: PropsWithChildren<LayoutProps>): ReactElement => (
   <>
     <Head>
-      <title>
-        {title}
-        {' '}
-        |
-        {' '}
-        Racetijden
-      </title>
+      <title>{title} | Racetijden</title>
       <meta name="description" content={description} />
       <link rel="icon" href="/favicon.ico" />
     </Head>
@@ -28,7 +25,6 @@ const Layout = ({
     <Header title={title} winner={winner} />
 
     <main>{children}</main>
-
   </>
 );
 
