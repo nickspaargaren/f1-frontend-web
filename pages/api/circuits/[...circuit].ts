@@ -1,8 +1,7 @@
+import { PrismaClient } from '@prisma/client';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import database from '@/config';
-import Circuits from '@/models/Circuits';
-import Times from '@/models/Times';
+const prisma = new PrismaClient();
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { apikey, circuit, times } = req.query;
@@ -10,25 +9,31 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (apikey === process.env.API_KEY) {
     const { method } = req;
 
-    await database();
-
     switch (method) {
       case 'GET':
         try {
-          const circuits = await Circuits.find({ name: circuit });
+          const circuits = await prisma.circuits.findUnique({
+            where: {
+              name: circuit[0],
+            },
+          });
 
-          if (circuits.length) {
+          if (circuits) {
             if (times === 'true') {
-              const timesData = await Times.find({ circuit: circuits[0].name });
+              const timesData = await prisma.times.findMany({
+                where: {
+                  circuit: circuits.name,
+                },
+              });
 
               const circuitData = {
-                circuits: [circuits[0]],
+                circuits: [circuits],
                 times: timesData,
               };
 
               res.status(200).json({ success: true, data: circuitData });
             } else {
-              res.status(200).json({ success: true, data: { circuits: [circuits[0]] } });
+              res.status(200).json({ success: true, data: { circuits: [circuits] } });
             }
           } else {
             res.status(400).json({ success: false, data: 'Circuit not found' });

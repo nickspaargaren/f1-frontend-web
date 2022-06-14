@@ -1,8 +1,7 @@
+import { PrismaClient } from '@prisma/client';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import database from '@/config';
-import Circuits from '@/models/Circuits';
-import Times from '@/models/Times';
+const prisma = new PrismaClient();
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const {
@@ -10,12 +9,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   } = req.query;
 
   if (apikey === process.env.API_KEY) {
-    await database();
-
     switch (req.method) {
       case 'GET':
         try {
-          const times = await Times.find({ gamertag: driver });
+          const times = await prisma.times.findMany({
+            where: {
+              gamertag: driver as string,
+            },
+          });
 
           if (times.length) {
             res.status(200).json({ success: true, data: { times } });
@@ -28,19 +29,45 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         break;
       case 'POST':
         try {
-          const newtime = await Times.updateOne(
-            { gamertag: driver, circuit },
-            {
-              time, gamertag: driver, circuit, creationDate: new Date(),
+          const newtime = await prisma.times.upsert({
+            where: {
+              gamertag_circuit: {
+                gamertag: driver as string,
+                circuit: circuit as string,
+              },
             },
-            { upsert: true, setDefaultsOnInsert: true },
-          );
+            update: {
+              time: time as string,
+              gamertag: driver as string,
+              circuit: circuit as string,
+            },
+            create: {
+              time: time as string,
+              gamertag: driver as string,
+              circuit: circuit as string,
+            },
+          });
 
-          // update winner
-          const times = await Times.find({ circuit }).sort('time');
+          const times = await prisma.times.findMany({
+            where: {
+              circuit: circuit as string,
+            },
+            take: 1,
+            orderBy: {
+              time: 'asc',
+            },
+          });
+
           let newWinner;
-          if (times.length > 0) {
-            newWinner = await Circuits.updateOne({ name: circuit }, { winner: times[0].gamertag }, { upsert: true, setDefaultsOnInsert: true });
+          if (times) {
+            newWinner = await prisma.circuits.update({
+              where: {
+                name: circuit as string,
+              },
+              data: {
+                winner: times[0].gamertag,
+              },
+            });
           }
 
           res.status(201).json({ success: true, data: newtime, newWinner });

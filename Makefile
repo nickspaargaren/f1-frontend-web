@@ -10,6 +10,9 @@ build: \
 	do-install-dependencies
 	@echo ""
 	@docker-compose build
+	@docker-compose up -d
+	@docker-compose exec frontend sh -c "yarn prisma:setup && yarn prisma:generate"
+	@make database-seed
 
 start:
 	@docker-compose up -d
@@ -27,6 +30,8 @@ update: do-update-dependencies
 
 reset: \
 	do-remove-nodemodules
+	sudo rm -rf postgres-data
+	sudo rm -rf build
 	@docker-compose down -v
 
 # Installing dependencies
@@ -47,3 +52,9 @@ do-remove-nodemodules:
 	@echo "Removing all node_modules folders.."
 	sudo rm -rf node_modules
 	@echo "All node_modules folders removed.."
+
+database-seed:
+	@docker-compose exec frontend sh -c "yarn prisma db seed"
+
+database-reset:
+	@docker-compose exec frontend sh -c "yarn prisma:reset --force"
