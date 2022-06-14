@@ -151,7 +151,10 @@ const Circuit: NextPage = ({ circuit }: any): ReactElement => {
             </tbody>
           </table>
         ) : (
-          <div style={{ padding: "10px", textAlign: "center" }}>
+          <div
+            style={{ padding: "10px", textAlign: "center" }}
+            data-cy="notimes"
+          >
             Nog geen tijden
           </div>
         )}
@@ -162,6 +165,7 @@ const Circuit: NextPage = ({ circuit }: any): ReactElement => {
             <input
               type="text"
               placeholder="Gamertag"
+              data-cy="gamertag"
               {...register("gamertag")}
             />
             <NumberFormat
@@ -169,10 +173,16 @@ const Circuit: NextPage = ({ circuit }: any): ReactElement => {
               mask="_"
               type="text"
               placeholder="Tijd"
+              data-cy="time"
               onValueChange={(v) => setValue("time", v.formattedValue)}
             />
           </div>
-          <input type="submit" className="button" value="Toevoegen" />
+          <input
+            type="submit"
+            className="button"
+            value="Toevoegen"
+            data-cy="submit"
+          />
         </form>
       </NewTimeForm>
     </Layout>
