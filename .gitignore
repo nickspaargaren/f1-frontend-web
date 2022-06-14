@@ -18,3 +18,7 @@ yarn-error.log*
 
 # Prisma
 /postgres-data
+
+# Tests
+/cypress/videos
+/cypress/screenshots

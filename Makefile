@@ -26,6 +26,10 @@ stop:
 dev:
 	@docker-compose up
 
+test: ## Run the project tests.
+	@make start
+	@make do-frontend-tests
+
 lint: ## Run the project codestyle check.
 	@make start
 	@make do-frontend-lint
@@ -61,7 +65,11 @@ database-seed:
 	@docker-compose exec frontend sh -c "yarn prisma db seed"
 
 database-reset:
-	@docker-compose exec frontend sh -c "yarn prisma:reset --force"
+	@docker-compose exec -T frontend sh -c "yarn prisma:reset --force"
+
+do-frontend-tests:
+	@echo "Starting frontend tests.."
+	yarn test
 
 do-frontend-lint:
 	@echo "Starting frontend codestyle check.."

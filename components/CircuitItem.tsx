@@ -73,7 +73,7 @@ const CircuitItem = ({ item, loading }: CircuitItemType): ReactElement => {
     <SlideAnimation>
       <StyledCircuitItem>
         <Link href={`/circuits/${item.name}`}>
-          <a>
+          <a data-cy={item.name}>
             <div className="image">
               {item.flag && (
                 <Image
