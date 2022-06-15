@@ -91,7 +91,7 @@ const LatestTimeUpdate = (): ReactElement => {
             <p>{latestTime.data.times[0].time}</p>
             <p>
               <small>
-                {dayjs(latestTime.data.times[0].creationDate).fromNow()}
+                {dayjs(latestTime.data.times[0].updatedAt).fromNow()}
               </small>
             </p>
           </div>

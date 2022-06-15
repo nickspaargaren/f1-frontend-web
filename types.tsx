@@ -24,4 +24,5 @@ export type TimeType = {
   gamertag: string;
   circuitId: string;
   creationDate: string;
+  updatedAt: string;
 };
