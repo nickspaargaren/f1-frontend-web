@@ -79,6 +79,28 @@ export default async function handler(
           res.status(400).json({ success: false });
         }
         break;
+      case "DELETE":
+        try {
+          const deleteTime = await prisma.times.deleteMany({
+            where: {
+              gamertag: driver as string,
+              circuit: circuit as string,
+            },
+          });
+
+          if (deleteTime.count === 0) {
+            res
+              .status(201)
+              .json({ success: false, message: "Time does not exist" });
+          } else {
+            res
+              .status(201)
+              .json({ success: true, message: `Deleted ${driver}'s time ` });
+          }
+        } catch (error) {
+          res.status(400).json({ success: false });
+        }
+        break;
       default:
         res.status(400).json({ success: false });
         break;
