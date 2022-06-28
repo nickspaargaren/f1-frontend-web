@@ -67,6 +67,12 @@ database-seed:
 database-reset:
 	@docker-compose exec -T frontend sh -c "yarn prisma:reset --force"
 
+database-migration:
+	@docker-compose exec frontend sh -c "npx prisma migrate dev"
+
+do-frontend-shell:
+	@docker-compose exec frontend sh
+
 do-frontend-tests:
 	@echo "Starting frontend tests.."
 	yarn test
