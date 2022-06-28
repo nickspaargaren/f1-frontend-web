@@ -14,6 +14,10 @@ export default async function handler(
 
     switch (method) {
       case "GET":
+        if (!circuit) {
+          return;
+        }
+
         try {
           const circuits = await prisma.circuits.findUnique({
             where: {
