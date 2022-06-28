@@ -30,6 +30,10 @@ test: ## Run the project tests.
 	@make start
 	@make do-frontend-tests
 
+test-manual: ## Open the Cypress interface.
+	@make start
+	@npx cypress open
+
 lint: ## Run the project codestyle check.
 	@make start
 	@make do-frontend-lint
