@@ -1,3 +1,4 @@
+import { PrismaClient } from "@prisma/client";
 import axios from "axios";
 import type { NextPage } from "next";
 import { ReactElement } from "react";
@@ -6,8 +7,6 @@ import NumberFormat from "react-number-format";
 import styled from "styled-components";
 
 import Layout from "@/components/Layout";
-import Loading from "@/components/Loading";
-import useCircuits from "@/hooks/useCircuits";
 import { getwinner } from "@/utils";
 
 const TextButton = styled.button`
@@ -56,20 +55,27 @@ const NewTimeForm = styled.div`
 `;
 
 type newtimeProps = {
-  gamertag: string;
+  id: number;
   circuit: string;
   time: string;
+  gamertag: string;
 };
 
-const Circuit: NextPage = ({ circuit }: any): ReactElement => {
+const Circuit: NextPage = ({ data }: any): ReactElement => {
+  const circuit = JSON.parse(data);
+
+  console.log(circuit);
+
   const addNewTime = async (data: newtimeProps) => {
     if (
       data.gamertag !== "" &&
       data.time !== "99:99.999" &&
       !data.time.includes("_")
     ) {
+      console.log(data);
+
       await axios.post(
-        `/api/times/${data.gamertag}?apikey=${process.env.API_KEY}&circuit=${data.circuit}&time=${data.time}`
+        `/api/times/${data.gamertag}?apikey=${process.env.API_KEY}&circuit=${data.circuit}&time=${data.time}&circuitId=${data.id}`
       );
       window.location.reload();
     } else {
@@ -77,37 +83,21 @@ const Circuit: NextPage = ({ circuit }: any): ReactElement => {
     }
   };
 
-  const circuits = useCircuits(`/api/circuits/${circuit}?times=true`);
   const { register, setValue, handleSubmit } = useForm({
     defaultValues: {
-      circuit,
+      id: circuit.id,
+      circuit: circuit.name,
       time: "99:99.999",
       gamertag: "",
     },
   });
 
-  if (circuits.error) {
-    return (
-      <Layout title="F1 stats" description="Circuits">
-        {circuits.error}
-      </Layout>
-    );
-  }
-
-  if (circuits.loading) {
-    return (
-      <Layout title={circuit} description="Loading...">
-        <Loading />
-      </Layout>
-    );
-  }
-
-  const winner = getwinner(circuits.data.circuits[0].times);
+  const winner = getwinner(circuit.times);
 
   return (
     <Layout
-      title={circuits.data.circuits[0].name}
-      description={circuits.data.circuits[0].description}
+      title={circuit.name}
+      description={circuit.description}
       winner={winner}
     >
       <main>
@@ -119,7 +109,7 @@ const Circuit: NextPage = ({ circuit }: any): ReactElement => {
             className="times"
           >
             <tbody>
-              {circuits.data.circuits[0].times.map((item) => (
+              {circuit.times.map((item) => (
                 <tr key={item._id}>
                   <td>
                     <TextButton
@@ -183,6 +173,29 @@ const Circuit: NextPage = ({ circuit }: any): ReactElement => {
   );
 };
 
-Circuit.getInitialProps = (ctx) => ({ circuit: ctx.query.circuit });
+export async function getServerSideProps(ctx) {
+  const prisma = new PrismaClient();
+
+  const circuit = await prisma.circuits.findUnique({
+    where: {
+      name: ctx.query.circuit,
+    },
+    include: {
+      times: {
+        orderBy: [
+          {
+            time: "asc",
+          },
+        ],
+      },
+    },
+  });
+
+  return {
+    props: {
+      data: JSON.stringify(circuit),
+    },
+  };
+}
 
 export default Circuit;
