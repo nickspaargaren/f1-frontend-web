@@ -14,6 +14,7 @@ export type CircuitType = {
   location: string;
   flag: string | null;
   winner: string | null;
+  times: TimeType[];
   creationDate: string;
 };
 

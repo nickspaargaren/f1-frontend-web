@@ -184,23 +184,23 @@ async function main() {
   const times = [
     {
       time: "01:17.571",
-      circuit: "Austrian GP",
       gamertag: "CSI-SNIPER",
+      circuitId: 1,
     },
     {
       time: "01:16.126",
       gamertag: "nickspaargaren25",
-      circuit: "Austrian GP",
+      circuitId: 2,
     },
     {
       time: "01:08.404",
       gamertag: "CSI-SNIPER",
-      circuit: "Portuguese GP",
+      circuitId: 3,
     },
     {
       time: "01:10.213",
       gamertag: "nickspaargaren25",
-      circuit: "Portuguese GP",
+      circuitId: 3,
     },
   ];
 

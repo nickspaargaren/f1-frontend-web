@@ -102,7 +102,7 @@ const Circuit: NextPage = ({ circuit }: any): ReactElement => {
     );
   }
 
-  const winner = getwinner(circuits.data.times);
+  const winner = getwinner(circuits.data.circuits[0].times);
 
   return (
     <Layout
@@ -119,7 +119,7 @@ const Circuit: NextPage = ({ circuit }: any): ReactElement => {
             className="times"
           >
             <tbody>
-              {circuits.data.times.map((item) => (
+              {circuits.data.circuits[0].times.map((item) => (
                 <tr key={item._id}>
                   <td>
                     <TextButton

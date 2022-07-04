@@ -29,23 +29,27 @@ export default async function handler(
 
         if (circuits) {
           if (times === "true") {
-            const timesData = await prisma.times.findMany({
+            const circuitsWithTime = await prisma.circuits.findUnique({
               where: {
-                circuit: circuits.name,
+                name: circuit[0],
               },
-              orderBy: [
-                {
-                  time: "asc",
+              include: {
+                times: {
+                  orderBy: [
+                    {
+                      time: "asc",
+                    },
+                  ],
                 },
-              ],
+              },
             });
 
-            const circuitData = {
-              circuits: [circuits],
-              times: timesData,
-            };
-
-            res.status(200).json({ success: true, data: circuitData });
+            res.status(200).json({
+              success: true,
+              data: {
+                circuits: [circuitsWithTime],
+              },
+            });
           } else {
             res
               .status(200)
