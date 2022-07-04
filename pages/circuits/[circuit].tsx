@@ -102,13 +102,7 @@ const Circuit: NextPage = ({ circuit }: any): ReactElement => {
     );
   }
 
-  const sortedTimes = circuits.data.times.sort((a, b) => {
-    if (a.time > b.time) return 1;
-    if (a.time < b.time) return -1;
-    return 0;
-  });
-
-  const winner = getwinner(sortedTimes);
+  const winner = getwinner(circuits.data.times);
 
   return (
     <Layout
@@ -125,7 +119,7 @@ const Circuit: NextPage = ({ circuit }: any): ReactElement => {
             className="times"
           >
             <tbody>
-              {sortedTimes.map((item) => (
+              {circuits.data.times.map((item) => (
                 <tr key={item._id}>
                   <td>
                     <TextButton

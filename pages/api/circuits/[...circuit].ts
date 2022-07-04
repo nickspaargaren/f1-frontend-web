@@ -31,6 +31,11 @@ export default async function handler(
                 where: {
                   circuit: circuits.name,
                 },
+                orderBy: [
+                  {
+                    time: "asc",
+                  },
+                ],
               });
 
               const circuitData = {
