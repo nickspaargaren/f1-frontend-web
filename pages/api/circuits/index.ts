@@ -7,31 +7,22 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.query.apikey === process.env.API_KEY) {
-    switch (req.method) {
-      case "GET":
-        try {
-          const circuits = await prisma.circuits.findMany();
+  if (req.query.apikey !== process.env.API_KEY) {
+    res.status(401).json({ success: false, data: "Invalid API key" });
+  }
 
-          res.status(200).json({ success: true, data: { circuits } });
-        } catch (error) {
-          res.status(400).json({ success: false });
-        }
-        break;
-      // case 'POST':
-      //   try {
-      //     const user = await Circuits.create(req.body);
+  switch (req.method) {
+    case "GET":
+      try {
+        const circuits = await prisma.circuits.findMany();
 
-      //     res.status(201).json({ success: true, data: user });
-      //   } catch (error) {
-      //     res.status(400).json({ success: false });
-      //   }
-      //   break;
-      default:
+        res.status(200).json({ success: true, data: { circuits } });
+      } catch (error) {
         res.status(400).json({ success: false });
-        break;
-    }
-  } else {
-    res.status(400).json({ success: false, data: "Invalid API key" });
+      }
+      break;
+    default:
+      res.status(400).json({ success: false });
+      break;
   }
 }

@@ -9,58 +9,57 @@ export default async function handler(
 ) {
   const { apikey, circuit, times } = req.query;
 
-  if (apikey === process.env.API_KEY) {
-    const { method } = req;
+  if (apikey !== process.env.API_KEY) {
+    res.status(401).json({ success: false, data: "Invalid API key" });
+  }
+  const { method } = req;
 
-    switch (method) {
-      case "GET":
-        if (!circuit) {
-          return;
-        }
+  switch (method) {
+    case "GET":
+      if (!circuit) {
+        return;
+      }
 
-        try {
-          const circuits = await prisma.circuits.findUnique({
-            where: {
-              name: circuit[0],
-            },
-          });
+      try {
+        const circuits = await prisma.circuits.findUnique({
+          where: {
+            name: circuit[0],
+          },
+        });
 
-          if (circuits) {
-            if (times === "true") {
-              const timesData = await prisma.times.findMany({
-                where: {
-                  circuit: circuits.name,
+        if (circuits) {
+          if (times === "true") {
+            const timesData = await prisma.times.findMany({
+              where: {
+                circuit: circuits.name,
+              },
+              orderBy: [
+                {
+                  time: "asc",
                 },
-                orderBy: [
-                  {
-                    time: "asc",
-                  },
-                ],
-              });
+              ],
+            });
 
-              const circuitData = {
-                circuits: [circuits],
-                times: timesData,
-              };
+            const circuitData = {
+              circuits: [circuits],
+              times: timesData,
+            };
 
-              res.status(200).json({ success: true, data: circuitData });
-            } else {
-              res
-                .status(200)
-                .json({ success: true, data: { circuits: [circuits] } });
-            }
+            res.status(200).json({ success: true, data: circuitData });
           } else {
-            res.status(400).json({ success: false, data: "Circuit not found" });
+            res
+              .status(200)
+              .json({ success: true, data: { circuits: [circuits] } });
           }
-        } catch (error) {
-          res.status(400).json({ success: false });
+        } else {
+          res.status(400).json({ success: false, data: "Circuit not found" });
         }
-        break;
-      default:
+      } catch (error) {
         res.status(400).json({ success: false });
-        break;
-    }
-  } else {
-    res.status(400).json({ success: false, data: "Invalid API key" });
+      }
+      break;
+    default:
+      res.status(400).json({ success: false });
+      break;
   }
 }
