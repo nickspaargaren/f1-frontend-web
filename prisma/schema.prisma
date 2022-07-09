@@ -19,7 +19,6 @@ model Circuits {
   description String
   location String
   flag String
-  winner String
   times Times[]
   createdAt DateTime @default(now())
 }
