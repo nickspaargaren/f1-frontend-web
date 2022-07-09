@@ -7,7 +7,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { apikey, circuit, times } = req.query;
+  const { apikey, circuit } = req.query;
 
   if (apikey !== process.env.API_KEY) {
     res.status(401).json({ success: false, data: "Invalid API key" });
@@ -28,31 +28,9 @@ export default async function handler(
         });
 
         if (circuits) {
-          if (times === "true") {
-            const circuitsWithTime = await prisma.circuits.findUnique({
-              where: {
-                name: circuit[0],
-              },
-              include: {
-                times: {
-                  orderBy: {
-                    time: "asc",
-                  },
-                },
-              },
-            });
-
-            res.status(200).json({
-              success: true,
-              data: {
-                circuits: [circuitsWithTime],
-              },
-            });
-          } else {
-            res
-              .status(200)
-              .json({ success: true, data: { circuits: [circuits] } });
-          }
+          res
+            .status(200)
+            .json({ success: true, data: { circuits: [circuits] } });
         } else {
           res.status(400).json({ success: false, data: "Circuit not found" });
         }
