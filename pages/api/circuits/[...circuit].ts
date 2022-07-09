@@ -35,11 +35,9 @@ export default async function handler(
               },
               include: {
                 times: {
-                  orderBy: [
-                    {
-                      time: "asc",
-                    },
-                  ],
+                  orderBy: {
+                    time: "asc",
+                  },
                 },
               },
             });

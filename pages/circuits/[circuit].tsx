@@ -65,14 +65,14 @@ type newtimeProps = {
 const Circuit: NextPage = ({ data }: any): ReactElement => {
   const circuit: CircuitType = JSON.parse(data);
 
+  console.log(circuit);
+
   const addNewTime = async (data: newtimeProps) => {
     if (
       data.gamertag !== "" &&
       data.time !== "99:99.999" &&
       !data.time.includes("_")
     ) {
-      console.log(data);
-
       await axios.post(
         `/api/times/${data.gamertag}?apikey=${process.env.API_KEY}&time=${data.time}&circuitId=${data.circuitId}`
       );
@@ -180,11 +180,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     },
     include: {
       times: {
-        orderBy: [
-          {
-            time: "asc",
-          },
-        ],
+        orderBy: {
+          time: "asc" as string,
+        },
       },
     },
   });
