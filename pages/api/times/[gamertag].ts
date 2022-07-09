@@ -7,7 +7,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { apikey, driver, time, circuit } = req.query;
+  const { apikey, gamertag, time, circuit } = req.query;
 
   if (apikey !== process.env.API_KEY) {
     res.status(401).json({ success: false, data: "Invalid API key" });
@@ -18,7 +18,7 @@ export default async function handler(
       try {
         const times = await prisma.times.findMany({
           where: {
-            gamertag: driver as string,
+            gamertag: gamertag as string,
           },
         });
 
@@ -27,7 +27,7 @@ export default async function handler(
         } else {
           res.status(200).json({
             success: false,
-            data: { times: `No times set for user ${driver}` },
+            data: { times: `No times set for user ${gamertag}` },
           });
         }
       } catch (error) {
@@ -39,18 +39,18 @@ export default async function handler(
         const newtime = await prisma.times.upsert({
           where: {
             gamertag_circuit: {
-              gamertag: driver as string,
+              gamertag: gamertag as string,
               circuit: circuit as string,
             },
           },
           update: {
             time: time as string,
-            gamertag: driver as string,
+            gamertag: gamertag as string,
             circuit: circuit as string,
           },
           create: {
             time: time as string,
-            gamertag: driver as string,
+            gamertag: gamertag as string,
             circuit: circuit as string,
           },
         });
@@ -86,7 +86,7 @@ export default async function handler(
       try {
         const deleteTime = await prisma.times.deleteMany({
           where: {
-            gamertag: driver as string,
+            gamertag: gamertag as string,
             circuit: circuit as string,
           },
         });
@@ -98,7 +98,7 @@ export default async function handler(
         } else {
           res
             .status(201)
-            .json({ success: true, message: `Deleted ${driver}'s time ` });
+            .json({ success: true, message: `Deleted ${gamertag}'s time ` });
         }
       } catch (error) {
         res.status(400).json({ success: false });
