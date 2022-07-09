@@ -90,9 +90,9 @@ const CircuitItem = ({ item, loading }: CircuitItemType): ReactElement => {
               <small>{item.description}</small>
             </div>
             <div className="winner">
-              {item.winner && (
+              {item.times[0]?.gamertag && (
                 <small>
-                  <Winner title={item.winner} />
+                  <Winner title={item.times[0].gamertag} />
                 </small>
               )}
             </div>

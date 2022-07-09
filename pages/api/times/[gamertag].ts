@@ -7,7 +7,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { apikey, gamertag, time, circuit } = req.query;
+  const { apikey, gamertag, time, circuit, circuitId } = req.query;
 
   if (apikey !== process.env.API_KEY) {
     res.status(401).json({ success: false, data: "Invalid API key" });
@@ -36,48 +36,27 @@ export default async function handler(
       break;
     case "POST":
       try {
-        const newtime = await prisma.times.upsert({
+        const circuitIdInt = parseInt(circuitId as string);
+
+        const updateTime = await prisma.times.updateMany({
           where: {
-            gamertag_circuit: {
-              gamertag: gamertag as string,
-              circuit: circuit as string,
-            },
+            circuitId: circuitIdInt as number,
+            gamertag: gamertag as any,
           },
-          update: {
-            time: time as string,
-            gamertag: gamertag as string,
-            circuit: circuit as string,
-          },
-          create: {
-            time: time as string,
-            gamertag: gamertag as string,
-            circuit: circuit as string,
-          },
+          data: { time: time as any },
         });
 
-        const times = await prisma.times.findMany({
-          where: {
-            circuit: circuit as string,
-          },
-          take: 1,
-          orderBy: {
-            time: "asc",
-          },
-        });
-
-        let newWinner;
-        if (times) {
-          newWinner = await prisma.circuits.update({
-            where: {
-              name: circuit as string,
-            },
+        if (updateTime.count === 0) {
+          const newTime = await prisma.times.create({
             data: {
-              winner: times[0].gamertag,
+              time: time as string,
+              gamertag: gamertag as string,
+              circuitId: circuitIdInt as any,
             },
           });
         }
 
-        res.status(201).json({ success: true, data: newtime, newWinner });
+        res.status(201).json({ success: true });
       } catch (error) {
         res.status(400).json({ success: false });
       }

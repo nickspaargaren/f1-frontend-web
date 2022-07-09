@@ -14,7 +14,22 @@ export default async function handler(
   switch (req.method) {
     case "GET":
       try {
-        const circuits = await prisma.circuits.findMany();
+        const circuits = await prisma.circuits.findMany({
+          include: {
+            times: {
+              select: { time: true, gamertag: true },
+              take: 1,
+              orderBy: [
+                {
+                  updatedAt: "desc",
+                },
+                {
+                  createdAt: "desc",
+                },
+              ],
+            },
+          },
+        });
 
         res.status(200).json({ success: true, data: { circuits } });
       } catch (error) {
