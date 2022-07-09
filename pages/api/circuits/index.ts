@@ -15,7 +15,10 @@ export default async function handler(
     case "GET":
       try {
         const circuits = await prisma.circuits.findMany({
-          include: {
+          select: {
+            name: true,
+            description: true,
+            flag: true,
             times: {
               select: { time: true, gamertag: true },
               take: 1,
