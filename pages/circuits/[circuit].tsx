@@ -1,12 +1,14 @@
 import { PrismaClient } from "@prisma/client";
 import axios from "axios";
 import type { NextPage } from "next";
+import { GetServerSideProps } from "next";
 import { ReactElement } from "react";
 import { useForm } from "react-hook-form";
 import NumberFormat from "react-number-format";
 import styled from "styled-components";
 
 import Layout from "@/components/Layout";
+import { CircuitType } from "@/types";
 import { getwinner } from "@/utils";
 
 const TextButton = styled.button`
@@ -56,13 +58,12 @@ const NewTimeForm = styled.div`
 
 type newtimeProps = {
   circuitId: number;
-  circuit: string;
   time: string;
   gamertag: string;
 };
 
 const Circuit: NextPage = ({ data }: any): ReactElement => {
-  const circuit = JSON.parse(data);
+  const circuit: CircuitType = JSON.parse(data);
 
   const addNewTime = async (data: newtimeProps) => {
     if (
@@ -170,12 +171,12 @@ const Circuit: NextPage = ({ data }: any): ReactElement => {
   );
 };
 
-export async function getServerSideProps(ctx) {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const prisma = new PrismaClient();
 
   const circuit = await prisma.circuits.findUnique({
     where: {
-      name: ctx.query.circuit,
+      name: ctx.query.circuit as string,
     },
     include: {
       times: {
@@ -193,6 +194,6 @@ export async function getServerSideProps(ctx) {
       data: JSON.stringify(circuit),
     },
   };
-}
+};
 
 export default Circuit;

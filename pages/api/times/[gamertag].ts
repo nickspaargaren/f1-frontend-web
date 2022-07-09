@@ -7,11 +7,13 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { apikey, gamertag, time, circuit, circuitId } = req.query;
+  const { apikey, gamertag, time, circuitId } = req.query;
 
   if (apikey !== process.env.API_KEY) {
     res.status(401).json({ success: false, data: "Invalid API key" });
   }
+
+  const circuitIdInt = parseInt(circuitId as string);
 
   switch (req.method) {
     case "GET":
@@ -36,8 +38,6 @@ export default async function handler(
       break;
     case "POST":
       try {
-        const circuitIdInt = parseInt(circuitId as string);
-
         const updateTime = await prisma.times.updateMany({
           where: {
             circuitId: circuitIdInt as number,
@@ -51,9 +51,10 @@ export default async function handler(
             data: {
               time: time as string,
               gamertag: gamertag as string,
-              circuitId: circuitIdInt as any,
+              circuitId: circuitIdInt as number,
             },
           });
+          res.status(201).json({ success: true, data: { newTime } });
         }
 
         res.status(201).json({ success: true });
@@ -65,8 +66,8 @@ export default async function handler(
       try {
         const deleteTime = await prisma.times.deleteMany({
           where: {
-            gamertag: gamertag as string,
-            circuit: circuit as string,
+            circuitId: circuitIdInt as number,
+            gamertag: gamertag as any,
           },
         });
 
