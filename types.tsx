@@ -22,7 +22,7 @@ export type CircuitType = {
 export type TimeType = {
   _id: string;
   time: string;
-  circuit: string;
+  circuit: CircuitType;
   gamertag: string;
   circuitId: string;
   creationDate: string;
