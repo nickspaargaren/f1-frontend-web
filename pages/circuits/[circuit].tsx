@@ -65,8 +65,6 @@ type newtimeProps = {
 const Circuit: NextPage = ({ data }: any): ReactElement => {
   const circuit: CircuitType = JSON.parse(data);
 
-  console.log(circuit);
-
   const addNewTime = async (data: newtimeProps) => {
     if (
       data.gamertag !== "" &&
