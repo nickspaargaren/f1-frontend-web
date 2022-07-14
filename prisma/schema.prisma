@@ -28,7 +28,7 @@ model Times {
   time String
   gamertag String
   circuit Circuits @relation(fields: [circuitId], references: [id])
-  circuitId Int
+  circuitId Int @default(autoincrement())
   updatedAt DateTime @updatedAt
   createdAt DateTime @default(now())
 }
