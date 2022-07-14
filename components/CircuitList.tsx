@@ -29,11 +29,9 @@ const CircuitList = (): ReactElement => {
 
   return (
     <StyledCircuitList>
-      {circuits.data.circuits
-        .sort((a, b) => a.name.localeCompare(b.name))
-        .map((item) => (
-          <CircuitItem key={item._id} item={item} />
-        ))}
+      {circuits.data.circuits.map((item) => (
+        <CircuitItem key={item._id} item={item} />
+      ))}
     </StyledCircuitList>
   );
 };

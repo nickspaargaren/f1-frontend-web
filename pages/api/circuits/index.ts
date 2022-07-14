@@ -29,6 +29,9 @@ export default async function handler(
               ],
             },
           },
+          orderBy: {
+            name: "asc",
+          },
         });
 
         res.status(200).json({ success: true, data: { circuits } });
