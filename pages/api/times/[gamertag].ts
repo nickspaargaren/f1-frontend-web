@@ -7,18 +7,20 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { apikey, driver, time, circuit } = req.query;
+  const { apikey, gamertag, time, circuitId } = req.query;
 
   if (apikey !== process.env.API_KEY) {
     res.status(401).json({ success: false, data: "Invalid API key" });
   }
+
+  const circuitIdInt = parseInt(circuitId as string);
 
   switch (req.method) {
     case "GET":
       try {
         const times = await prisma.times.findMany({
           where: {
-            gamertag: driver as string,
+            gamertag: gamertag as string,
           },
         });
 
@@ -27,7 +29,7 @@ export default async function handler(
         } else {
           res.status(200).json({
             success: false,
-            data: { times: `No times set for user ${driver}` },
+            data: { times: `No times set for user ${gamertag}` },
           });
         }
       } catch (error) {
@@ -36,48 +38,26 @@ export default async function handler(
       break;
     case "POST":
       try {
-        const newtime = await prisma.times.upsert({
+        const updateTime = await prisma.times.updateMany({
           where: {
-            gamertag_circuit: {
-              gamertag: driver as string,
-              circuit: circuit as string,
-            },
+            circuitId: circuitIdInt as number,
+            gamertag: gamertag as any,
           },
-          update: {
-            time: time as string,
-            gamertag: driver as string,
-            circuit: circuit as string,
-          },
-          create: {
-            time: time as string,
-            gamertag: driver as string,
-            circuit: circuit as string,
-          },
+          data: { time: time as any },
         });
 
-        const times = await prisma.times.findMany({
-          where: {
-            circuit: circuit as string,
-          },
-          take: 1,
-          orderBy: {
-            time: "asc",
-          },
-        });
-
-        let newWinner;
-        if (times) {
-          newWinner = await prisma.circuits.update({
-            where: {
-              name: circuit as string,
-            },
+        if (updateTime.count === 0) {
+          const newTime = await prisma.times.create({
             data: {
-              winner: times[0].gamertag,
+              time: time as string,
+              gamertag: gamertag as string,
+              circuitId: circuitIdInt as number,
             },
           });
+          res.status(201).json({ success: true, data: { newTime } });
         }
 
-        res.status(201).json({ success: true, data: newtime, newWinner });
+        res.status(201).json({ success: true });
       } catch (error) {
         res.status(400).json({ success: false });
       }
@@ -86,8 +66,8 @@ export default async function handler(
       try {
         const deleteTime = await prisma.times.deleteMany({
           where: {
-            gamertag: driver as string,
-            circuit: circuit as string,
+            circuitId: circuitIdInt as number,
+            gamertag: gamertag as any,
           },
         });
 
@@ -98,7 +78,7 @@ export default async function handler(
         } else {
           res
             .status(201)
-            .json({ success: true, message: `Deleted ${driver}'s time ` });
+            .json({ success: true, message: `Deleted ${gamertag}'s time ` });
         }
       } catch (error) {
         res.status(400).json({ success: false });

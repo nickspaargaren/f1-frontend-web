@@ -24,6 +24,11 @@ export default async function handler(
               createdAt: "desc",
             },
           ],
+          include: {
+            circuit: {
+              select: { name: true },
+            },
+          },
         });
 
         res.status(200).json({ success: true, data: { times: [time[0]] } });

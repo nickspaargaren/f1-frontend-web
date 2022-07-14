@@ -14,21 +14,21 @@ model Users {
 }
 
 model Circuits {
-  id String @id @default(cuid())
+  id Int @id @default(autoincrement())
   name String @unique
   description String
   location String
   flag String
-  winner String
+  times Times[]
   createdAt DateTime @default(now())
 }
 
 model Times {
-  id String @default(cuid())
+  id Int @id @default(autoincrement())
   time String
   gamertag String
-  circuit String
+  circuit Circuits @relation(fields: [circuitId], references: [id])
+  circuitId Int @default(autoincrement())
   updatedAt DateTime @updatedAt
   createdAt DateTime @default(now())
-  @@id([gamertag, circuit])
 }
