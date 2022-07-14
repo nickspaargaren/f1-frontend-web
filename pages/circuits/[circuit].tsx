@@ -179,7 +179,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     include: {
       times: {
         orderBy: {
-          time: "asc" as string,
+          time: "asc",
         },
       },
     },
