@@ -26,7 +26,7 @@ model Circuits {
 model Times {
   id Int @id @default(autoincrement())
   time String
-  gamertag String @unique
+  gamertag String
   circuit Circuits @relation(fields: [circuitId], references: [id])
   circuitId Int @default(autoincrement())
   updatedAt DateTime @updatedAt
