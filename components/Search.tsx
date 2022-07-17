@@ -27,6 +27,7 @@ const SearchInput = styled.input`
 const SearchIcon = styled.div`
   width: 30px;
   height: 30px;
+  margin: auto 0;
   display: flex;
   justify-content: center;
 
