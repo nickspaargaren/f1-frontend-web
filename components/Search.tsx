@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useRef } from "react";
 import { ImCross, ImSearch } from "react-icons/im";
 import styled from "styled-components";
 const StyledSearch = styled.div`
-  padding: 10px;
+  padding: 5px;
   background: rgba(255, 255, 255, 0.05);
   margin: 10px;
   display: flex;
@@ -11,7 +11,7 @@ const StyledSearch = styled.div`
 
 const SearchInput = styled.input`
   padding: 5px;
-  line-height: 1;
+  line-height: normal;
   background: none;
   color: #fff;
   width: 100%;
@@ -48,7 +48,7 @@ const Search = ({ searchQuery, setSearchQuery }: SearchProps) => {
       <SearchInput
         ref={searchInputRef}
         type="text"
-        placeholder="Zoeken.."
+        placeholder="Circuit zoeken.."
         onChange={({ target }) => setSearchQuery(target.value)}
       />
       {searchQuery ? (
