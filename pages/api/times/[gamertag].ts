@@ -38,28 +38,26 @@ export default async function handler(
       break;
     case "POST":
       try {
-        const updateTime = await prisma.times.updateMany({
+        const updateTime = await prisma.times.upsert({
           where: {
-            circuitId: circuitIdInt as number,
-            gamertag: gamertag as any,
+            timeUpdateId: {
+              circuitId: circuitIdInt as number,
+              gamertag: gamertag as any,
+            },
           },
-          data: { time: time as any },
+          update: {
+            time: time as any,
+          },
+          create: {
+            time: time as string,
+            gamertag: gamertag as string,
+            circuitId: circuitIdInt as number,
+          },
         });
 
-        if (updateTime.count === 0) {
-          const newTime = await prisma.times.create({
-            data: {
-              time: time as string,
-              gamertag: gamertag as string,
-              circuitId: circuitIdInt as number,
-            },
-          });
-          res.status(201).json({ success: true, data: { newTime } });
-        }
-
-        res.status(201).json({ success: true });
+        res.status(201).json({ success: true, data: updateTime });
       } catch (error) {
-        res.status(400).json({ success: false });
+        res.status(400).json({ success: false, data: error });
       }
       break;
     case "DELETE":

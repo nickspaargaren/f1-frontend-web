@@ -25,6 +25,13 @@ export default async function handler(
           where: {
             name: circuit[0],
           },
+          include: {
+            times: {
+              orderBy: {
+                time: "asc",
+              },
+            },
+          },
         });
 
         if (circuits) {
