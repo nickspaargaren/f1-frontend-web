@@ -1,4 +1,3 @@
-import { TimeType } from "@/types";
-
-export const getwinner = (object: TimeType[]) =>
-  object.length > 0 ? object[0].gamertag : "";
+export const getwinner = <T extends { gamertag: string }>(
+  object: T[]
+): string => (object.length > 0 ? object[0].gamertag : "");
