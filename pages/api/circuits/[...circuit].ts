@@ -25,14 +25,15 @@ export default async function handler(
           where: {
             name: circuit[0],
           },
-          include: {
+          select: {
+            name: true,
+            description: true,
+            flag: true,
+            id: true,
             times: {
+              select: { time: true, gamertag: true },
               orderBy: {
                 time: "asc",
-              },
-              select: {
-                time: true,
-                gamertag: true,
               },
             },
           },
