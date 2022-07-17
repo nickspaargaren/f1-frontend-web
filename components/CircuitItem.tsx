@@ -6,7 +6,6 @@ import styled from "styled-components";
 import TextLoader from "@/components/TextLoader";
 import { CircuitType } from "@/types";
 
-import SlideAnimation from "./SlideAnimation";
 import Winner from "./Winner";
 
 type CircuitItemType = {
@@ -70,36 +69,34 @@ const CircuitItem = ({ item, loading }: CircuitItemType): ReactElement => {
   }
 
   return (
-    <SlideAnimation>
-      <StyledCircuitItem>
-        <Link href={`/circuits/${item.name}`}>
-          <a data-cy={item.name}>
-            <div className="image">
-              {item.flag && (
-                <Image
-                  src={`/images/flags/${item.flag}.png`}
-                  alt={item.flag}
-                  width={30}
-                  height={18}
-                />
-              )}
-            </div>
-            <div className="title">
-              {item.name}
-              <br />
-              <small>{item.description}</small>
-            </div>
-            <div className="winner">
-              {item.times[0]?.gamertag && (
-                <small>
-                  <Winner title={item.times[0].gamertag} />
-                </small>
-              )}
-            </div>
-          </a>
-        </Link>
-      </StyledCircuitItem>
-    </SlideAnimation>
+    <StyledCircuitItem>
+      <Link href={`/circuits/${item.name}`}>
+        <a data-cy={item.name}>
+          <div className="image">
+            {item.flag && (
+              <Image
+                src={`/images/flags/${item.flag}.png`}
+                alt={item.flag}
+                width={30}
+                height={18}
+              />
+            )}
+          </div>
+          <div className="title">
+            {item.name}
+            <br />
+            <small>{item.description}</small>
+          </div>
+          <div className="winner">
+            {item.times[0]?.gamertag && (
+              <small>
+                <Winner title={item.times[0].gamertag} />
+              </small>
+            )}
+          </div>
+        </a>
+      </Link>
+    </StyledCircuitItem>
   );
 };
 
