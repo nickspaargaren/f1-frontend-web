@@ -1,14 +1,13 @@
-import { PrismaClient } from "@prisma/client";
 import axios from "axios";
-import type { NextPage } from "next";
-import { GetServerSideProps } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import { ReactElement } from "react";
 import { useForm } from "react-hook-form";
 import NumberFormat from "react-number-format";
 import styled from "styled-components";
 
 import Layout from "@/components/Layout";
-import { CircuitType } from "@/types";
+import Loading from "@/components/Loading";
+import useCircuits from "@/hooks/useCircuits";
 import { getwinner } from "@/utils";
 
 const TextButton = styled.button`
@@ -62,8 +61,8 @@ type newtimeProps = {
   gamertag: string;
 };
 
-const Circuit: NextPage = ({ data }: any): ReactElement => {
-  const circuit: CircuitType = JSON.parse(data);
+const Circuit: NextPage = ({ circuit }: any): ReactElement => {
+  const circuits = useCircuits(`/api/circuits/${circuit}?times=true`);
 
   const addNewTime = async (data: newtimeProps) => {
     if (
@@ -82,18 +81,38 @@ const Circuit: NextPage = ({ data }: any): ReactElement => {
 
   const { register, setValue, handleSubmit } = useForm({
     defaultValues: {
-      circuitId: circuit.id,
+      circuitId: 0,
       time: "99:99.999",
       gamertag: "",
     },
   });
 
-  const winner = getwinner(circuit.times);
+  if (circuits.error) {
+    return (
+      <Layout title="F1 stats" description="Circuits">
+        {circuits.error}
+      </Layout>
+    );
+  }
+
+  if (circuits.loading) {
+    return (
+      <Layout title={circuit} description="Loading...">
+        <Loading />
+      </Layout>
+    );
+  }
+
+  const [currentCircuit] = circuits.data.circuits;
+
+  setValue("circuitId", currentCircuit.id);
+
+  const winner = getwinner(currentCircuit.times);
 
   return (
     <Layout
-      title={circuit.name}
-      description={circuit.description}
+      title={currentCircuit.name}
+      description={currentCircuit.description}
       winner={winner}
     >
       <main>
@@ -105,7 +124,7 @@ const Circuit: NextPage = ({ data }: any): ReactElement => {
             className="times"
           >
             <tbody>
-              {circuit.times.map((item) => (
+              {currentCircuit.times.map((item) => (
                 <tr key={item._id}>
                   <td>
                     <TextButton
@@ -169,25 +188,10 @@ const Circuit: NextPage = ({ data }: any): ReactElement => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const prisma = new PrismaClient();
-
-  const circuit = await prisma.circuits.findUnique({
-    where: {
-      name: ctx.query.circuit as string,
-    },
-    include: {
-      times: {
-        orderBy: {
-          time: "asc",
-        },
-      },
-    },
-  });
-
+export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
-      data: JSON.stringify(circuit),
+      circuit: context.query.circuit,
     },
   };
 };
