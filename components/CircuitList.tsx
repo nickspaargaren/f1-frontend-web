@@ -10,7 +10,11 @@ const StyledCircuitList = styled.div`
   margin: 10px;
 `;
 
-const CircuitList = (): ReactElement => {
+const CircuitList = ({
+  searchQuery,
+}: {
+  searchQuery: string;
+}): ReactElement => {
   const circuits = useCircuits("/api/circuits");
 
   if (circuits.error) {
@@ -29,9 +33,12 @@ const CircuitList = (): ReactElement => {
 
   return (
     <StyledCircuitList>
-      {circuits.data.circuits.map((item) => (
-        <CircuitItem key={item._id} item={item} />
-      ))}
+      {circuits.data.circuits.map(
+        (item) =>
+          (item.name.toLowerCase() + item.description.toLowerCase()).includes(
+            searchQuery.toLowerCase()
+          ) && <CircuitItem key={item._id} item={item} />
+      )}
     </StyledCircuitList>
   );
 };
