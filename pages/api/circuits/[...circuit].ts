@@ -30,6 +30,10 @@ export default async function handler(
               orderBy: {
                 time: "asc",
               },
+              select: {
+                time: true,
+                gamertag: true,
+              },
             },
           },
         });
