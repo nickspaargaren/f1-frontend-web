@@ -55,6 +55,28 @@ const NewTimeForm = styled.div`
   }
 `;
 
+const TimeTable = styled.div<{
+  justifyContent: "space-between" | "space-around";
+}>`
+  display: flex;
+  justify-content: ${({ justifyContent }) => justifyContent};
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+  > div {
+    padding: 5px 10px;
+  }
+`;
+
+const Time = styled.div`
+  text-align: right;
+  font-family: monospace;
+  font-weight: bold;
+  font-size: 14px;
+  letter-spacing: 1.5px;
+  margin: auto 0;
+`;
+
 type newtimeProps = {
   circuitId: number;
   time: string;
@@ -111,34 +133,25 @@ const Circuit: NextPage<{ circuit: string }> = ({ circuit }): ReactElement => {
       description={currentCircuit.description}
       winner={winner}
     >
-      <main>
-        {winner ? (
-          <table cellSpacing="0" className="times">
-            <tbody>
-              {currentCircuit.times.map((item) => (
-                <tr key={item._id}>
-                  <td>
-                    <TextButton
-                      type="button"
-                      onClick={() => setValue("gamertag", item.gamertag)}
-                    >
-                      {item.gamertag}
-                    </TextButton>
-                  </td>
-                  <td className="time">{item.time}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        ) : (
-          <div
-            style={{ padding: "10px", textAlign: "center" }}
-            data-cy="notimes"
-          >
-            Nog geen tijden
-          </div>
-        )}
-      </main>
+      {winner ? (
+        currentCircuit.times.map((item) => (
+          <TimeTable justifyContent="space-between" key={item._id}>
+            <div>
+              <TextButton
+                type="button"
+                onClick={() => setValue("gamertag", item.gamertag)}
+              >
+                {item.gamertag}
+              </TextButton>
+            </div>
+            <Time>{item.time}</Time>
+          </TimeTable>
+        ))
+      ) : (
+        <TimeTable justifyContent="space-around" data-cy="notimes">
+          <div>Nog geen tijden</div>
+        </TimeTable>
+      )}
       <NewTimeForm>
         <form onSubmit={handleSubmit(addNewTime)}>
           <div className="grid">

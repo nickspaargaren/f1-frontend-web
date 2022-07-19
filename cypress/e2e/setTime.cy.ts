@@ -15,7 +15,8 @@ describe("Set new time test", () => {
     cy.get(`[data-cy="time"]`).type(time.time);
     cy.get(`[data-cy="submit"]`).click();
 
-    cy.get(".times tr:first-child button").should("have.text", time.gamertag);
+    cy.get("main").contains(time.gamertag);
+    cy.get("main").contains(time.time);
   });
 
   it("Should be able to update the latest time", () => {
