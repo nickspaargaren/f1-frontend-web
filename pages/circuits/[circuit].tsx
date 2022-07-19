@@ -117,12 +117,7 @@ const Circuit: NextPage<{ circuit: string }> = ({ circuit }): ReactElement => {
     >
       <main>
         {winner ? (
-          <table
-            cellSpacing="0"
-            cellPadding="0"
-            style={{ textAlign: "left" }}
-            className="times"
-          >
+          <table cellSpacing="0" className="times">
             <tbody>
               {currentCircuit.times.map((item) => (
                 <tr key={item._id}>
@@ -134,17 +129,7 @@ const Circuit: NextPage<{ circuit: string }> = ({ circuit }): ReactElement => {
                       {item.gamertag}
                     </TextButton>
                   </td>
-                  <td
-                    style={{
-                      textAlign: "right",
-                      fontFamily: "monospace",
-                      fontWeight: "bold",
-                      fontSize: "14px",
-                      letterSpacing: "1.5px",
-                    }}
-                  >
-                    {item.time}
-                  </td>
+                  <td className="time">{item.time}</td>
                 </tr>
               ))}
             </tbody>
