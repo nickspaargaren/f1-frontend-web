@@ -64,14 +64,10 @@ type newtimeProps = {
 const Circuit: NextPage<{ circuit: string }> = ({ circuit }): ReactElement => {
   const circuits = useCircuits(`/api/circuits/${circuit}?times=true`);
 
-  const addNewTime = async (data: newtimeProps) => {
-    if (
-      data.gamertag !== "" &&
-      data.time !== "99:99.999" &&
-      !data.time.includes("_")
-    ) {
+  const addNewTime = async ({ circuitId, time, gamertag }: newtimeProps) => {
+    if (gamertag !== "" && time !== "" && !time.includes("_")) {
       await axios.post(
-        `/api/times/${data.gamertag}?apikey=${process.env.API_KEY}&time=${data.time}&circuitId=${data.circuitId}`
+        `/api/times/${gamertag}?apikey=${process.env.API_KEY}&time=${time}&circuitId=${circuitId}`
       );
       window.location.reload();
     } else {
@@ -82,7 +78,7 @@ const Circuit: NextPage<{ circuit: string }> = ({ circuit }): ReactElement => {
   const { register, setValue, handleSubmit } = useForm({
     defaultValues: {
       circuitId: 0,
-      time: "99:99.999",
+      time: "",
       gamertag: "",
     },
   });
