@@ -27,6 +27,8 @@ table {width: 100%;}
 table tr td {padding: 10px; border-bottom: 1px solid rgba(255,255,255,.1);}
 table tr td a {display: block;}
 
+table.times {text-align: left;}
 table.times tr td {padding: 5px 10px;}
+table.times tr td.time {text-align: right; font-family: monospace; font-weight: bold; font-size: 14px; letter-spacing: 1.5px;}
 
 small {opacity: .75;}
