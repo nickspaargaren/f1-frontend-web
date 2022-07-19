@@ -61,7 +61,7 @@ type newtimeProps = {
   gamertag: string;
 };
 
-const Circuit: NextPage = ({ circuit }: any): ReactElement => {
+const Circuit: NextPage<{ circuit: string }> = ({ circuit }): ReactElement => {
   const circuits = useCircuits(`/api/circuits/${circuit}?times=true`);
 
   const addNewTime = async (data: newtimeProps) => {
