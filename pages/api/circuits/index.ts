@@ -7,10 +7,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.query.apikey !== process.env.API_KEY) {
-    res.status(401).json({ success: false, data: "Invalid API key" });
-  }
-
   switch (req.method) {
     case "GET":
       try {
