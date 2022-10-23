@@ -18,6 +18,7 @@ start:
 	@docker-compose up -d
 	@echo ""
 	@echo "  The project is running on http://localhost:3000/."
+	@echo "  Prisma Studio is running on http://localhost:5555/."
 	@echo ""
 
 stop:

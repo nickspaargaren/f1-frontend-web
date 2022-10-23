@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      target: local
+      target: frontend
     container_name: frontend
     depends_on:
         - "postgres"
@@ -15,6 +15,21 @@ services:
       - /app/node_modules
     ports:
       - 3000:3000
+
+  studio:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: studio
+    container_name: studio
+    depends_on:
+        - "postgres"
+    restart: always
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    ports:
+      - 5555:5555
 
   postgres:
     image: postgres:latest
