@@ -2,7 +2,7 @@ import axios from "axios";
 import type { GetServerSideProps, NextPage } from "next";
 import { ReactElement } from "react";
 import { useForm } from "react-hook-form";
-import NumberFormat from "react-number-format";
+import { PatternFormat } from "react-number-format";
 import styled from "styled-components";
 
 import Layout from "@/components/Layout";
@@ -161,7 +161,7 @@ const Circuit: NextPage<{ circuit: string }> = ({ circuit }): ReactElement => {
               data-cy="gamertag"
               {...register("gamertag")}
             />
-            <NumberFormat
+            <PatternFormat
               format="##:##.###"
               mask="_"
               type="text"
