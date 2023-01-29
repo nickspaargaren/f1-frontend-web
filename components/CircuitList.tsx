@@ -24,8 +24,8 @@ const CircuitList = ({
   if (circuits.loading) {
     return (
       <StyledCircuitList>
-        {[...Array(10)].map((index) => (
-          <CircuitItem key={index} loading />
+        {[...Array(10)].map((_, key) => (
+          <CircuitItem key={key} loading />
         ))}
       </StyledCircuitList>
     );
@@ -37,7 +37,7 @@ const CircuitList = ({
         (item) =>
           (item.name.toLowerCase() + item.description.toLowerCase()).includes(
             searchQuery.toLowerCase()
-          ) && <CircuitItem key={item._id} item={item} />
+          ) && <CircuitItem key={item.name} item={item} />
       )}
     </StyledCircuitList>
   );

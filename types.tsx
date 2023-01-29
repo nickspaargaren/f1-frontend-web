@@ -8,7 +8,6 @@ export type ResponseType = {
 };
 
 export type CircuitType = {
-  _id: string;
   id: number;
   name: string;
   description: string;
@@ -20,7 +19,6 @@ export type CircuitType = {
 };
 
 export type TimeType = {
-  _id: string;
   time: string;
   circuit: CircuitType;
   gamertag: string;

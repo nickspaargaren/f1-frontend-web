@@ -134,8 +134,8 @@ const Circuit: NextPage<{ circuit: string }> = ({ circuit }): ReactElement => {
       winner={winner}
     >
       {winner ? (
-        currentCircuit.times.map((item) => (
-          <TimeTable justifyContent="space-between" key={item._id}>
+        currentCircuit.times.map((item, key) => (
+          <TimeTable justifyContent="space-between" key={key}>
             <div>
               <TextButton
                 type="button"

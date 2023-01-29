@@ -6,7 +6,8 @@ type LoaderType = {
   height: string;
 };
 
-const StyledTextLoader = styled.div<LoaderType>`
+const StyledTextLoader = styled.span<LoaderType>`
+  display: block;
   margin: 2px 0;
   background: linear-gradient(
     90deg,
