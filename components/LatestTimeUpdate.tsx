@@ -78,24 +78,23 @@ const LatestTimeUpdate = (): ReactElement => {
 
   return (
     <StyledLatestTimeUpdate>
-      <Link href={`/circuits/${latestTime.data.times[0].circuit.name}`}>
-        <a data-cy="latesttime">
-          <div>
-            <p>{latestTime.data.times[0].circuit.name}</p>
-            <p>
-              <small>{latestTime.data.times[0].gamertag}</small>
-            </p>
-          </div>
-          <div className="vhr" />
-          <div>
-            <p>{latestTime.data.times[0].time}</p>
-            <p>
-              <small>
-                {dayjs(latestTime.data.times[0].updatedAt).fromNow()}
-              </small>
-            </p>
-          </div>
-        </a>
+      <Link
+        href={`/circuits/${latestTime.data.times[0].circuit.name}`}
+        data-cy="latesttime"
+      >
+        <div>
+          <p>{latestTime.data.times[0].circuit.name}</p>
+          <p>
+            <small>{latestTime.data.times[0].gamertag}</small>
+          </p>
+        </div>
+        <div className="vhr" />
+        <div>
+          <p>{latestTime.data.times[0].time}</p>
+          <p>
+            <small>{dayjs(latestTime.data.times[0].updatedAt).fromNow()}</small>
+          </p>
+        </div>
       </Link>
     </StyledLatestTimeUpdate>
   );

@@ -61,16 +61,14 @@ const Header = ({ title, winner }: HeaderTitleProps): ReactElement => {
     <>
       <StyledHeader>
         <Bar color="#e20600">
-          <Link href="/">
-            <a className="title">Racetijden</a>
+          <Link href="/" className="title">
+            Racetijden
           </Link>
           <Icons>
             <Link href="/">
-              <a>
-                <Icon>
-                  <ImHome2 />
-                </Icon>
-              </a>
+              <Icon>
+                <ImHome2 />
+              </Icon>
             </Link>
           </Icons>
         </Bar>

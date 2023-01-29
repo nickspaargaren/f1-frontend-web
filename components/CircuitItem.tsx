@@ -70,31 +70,29 @@ const CircuitItem = ({ item, loading }: CircuitItemType): ReactElement => {
 
   return (
     <StyledCircuitItem>
-      <Link href={`/circuits/${item.name}`}>
-        <a data-cy={item.name}>
-          <div className="image">
-            {item.flag && (
-              <Image
-                src={`/images/flags/${item.flag}.png`}
-                alt={item.flag}
-                width={30}
-                height={18}
-              />
-            )}
-          </div>
-          <div className="title">
-            {item.name}
-            <br />
-            <small>{item.description}</small>
-          </div>
-          <div className="winner">
-            {item.times[0]?.gamertag && (
-              <small>
-                <Winner title={item.times[0].gamertag} />
-              </small>
-            )}
-          </div>
-        </a>
+      <Link href={`/circuits/${item.name}`} data-cy={item.name}>
+        <div className="image">
+          {item.flag && (
+            <Image
+              src={`/images/flags/${item.flag}.png`}
+              alt={item.flag}
+              width={30}
+              height={18}
+            />
+          )}
+        </div>
+        <div className="title">
+          {item.name}
+          <br />
+          <small>{item.description}</small>
+        </div>
+        <div className="winner">
+          {item.times[0]?.gamertag && (
+            <small>
+              <Winner title={item.times[0].gamertag} />
+            </small>
+          )}
+        </div>
       </Link>
     </StyledCircuitItem>
   );
