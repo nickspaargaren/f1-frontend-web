@@ -3,11 +3,12 @@ import "dayjs/locale/nl";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Link from "next/link";
-import { ReactElement } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import styled from "styled-components";
 
 import TextLoader from "@/components/TextLoader";
 import useCircuits from "@/hooks/useCircuits";
+import { ResponseType } from "@/types";
 
 dayjs.locale("nl");
 
@@ -42,11 +43,17 @@ const StyledLatestTimeUpdate = styled.div`
 const LatestTimeUpdate = (): ReactElement => {
   const latestTime = useCircuits("/api/times/latest");
 
-  if (latestTime.error) {
+  const [latestTimeState, setLatestTimeState] = useState<ResponseType>();
+
+  useEffect(() => {
+    setLatestTimeState(latestTime);
+  }, [latestTime]);
+
+  if (latestTimeState?.error) {
     return <>{latestTime.error}</>;
   }
 
-  if (latestTime.loading) {
+  if (latestTimeState?.loading) {
     return (
       <StyledLatestTimeUpdate>
         <a>
@@ -79,20 +86,22 @@ const LatestTimeUpdate = (): ReactElement => {
   return (
     <StyledLatestTimeUpdate>
       <Link
-        href={`/circuits/${latestTime.data.times[0].circuit.name}`}
+        href={`/circuits/${latestTimeState?.data.times[0].circuit.name}`}
         data-cy="latesttime"
       >
         <div>
-          <p>{latestTime.data.times[0].circuit.name}</p>
+          <p>{latestTimeState?.data.times[0].circuit.name}</p>
           <p>
-            <small>{latestTime.data.times[0].gamertag}</small>
+            <small>{latestTimeState?.data.times[0].gamertag}</small>
           </p>
         </div>
         <div className="vhr" />
         <div>
-          <p>{latestTime.data.times[0].time}</p>
+          <p>{latestTimeState?.data.times[0].time}</p>
           <p>
-            <small>{dayjs(latestTime.data.times[0].updatedAt).fromNow()}</small>
+            <small>
+              {dayjs(latestTimeState?.data.times[0].updatedAt).fromNow()}
+            </small>
           </p>
         </div>
       </Link>
