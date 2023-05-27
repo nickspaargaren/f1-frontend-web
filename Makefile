@@ -11,7 +11,7 @@ build: \
 	@echo ""
 	@docker-compose build
 	@docker-compose up -d
-	@docker-compose exec frontend sh -c "yarn prisma:setup && yarn prisma:generate"
+	@docker-compose exec frontend sh -c "yarn prisma:reset"
 	@make database-seed
 
 start:
