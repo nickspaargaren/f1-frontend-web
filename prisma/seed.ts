@@ -148,6 +148,12 @@ async function main() {
       location: "Montreal",
       flag: "can",
     },
+    {
+      name: "Miami GP",
+      description: "Miami International Autodrome",
+      location: "Unknown",
+      flag: "usa",
+    },
   ];
 
   const newCircuits = await prisma.circuits.createMany({
