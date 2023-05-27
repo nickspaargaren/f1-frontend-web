@@ -8,6 +8,7 @@
     "prisma:setup": "prisma migrate dev",
     "prisma:generate": "prisma generate",
     "prisma:reset": "npx prisma migrate reset",
+    "postinstall": "prisma generate",
     "test": "npx cypress run"
   },
   "prisma": {
