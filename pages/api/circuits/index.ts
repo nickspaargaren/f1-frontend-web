@@ -36,7 +36,10 @@ export default async function handler(
       }
       break;
     default:
-      res.status(400).json({ success: false });
+      res.status(405).json({
+        success: false,
+        error: { message: `Method ${req.method} Not Allowed` },
+      });
       break;
   }
 }
