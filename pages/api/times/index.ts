@@ -1,12 +1,24 @@
 import { PrismaClient } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
 
+import { apikeySchema } from "@/lib/schemas";
+
 const prisma = new PrismaClient();
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  const response = apikeySchema.safeParse(req.query.apikey);
+
+  if (!response.success) {
+    const { errors } = response.error;
+
+    return res.status(400).json({
+      error: { errors },
+    });
+  }
+
   if (req.query.apikey !== process.env.API_KEY) {
     res.status(401).json({ success: false, data: "Invalid API key" });
   }

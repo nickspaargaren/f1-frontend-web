@@ -21,6 +21,7 @@
       "@/utils": ["utils"],
       "@/types": ["types"],
       "@/models/*": ["models/*"],
+      "@/lib/*": ["lib/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
