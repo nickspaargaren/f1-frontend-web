@@ -3,6 +3,8 @@ info:
 	@echo "  make start			Start the project containers."
 	@echo "  make stop			Stop the project containers."
 	@echo "  make dev			Start the project containers including dev output."
+	@echo "  make test			Run the project test."
+	@echo "  make test-manual		Run the project test with Cypress interface."
 	@echo "  make update			Update all dependencies in root, frontend and backend folders."
 	@echo "  make reset			Reset the project containers, volumes, local dependencies and cache files."
 
