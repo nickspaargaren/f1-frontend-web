@@ -17,11 +17,12 @@
     "baseUrl": ".",
     "paths": {
       "@/components/*": ["components/*"],
+      "@/helpers/*": ["helpers/*"],
       "@/hooks/*": ["hooks/*"],
-      "@/utils": ["utils"],
-      "@/types": ["types"],
-      "@/models/*": ["models/*"],
       "@/lib/*": ["lib/*"],
+      "@/models/*": ["models/*"],
+      "@/types": ["types"],
+      "@/utils": ["utils"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

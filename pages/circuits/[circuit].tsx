@@ -1,4 +1,3 @@
-import axios from "axios";
 import type { GetServerSideProps, NextPage } from "next";
 import { ReactElement } from "react";
 import { useForm } from "react-hook-form";
@@ -7,6 +6,7 @@ import styled from "styled-components";
 
 import Layout from "@/components/Layout";
 import Loading from "@/components/Loading";
+import { addNewTime } from "@/helpers/addNewTime";
 import useCircuits from "@/hooks/useCircuits";
 import { getwinner } from "@/utils";
 
@@ -77,25 +77,8 @@ const Time = styled.div`
   margin: auto 0;
 `;
 
-type newtimeProps = {
-  circuitId: number;
-  time: string;
-  gamertag: string;
-};
-
 const Circuit: NextPage<{ circuit: string }> = ({ circuit }): ReactElement => {
   const circuits = useCircuits(`/api/circuits/${circuit}`);
-
-  const addNewTime = async ({ circuitId, time, gamertag }: newtimeProps) => {
-    if (gamertag !== "" && time !== "" && !time.includes("_")) {
-      await axios.post(
-        `/api/times/${gamertag}/add?apikey=${process.env.API_KEY}&time=${time}&circuitId=${circuitId}`
-      );
-      window.location.reload();
-    } else {
-      alert("Controleer je gamertag en tijd.");
-    }
-  };
 
   const { register, setValue, handleSubmit } = useForm({
     defaultValues: {
