@@ -1,16 +1,16 @@
 import time from "../fixtures/time.json";
 
 describe("Set new time test", () => {
-  before(() => {
-    cy.visit("/");
-  });
-
   it("Should show no times set if no times are set", () => {
+    cy.visit("/");
+
     cy.get(`[data-cy="${time.circuit}"]`).click();
     cy.get(`[data-cy="notimes"]`).should("have.text", "Nog geen tijden");
   });
 
   it("Should be able to set a new time", () => {
+    cy.visit(`/circuits/${time.circuit}`);
+
     cy.get(`[data-cy="gamertag"]`).type(time.gamertag);
     cy.get(`[data-cy="time"]`).type(time.time);
     cy.get(`[data-cy="submit"]`).click();
