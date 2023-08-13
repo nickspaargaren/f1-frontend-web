@@ -13,7 +13,7 @@ const Home: NextPage = (): ReactElement => {
   const { t } = useTranslation();
 
   return (
-    <Layout title={t("F122times")} description="Circuits">
+    <Layout title={t("F1times", { version: "22" })} description="Circuits">
       <Search searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       {!searchQuery && <LatestTimeUpdate />}
       <CircuitList searchQuery={searchQuery} />

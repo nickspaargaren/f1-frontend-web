@@ -92,7 +92,7 @@ const Circuit: NextPage<{ circuit: string }> = ({ circuit }): ReactElement => {
 
   if (circuits.error) {
     return (
-      <Layout title={t("F122times")} description="Circuits">
+      <Layout title={t("F1times", { version: "22" })} description="Circuits">
         {circuits.error}
       </Layout>
     );
