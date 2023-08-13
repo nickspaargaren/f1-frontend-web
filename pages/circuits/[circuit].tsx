@@ -84,12 +84,12 @@ type newtimeProps = {
 };
 
 const Circuit: NextPage<{ circuit: string }> = ({ circuit }): ReactElement => {
-  const circuits = useCircuits(`/api/circuits/${circuit}?times=true`);
+  const circuits = useCircuits(`/api/circuits/${circuit}`);
 
   const addNewTime = async ({ circuitId, time, gamertag }: newtimeProps) => {
     if (gamertag !== "" && time !== "" && !time.includes("_")) {
       await axios.post(
-        `/api/times/${gamertag}?apikey=${process.env.API_KEY}&time=${time}&circuitId=${circuitId}`
+        `/api/times/${gamertag}/add?apikey=${process.env.API_KEY}&time=${time}&circuitId=${circuitId}`
       );
       window.location.reload();
     } else {
