@@ -21,6 +21,7 @@
       "@/hooks/*": ["hooks/*"],
       "@/lib/*": ["lib/*"],
       "@/models/*": ["models/*"],
+      "@/translations/*": ["translations/*"],
       "@/types": ["types"],
       "@/utils": ["utils"]
     }

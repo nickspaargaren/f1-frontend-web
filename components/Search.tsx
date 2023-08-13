@@ -1,6 +1,9 @@
 import { Dispatch, SetStateAction, useRef } from "react";
 import { ImCross, ImSearch } from "react-icons/im";
 import styled from "styled-components";
+
+import { useTranslation } from "@/helpers/useTranslation";
+
 const StyledSearch = styled.div`
   padding: 5px;
   background: rgba(255, 255, 255, 0.05);
@@ -43,13 +46,14 @@ type SearchProps = {
 
 const Search = ({ searchQuery, setSearchQuery }: SearchProps) => {
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const { t } = useTranslation();
 
   return (
     <StyledSearch>
       <SearchInput
         ref={searchInputRef}
         type="text"
-        placeholder="Circuit zoeken.."
+        placeholder={t("searchCircuit")}
         onChange={({ target }) => setSearchQuery(target.value)}
       />
       {searchQuery ? (

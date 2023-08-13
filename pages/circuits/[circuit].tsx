@@ -7,6 +7,7 @@ import styled from "styled-components";
 import Layout from "@/components/Layout";
 import Loading from "@/components/Loading";
 import { addNewTime } from "@/helpers/addNewTime";
+import { useTranslation } from "@/helpers/useTranslation";
 import useCircuits from "@/hooks/useCircuits";
 import { getwinner } from "@/utils";
 
@@ -79,6 +80,7 @@ const Time = styled.div`
 
 const Circuit: NextPage<{ circuit: string }> = ({ circuit }): ReactElement => {
   const circuits = useCircuits(`/api/circuits/${circuit}`);
+  const { t } = useTranslation();
 
   const { register, setValue, handleSubmit } = useForm({
     defaultValues: {
@@ -90,7 +92,7 @@ const Circuit: NextPage<{ circuit: string }> = ({ circuit }): ReactElement => {
 
   if (circuits.error) {
     return (
-      <Layout title="F1 stats" description="Circuits">
+      <Layout title={t("F122times")} description="Circuits">
         {circuits.error}
       </Layout>
     );
@@ -98,7 +100,7 @@ const Circuit: NextPage<{ circuit: string }> = ({ circuit }): ReactElement => {
 
   if (circuits.loading) {
     return (
-      <Layout title={circuit} description="Loading...">
+      <Layout title={circuit} description={t("loading")}>
         <Loading />
       </Layout>
     );
@@ -132,7 +134,7 @@ const Circuit: NextPage<{ circuit: string }> = ({ circuit }): ReactElement => {
         ))
       ) : (
         <TimeTable justifyContent="space-around" data-cy="notimes">
-          <div>Nog geen tijden</div>
+          <div>{t("noTimesSet")}</div>
         </TimeTable>
       )}
       <NewTimeForm>
@@ -148,7 +150,7 @@ const Circuit: NextPage<{ circuit: string }> = ({ circuit }): ReactElement => {
               format="##:##.###"
               mask="_"
               type="text"
-              placeholder="Tijd"
+              placeholder={t("time")}
               data-cy="time"
               onValueChange={(v) => setValue("time", v.formattedValue)}
             />
@@ -156,7 +158,7 @@ const Circuit: NextPage<{ circuit: string }> = ({ circuit }): ReactElement => {
           <input
             type="submit"
             className="button"
-            value="Toevoegen"
+            value={t("add")}
             data-cy="submit"
           />
         </form>
