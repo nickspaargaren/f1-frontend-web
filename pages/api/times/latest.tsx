@@ -23,7 +23,7 @@ export default async function handler(
           ],
           include: {
             circuit: {
-              select: { name: true },
+              select: { name: true, flag: true },
             },
           },
         });
