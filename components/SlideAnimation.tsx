@@ -1,4 +1,4 @@
-import { motion, useTransform, useViewportScroll } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import {
   PropsWithChildren,
   ReactElement,
@@ -19,7 +19,7 @@ const SlideAnimation = ({
   const [elementTop, setElementTop] = useState(0);
   const [windowHeight, setWindowHeight] = useState(0);
 
-  const { scrollY } = useViewportScroll();
+  const { scrollY } = useScroll();
 
   useEffect(() => {
     if (!ref.current) return;
