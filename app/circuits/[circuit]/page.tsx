@@ -1,4 +1,4 @@
-import type { GetServerSideProps, NextPage } from "next";
+"use client";
 import { ReactElement } from "react";
 import { useForm } from "react-hook-form";
 import { PatternFormat } from "react-number-format";
@@ -78,7 +78,11 @@ const Time = styled.div`
   margin: auto 0;
 `;
 
-const Circuit: NextPage<{ circuit: string }> = ({ circuit }): ReactElement => {
+const Circuit = ({
+  params: { circuit },
+}: {
+  params: { circuit: string };
+}): ReactElement => {
   const circuits = useCircuits(`/api/circuits/${circuit}`);
   const { t } = useTranslation();
 
@@ -91,16 +95,12 @@ const Circuit: NextPage<{ circuit: string }> = ({ circuit }): ReactElement => {
   });
 
   if (circuits.error) {
-    return (
-      <Layout title={t("F1times", { version: "22" })} description="Circuits">
-        {circuits.error}
-      </Layout>
-    );
+    return <Layout title={circuits.error}>{circuits.error}</Layout>;
   }
 
   if (circuits.loading) {
     return (
-      <Layout title={circuit} description={t("loading")}>
+      <Layout title={t("loading")}>
         <Loading />
       </Layout>
     );
@@ -113,11 +113,7 @@ const Circuit: NextPage<{ circuit: string }> = ({ circuit }): ReactElement => {
   const winner = getwinner(currentCircuit.times);
 
   return (
-    <Layout
-      title={currentCircuit.name}
-      description={currentCircuit.description}
-      winner={winner}
-    >
+    <Layout title={currentCircuit.name} winner={winner}>
       {winner ? (
         currentCircuit.times.map((item, key) => (
           <TimeTable justifyContent="space-between" key={key}>
@@ -165,14 +161,6 @@ const Circuit: NextPage<{ circuit: string }> = ({ circuit }): ReactElement => {
       </NewTimeForm>
     </Layout>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  return {
-    props: {
-      circuit: context.query.circuit,
-    },
-  };
 };
 
 export default Circuit;

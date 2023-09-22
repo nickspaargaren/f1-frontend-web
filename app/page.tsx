@@ -1,3 +1,5 @@
+"use client";
+
 import type { NextPage } from "next";
 import { ReactElement } from "react";
 import { useState } from "react";
@@ -13,7 +15,7 @@ const Home: NextPage = (): ReactElement => {
   const { t } = useTranslation();
 
   return (
-    <Layout title={t("F1times", { version: "22" })} description="Circuits">
+    <Layout title={t("F1times", { version: "22" })}>
       <Search searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       {!searchQuery && <LatestTimeUpdate />}
       <CircuitList searchQuery={searchQuery} />

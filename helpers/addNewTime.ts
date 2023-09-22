@@ -14,6 +14,7 @@ export const addNewTime = async ({
   gamertag,
 }: newtimeProps) => {
   const { t } = useTranslation();
+
   if (gamertag !== "" && time !== "" && !time.includes("_")) {
     await axios.post(
       `/api/times/${gamertag}/add?apikey=${process.env.API_KEY}&time=${time}&circuitId=${circuitId}`

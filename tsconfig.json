@@ -24,8 +24,13 @@
       "@/translations/*": ["translations/*"],
       "@/types": ["types"],
       "@/utils": ["utils"]
-    }
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "build/types/**/*.ts"],
+  "exclude": ["node_modules", "build"]
 }
