@@ -1,4 +1,4 @@
-import { motion, useTransform, useViewportScroll } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import { ReactElement } from "react";
 import { ImHome2 } from "react-icons/im";
@@ -54,7 +54,7 @@ type HeaderTitleProps = {
 };
 
 const Header = ({ title, winner }: HeaderTitleProps): ReactElement => {
-  const { scrollY } = useViewportScroll();
+  const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 200], [0, -54]);
 
   return (
