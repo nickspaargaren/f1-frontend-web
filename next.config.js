@@ -2,6 +2,9 @@
 module.exports = {
   reactStrictMode: true,
   distDir: "build",
+  compiler: {
+    styledComponents: true,
+  },
   env: {
     API_KEY: process.env.API_KEY,
   },
