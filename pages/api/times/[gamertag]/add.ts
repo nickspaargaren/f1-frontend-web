@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { z } from "zod";
 
@@ -68,6 +69,35 @@ export default async function handler(
             circuitId: circuitIdInt,
           },
         });
+
+        const circuitData = await prisma.circuits.findUnique({
+          where: {
+            id: circuitIdInt,
+          },
+          select: {
+            name: true,
+          },
+        });
+
+        const circuitName = circuitData?.name || circuitIdInt;
+
+        if (process.env.NODE_ENV === "production") {
+          axios.post(
+            "https://api.resend.com/emails",
+            {
+              from: "Racetijden <info@racetijden.nl>",
+              to: ["info@racetijden.nl"],
+              subject: `New time set by ${response.data.gamertag}!`,
+              text: `${response.data.gamertag} set a new time (${response.data.time}) on ${circuitName}`,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${process.env.RESEND_MAIL_API_KEY}`,
+                "Content-Type": "application/json",
+              },
+            }
+          );
+        }
 
         res.status(201).json({ success: true, data: updateTime });
       } catch (error) {
