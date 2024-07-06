@@ -1,4 +1,5 @@
-import type { GetServerSideProps, NextPage } from "next";
+"use client";
+
 import { ReactElement } from "react";
 import { useForm } from "react-hook-form";
 import { PatternFormat } from "react-number-format";
@@ -78,8 +79,8 @@ const Time = styled.div`
   margin: auto 0;
 `;
 
-const Circuit: NextPage<{ circuit: string }> = ({ circuit }): ReactElement => {
-  const circuits = useCircuits(`/api/circuits/${circuit}`);
+const Circuit = ({ params }: { params: { circuit: string } }): ReactElement => {
+  const circuits = useCircuits(`/api/circuits/${params.circuit}`);
   const { t } = useTranslation();
 
   const { register, setValue, handleSubmit } = useForm({
@@ -100,7 +101,7 @@ const Circuit: NextPage<{ circuit: string }> = ({ circuit }): ReactElement => {
 
   if (circuits.loading) {
     return (
-      <Layout title={circuit} description={t("loading")}>
+      <Layout title={t("loading")} description={t("loading")}>
         <Loading />
       </Layout>
     );
@@ -165,14 +166,6 @@ const Circuit: NextPage<{ circuit: string }> = ({ circuit }): ReactElement => {
       </NewTimeForm>
     </Layout>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  return {
-    props: {
-      circuit: context.query.circuit,
-    },
-  };
 };
 
 export default Circuit;
