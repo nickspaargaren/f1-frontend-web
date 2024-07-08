@@ -4,6 +4,7 @@ info:
 	@echo "  make stop			Stop the project containers."
 	@echo "  make dev			Start the project containers including dev output."
 	@echo "  make lint			Run the project codestyle check."
+	@echo "  make lint-fix			Run the project codestyle fix."
 	@echo "  make test			Run the project test."
 	@echo "  make test-manual		Run the project test with Cypress interface."
 	@echo "  make update			Update all dependencies in root, frontend and backend folders."
@@ -38,9 +39,14 @@ test-manual: ## Open the Cypress interface.
 	@make start
 	@npx cypress open
 
-lint: ## Run the project codestyle check.
+lint: ## Run the project codestyle & typescript check.
 	@make start
 	@make do-frontend-codestyle-check
+	@make do-frontend-typescript-check
+
+lint-fix: ## Run the project codestyle fix.
+	@make start
+	@make do-frontend-codestyle-fix
 
 update: do-update-dependencies
 
@@ -87,4 +93,12 @@ do-frontend-tests:
 
 do-frontend-codestyle-check:
 	@echo "Starting frontend codestyle check.."
-	@docker-compose exec frontend sh -c "yarn lint && yarn tsc --noEmit"
+	@docker-compose exec frontend sh -c "yarn lint"
+
+do-frontend-codestyle-fix:
+	@echo "Starting frontend codestyle fix.."
+	@docker-compose exec frontend sh -c "yarn lint:fix"
+
+do-frontend-typescript-check:
+	@echo "Starting frontend typescript check.."
+	@docker-compose exec frontend sh -c "yarn tsc --noEmit"
