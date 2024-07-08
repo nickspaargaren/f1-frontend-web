@@ -5,6 +5,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint '**/*.tsx'",
+    "lint:fix": "eslint '**/*.tsx' --fix",
     "prisma:setup": "prisma migrate dev",
     "prisma:generate": "prisma generate",
     "prisma:reset": "npx prisma migrate reset",
