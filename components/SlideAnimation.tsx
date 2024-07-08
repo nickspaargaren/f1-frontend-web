@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import { EasingFunction, motion, useScroll, useTransform } from "framer-motion";
 import {
   PropsWithChildren,
   ReactElement,
@@ -8,7 +8,7 @@ import {
 } from "react";
 
 type SlideAnimationProps = {
-  easing?: any;
+  easing?: EasingFunction | number[];
 };
 
 const SlideAnimation = ({
@@ -31,13 +31,13 @@ const SlideAnimation = ({
     scrollY,
     [elementTop - windowHeight, elementTop - windowHeight + 70],
     [0, 1],
-    easing
+    { ease: easing as EasingFunction }
   );
   const y = useTransform(
     scrollY,
     [elementTop - windowHeight, elementTop - windowHeight + 70],
     [20, 0],
-    easing
+    { ease: easing as EasingFunction }
   );
 
   return (
