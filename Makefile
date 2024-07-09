@@ -13,23 +13,23 @@ info:
 build: \
 	do-install-dependencies
 	@echo ""
-	@docker-compose build
-	@docker-compose up -d
-	@docker-compose exec frontend sh -c "yarn prisma:reset"
+	@docker compose build
+	@docker compose up -d
+	@docker compose exec frontend sh -c "yarn prisma:reset"
 	@make database-seed
 
 start:
-	@docker-compose up -d
+	@docker compose up -d
 	@echo ""
 	@echo "  The project is running on http://localhost:3000/."
 	@echo "  Prisma Studio is running on http://localhost:5555/."
 	@echo ""
 
 stop:
-	@docker-compose stop
+	@docker compose stop
 
 dev:
-	@docker-compose up
+	@docker compose up
 
 test: ## Run the project tests.
 	@make start
@@ -54,7 +54,7 @@ reset: \
 	do-remove-nodemodules
 	sudo rm -rf postgres-data
 	sudo rm -rf build
-	@docker-compose down -v
+	@docker compose down -v
 
 # Installing dependencies
 do-install-dependencies:
@@ -76,16 +76,16 @@ do-remove-nodemodules:
 	@echo "All node_modules folders removed.."
 
 database-seed:
-	@docker-compose exec frontend sh -c "yarn prisma db seed"
+	@docker compose exec frontend sh -c "yarn prisma db seed"
 
 database-reset:
-	@docker-compose exec -T frontend sh -c "yarn prisma:reset --force"
+	@docker compose exec -T frontend sh -c "yarn prisma:reset --force"
 
 database-migration:
-	@docker-compose exec frontend sh -c "npx prisma migrate dev"
+	@docker compose exec frontend sh -c "npx prisma migrate dev"
 
 do-frontend-shell:
-	@docker-compose exec frontend sh
+	@docker compose exec frontend sh
 
 do-frontend-tests:
 	@echo "Starting frontend tests.."
@@ -93,12 +93,12 @@ do-frontend-tests:
 
 do-frontend-codestyle-check:
 	@echo "Starting frontend codestyle check.."
-	@docker-compose exec frontend sh -c "yarn lint"
+	@docker compose exec frontend sh -c "yarn lint"
 
 do-frontend-codestyle-fix:
 	@echo "Starting frontend codestyle fix.."
-	@docker-compose exec frontend sh -c "yarn lint:fix"
+	@docker compose exec frontend sh -c "yarn lint:fix"
 
 do-frontend-typescript-check:
 	@echo "Starting frontend typescript check.."
-	@docker-compose exec frontend sh -c "yarn tsc --noEmit"
+	@docker compose exec frontend sh -c "yarn tsc --noEmit"
