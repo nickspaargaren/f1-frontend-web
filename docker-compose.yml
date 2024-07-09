@@ -1,5 +1,3 @@
-version: "3"
-
 services:
   frontend:
     build:
@@ -8,7 +6,7 @@ services:
       target: frontend
     container_name: frontend
     depends_on:
-        - "postgres"
+      - "postgres"
     restart: always
     volumes:
       - ./:/app
@@ -23,7 +21,7 @@ services:
       target: studio
     container_name: studio
     depends_on:
-        - "postgres"
+      - "postgres"
     restart: always
     volumes:
       - ./:/app
