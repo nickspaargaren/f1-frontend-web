@@ -1,11 +1,11 @@
-FROM node:20-alpine as base
+FROM node:20-alpine AS base
 WORKDIR /app
 COPY ./ /app
 
-FROM base as frontend
+FROM base AS frontend
 RUN yarn install
 CMD ["yarn", "dev"]
 
-FROM base as studio
+FROM base AS studio
 RUN yarn install
 CMD ["npx", "prisma", "studio"]
