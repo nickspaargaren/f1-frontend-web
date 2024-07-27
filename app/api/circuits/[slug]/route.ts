@@ -7,9 +7,9 @@ const prisma = new PrismaClient();
 
 const circuitsSchema = z.object({
   apikey: apikeySchema,
-  circuit: z.string({
-    required_error: "circuit is required",
-    invalid_type_error: "circuit must be a string",
+  slug: z.string({
+    required_error: "slug is required",
+    invalid_type_error: "slug must be a string",
   }),
 });
 
@@ -23,7 +23,7 @@ export async function GET(
 
   const response = circuitsSchema.safeParse({
     apikey: searchParams.get("apikey"),
-    circuit: params.circuit,
+    slug: params.slug,
   });
 
   if (!response.success) {
@@ -51,10 +51,11 @@ export async function GET(
   try {
     const circuitData = await prisma.circuits.findUnique({
       where: {
-        name: response.data.circuit,
+        slug: response.data.slug,
       },
       select: {
         name: true,
+        slug: true,
         description: true,
         flag: true,
         id: true,

@@ -10,6 +10,7 @@ export type ResponseType = {
 export type CircuitType = {
   id: number;
   name: string;
+  slug: string;
   description: string;
   location: string;
   flag: string | null;

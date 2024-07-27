@@ -7,6 +7,7 @@ export async function GET() {
     const circuits = await prisma.circuits.findMany({
       select: {
         name: true,
+        slug: true,
         description: true,
         flag: true,
         times: {

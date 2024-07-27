@@ -16,7 +16,7 @@ export async function GET() {
       ],
       include: {
         circuit: {
-          select: { name: true, flag: true },
+          select: { name: true, slug: true, flag: true },
         },
       },
     });
