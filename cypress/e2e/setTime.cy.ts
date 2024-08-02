@@ -9,7 +9,9 @@ describe("Set new time test", () => {
   });
 
   it("Should be able to set a new time", () => {
-    cy.visit(`/circuits/${time.circuit}`);
+    cy.visit(`/circuits/${time.slug}`);
+
+    cy.url().should("include", `/circuits/${time.slug}`);
 
     cy.get(`[data-cy="gamertag"]`).type(time.gamertag);
     cy.get(`[data-cy="time"]`).type(time.time);
@@ -30,6 +32,13 @@ describe("Set new time test", () => {
       "have.text",
       time.gamertag
     );
+
+    cy.get(`[data-cy="latesttime"]`).click();
+
+    cy.url().should("include", `/circuits/${time.slug}`);
+
+    cy.get("main").contains(time.gamertag);
+    cy.get("main").contains(time.time);
   });
 
   after(() => {

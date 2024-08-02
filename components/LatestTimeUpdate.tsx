@@ -86,7 +86,7 @@ const LatestTimeUpdate = (): ReactElement => {
   return (
     <StyledLatestTimeUpdate>
       <Link
-        href={`/circuits/${latestTimeState?.data.times[0].circuit.name}`}
+        href={`/circuits/${latestTimeState?.data.times[0].circuit.slug}`}
         data-cy="latesttime"
       >
         <div>
