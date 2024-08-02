@@ -27,7 +27,7 @@ export async function GET(request: Request) {
   }
 
   try {
-    const times = await prisma.times.findMany();
+    const times = await prisma.time.findMany();
 
     return Response.json({ success: true, data: { times } });
   } catch (error) {

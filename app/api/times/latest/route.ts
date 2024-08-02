@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 export async function GET() {
   try {
-    const time = await prisma.times.findMany({
+    const time = await prisma.time.findMany({
       take: 1,
       orderBy: [
         {

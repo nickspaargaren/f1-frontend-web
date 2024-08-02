@@ -8,13 +8,13 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
-model Users {
+model User {
   id        String   @id @default(cuid())
   gamertag  String   @unique
   createdAt DateTime @default(now())
 }
 
-model Circuits {
+model Circuit {
   name        String   @unique
   slug        String   @unique
   description String
@@ -22,17 +22,17 @@ model Circuits {
   flag        String
   createdAt   DateTime @default(now())
   id          Int      @id @default(autoincrement())
-  times       Times[]
+  times       Time[]
 }
 
-model Times {
+model Time {
   time      String
   gamertag  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   circuitId Int      @default(autoincrement())
   id        Int      @id @default(autoincrement())
-  circuit   Circuits @relation(fields: [circuitId], references: [id])
+  circuit   Circuit  @relation(fields: [circuitId], references: [id])
 
   @@unique([circuitId, gamertag], name: "timeUpdateId")
 }

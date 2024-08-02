@@ -1,4 +1,4 @@
-import type { Circuits, Times } from "@prisma/client";
+import type { Circuit, Time } from "@prisma/client";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -7,7 +7,7 @@ const createdAt = new Date();
 const updatedAt = new Date();
 
 async function main() {
-  const circuits: Omit<Circuits, "id">[] = [
+  const circuits: Omit<Circuit, "id">[] = [
     {
       name: "Bahrain GP",
       slug: "bahrain-gp",
@@ -210,14 +210,14 @@ async function main() {
     },
   ];
 
-  const newCircuits = await prisma.circuits.createMany({
+  const newCircuits = await prisma.circuit.createMany({
     data: circuits,
     skipDuplicates: true,
   });
 
   console.log(`Added ${newCircuits.count} circuits`);
 
-  const times: Omit<Times, "id">[] = [
+  const times: Omit<Time, "id">[] = [
     {
       time: "01:17.571",
       gamertag: "CSI-SNIPER",
@@ -248,7 +248,7 @@ async function main() {
     },
   ];
 
-  const newTimes = await prisma.times.createMany({
+  const newTimes = await prisma.time.createMany({
     data: times,
     skipDuplicates: true,
   });
