@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 export async function GET() {
   try {
-    const circuits = await prisma.circuits.findMany({
+    const circuits = await prisma.circuit.findMany({
       select: {
         name: true,
         slug: true,

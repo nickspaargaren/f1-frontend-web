@@ -55,7 +55,7 @@ export async function POST(
   const circuitIdInt = parseInt(response.data.circuitId);
 
   try {
-    const updateTime = await prisma.times.upsert({
+    const updateTime = await prisma.time.upsert({
       where: {
         timeUpdateId: {
           circuitId: circuitIdInt,
@@ -72,7 +72,7 @@ export async function POST(
       },
     });
 
-    const circuitData = await prisma.circuits.findUnique({
+    const circuitData = await prisma.circuit.findUnique({
       where: {
         id: circuitIdInt,
       },

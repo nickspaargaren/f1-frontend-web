@@ -49,7 +49,7 @@ export async function GET(
   }
 
   try {
-    const circuitData = await prisma.circuits.findUnique({
+    const circuitData = await prisma.circuit.findUnique({
       where: {
         slug: response.data.slug,
       },

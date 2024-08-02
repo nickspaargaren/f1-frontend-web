@@ -49,7 +49,7 @@ export async function GET(
   }
 
   try {
-    const times = await prisma.times.findMany({
+    const times = await prisma.time.findMany({
       where: {
         gamertag: response.data.gamertag,
       },
