@@ -3,7 +3,7 @@ import "dayjs/locale/nl";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Link from "next/link";
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement } from "react";
 import styled from "styled-components";
 
 import TextLoader from "@/components/TextLoader";
@@ -41,19 +41,14 @@ const StyledLatestTimeUpdate = styled.div`
 `;
 
 const LatestTimeUpdate = (): ReactElement => {
-  const latestTime = useCircuits("/api/times/latest");
+  const { data, isLoading, isError } =
+    useCircuits<ResponseType>("/api/times/latest");
 
-  const [latestTimeState, setLatestTimeState] = useState<ResponseType>();
-
-  useEffect(() => {
-    setLatestTimeState(latestTime);
-  }, [latestTime]);
-
-  if (latestTimeState?.error) {
-    return <>{latestTime.error}</>;
+  if (isError) {
+    return <p>Error loading the latest times.</p>;
   }
 
-  if (latestTimeState?.loading) {
+  if (isLoading || !data) {
     return (
       <StyledLatestTimeUpdate>
         <a>
@@ -83,29 +78,30 @@ const LatestTimeUpdate = (): ReactElement => {
     );
   }
 
+  const latestTimeEntry = data.data.times[0];
+
   return (
     <StyledLatestTimeUpdate>
       <Link
-        href={`/circuits/${latestTimeState?.data.times[0].circuit.slug}`}
+        href={`/circuits/${latestTimeEntry.circuit.slug}`}
         data-cy="latesttime"
       >
         <div>
-          <p>{latestTimeState?.data.times[0].circuit.name}</p>
+          <p>{latestTimeEntry.circuit.name}</p>
           <p>
-            <small>{latestTimeState?.data.times[0].gamertag}</small>
+            <small>{latestTimeEntry.gamertag}</small>
           </p>
         </div>
         <div className="vhr" />
         <div>
-          <p>{latestTimeState?.data.times[0].time}</p>
+          <p>{latestTimeEntry.time}</p>
           <p>
-            <small>
-              {dayjs(latestTimeState?.data.times[0].updatedAt).fromNow()}
-            </small>
+            <small>{dayjs(latestTimeEntry.updatedAt).fromNow()}</small>
           </p>
         </div>
       </Link>
     </StyledLatestTimeUpdate>
   );
 };
+
 export default LatestTimeUpdate;

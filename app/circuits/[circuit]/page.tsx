@@ -10,6 +10,7 @@ import Loading from "@/components/Loading";
 import { addNewTime } from "@/helpers/addNewTime";
 import { useTranslation } from "@/helpers/useTranslation";
 import useCircuits from "@/hooks/useCircuits";
+import { ResponseType } from "@/types";
 import { getwinner } from "@/utils";
 
 const TextButton = styled.button`
@@ -80,7 +81,9 @@ const Time = styled.div`
 `;
 
 const Circuit = ({ params }: { params: { circuit: string } }): ReactElement => {
-  const circuits = useCircuits(`/api/circuits/${params.circuit}`);
+  const { data, isError, isLoading } = useCircuits<ResponseType>(
+    `/api/circuits/${params.circuit}`,
+  );
   const { t } = useTranslation();
 
   const { register, setValue, handleSubmit } = useForm({
@@ -91,15 +94,15 @@ const Circuit = ({ params }: { params: { circuit: string } }): ReactElement => {
     },
   });
 
-  if (circuits.error) {
+  if (isError) {
     return (
       <Layout title={t("F1times", { version: "22" })} description="Circuits">
-        {circuits.error}
+        Error loading circuit.
       </Layout>
     );
   }
 
-  if (circuits.loading) {
+  if (isLoading || !data) {
     return (
       <Layout title={t("loading")} description={t("loading")}>
         <Loading />
@@ -107,7 +110,7 @@ const Circuit = ({ params }: { params: { circuit: string } }): ReactElement => {
     );
   }
 
-  const [currentCircuit] = circuits.data.circuits;
+  const [currentCircuit] = data.data.circuits;
 
   setValue("circuitId", currentCircuit.id);
 
