@@ -2,6 +2,7 @@ import { ReactElement } from "react";
 import styled from "styled-components";
 
 import useCircuits from "@/hooks/useCircuits";
+import { ResponseType } from "@/types";
 
 import CircuitItem from "./CircuitItem";
 
@@ -15,13 +16,14 @@ const CircuitList = ({
 }: {
   searchQuery: string;
 }): ReactElement => {
-  const circuits = useCircuits("/api/circuits");
+  const { data, isLoading, isError } =
+    useCircuits<ResponseType>("/api/circuits");
 
-  if (circuits.error) {
-    return <>{circuits.error}</>;
+  if (isError) {
+    return <p>Error loading circuits.</p>;
   }
 
-  if (circuits.loading) {
+  if (isLoading || !data) {
     return (
       <StyledCircuitList>
         {[...Array(10)].map((_, key) => (
@@ -33,7 +35,7 @@ const CircuitList = ({
 
   return (
     <StyledCircuitList>
-      {circuits.data.circuits.map(
+      {data.data.circuits.map(
         (item) =>
           (item.name.toLowerCase() + item.description.toLowerCase()).includes(
             searchQuery.toLowerCase(),

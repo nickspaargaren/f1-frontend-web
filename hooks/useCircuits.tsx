@@ -1,43 +1,23 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import useSWR, { Fetcher } from "swr";
 
-import { ResponseType } from "@/types";
+const useCircuits = <T extends object>(url: string) => {
+  const fetcher: Fetcher<T> = (url: string) =>
+    axios
+      .get<T>(url, {
+        params: {
+          apikey: process.env.API_KEY,
+        },
+      })
+      .then((res) => res.data);
 
-const useCircuits = (url: string): ResponseType => {
-  const [circuits, setCircuits] = useState<ResponseType>({
-    data: {
-      circuits: [],
-      times: [],
-    },
-    loading: true,
-    error: null,
-  });
+  const { data, error } = useSWR<T>(url, fetcher);
 
-  useEffect(() => {
-    const LoadData = async () => {
-      try {
-        const res = await axios.get(url, {
-          params: {
-            apikey: process.env.API_KEY,
-          },
-        });
-        const { data } = res;
-        setCircuits({ ...data, loading: false, error: null });
-      } catch (err) {
-        if (axios.isAxiosError(err)) {
-          setCircuits({
-            data: { circuits: [], times: [] },
-            loading: false,
-            error: err.message,
-          });
-        }
-      }
-    };
-
-    LoadData();
-  }, []);
-
-  return circuits;
+  return {
+    data: data,
+    isLoading: !error && !data,
+    isError: !!error,
+  };
 };
 
 export default useCircuits;
