@@ -18,7 +18,7 @@
   "dependencies": {
     "@prisma/client": "^5.13.0",
     "axios": "^1.7.7",
-    "cypress": "^13.8.1",
+    "cypress": "^13.14.2",
     "dayjs": "^1.11.13",
     "framer-motion": "^10.16.4",
     "next": "14.2.3",
