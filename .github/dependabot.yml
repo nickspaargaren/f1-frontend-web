@@ -4,3 +4,9 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    groups:
+        prisma:
+          applies-to: version-updates
+          patterns:
+            - "prisma"
+            - "@prisma/*"
