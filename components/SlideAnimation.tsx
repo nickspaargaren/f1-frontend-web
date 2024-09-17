@@ -31,13 +31,13 @@ const SlideAnimation = ({
     scrollY,
     [elementTop - windowHeight, elementTop - windowHeight + 70],
     [0, 1],
-    { ease: easing as EasingFunction }
+    { ease: easing as EasingFunction },
   );
   const y = useTransform(
     scrollY,
     [elementTop - windowHeight, elementTop - windowHeight + 70],
     [20, 0],
-    { ease: easing as EasingFunction }
+    { ease: easing as EasingFunction },
   );
 
   return (

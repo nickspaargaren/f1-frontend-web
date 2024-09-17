@@ -36,8 +36,8 @@ const CircuitList = ({
       {circuits.data.circuits.map(
         (item) =>
           (item.name.toLowerCase() + item.description.toLowerCase()).includes(
-            searchQuery.toLowerCase()
-          ) && <CircuitItem key={item.name} item={item} />
+            searchQuery.toLowerCase(),
+          ) && <CircuitItem key={item.name} item={item} />,
       )}
     </StyledCircuitList>
   );

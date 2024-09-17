@@ -1,3 +1,3 @@
 export const getwinner = <T extends { gamertag: string }>(
-  object: T[]
+  object: T[],
 ): T["gamertag"] => (object.length > 0 ? object[0].gamertag : "");
