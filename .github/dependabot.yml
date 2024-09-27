@@ -5,11 +5,17 @@ updates:
     schedule:
       interval: "weekly"
     groups:
-        prisma:
-          applies-to: version-updates
-          patterns:
-            - "prisma"
-            - "@prisma/*"
+      prisma:
+        applies-to: version-updates
+        patterns:
+          - "prisma"
+          - "@prisma/*"
+      react:
+        applies-to: version-updates
+        patterns:
+          - "react"
+          - "react-dom"
+          - "@types/react"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
