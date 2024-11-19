@@ -15,10 +15,8 @@ const timeSchema = z.object({
 
 type TimeSchema = Omit<z.infer<typeof timeSchema>, "apikey">;
 
-export async function GET(
-  request: Request,
-  { params }: { params: TimeSchema }
-) {
+export async function GET(request: Request, props: { params: Promise<TimeSchema> }) {
+  const params = await props.params;
   const { searchParams } = new URL(request.url);
 
   const response = timeSchema.safeParse({
