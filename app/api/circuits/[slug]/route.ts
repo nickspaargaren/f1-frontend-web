@@ -15,10 +15,8 @@ const circuitsSchema = z.object({
 
 type CircuitsSchema = Omit<z.infer<typeof circuitsSchema>, "apikey">;
 
-export async function GET(
-  request: Request,
-  { params }: { params: CircuitsSchema }
-) {
+export async function GET(request: Request, props: { params: Promise<CircuitsSchema> }) {
+  const params = await props.params;
   const { searchParams } = new URL(request.url);
 
   const response = circuitsSchema.safeParse({

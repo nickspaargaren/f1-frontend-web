@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactElement } from "react";
+import { ReactElement, use } from "react";
 import { useForm } from "react-hook-form";
 import { PatternFormat } from "react-number-format";
 import styled from "styled-components";
@@ -80,7 +80,10 @@ const Time = styled.div`
   margin: auto 0;
 `;
 
-const Circuit = ({ params }: { params: { circuit: string } }): ReactElement => {
+const CircuitPage = (props: {
+  params: Promise<{ circuit: string }>;
+}): ReactElement => {
+  const params = use(props.params);
   const { data, isError, isLoading } = useCircuits<ResponseType>(
     `/api/circuits/${params.circuit}`,
   );
@@ -171,4 +174,4 @@ const Circuit = ({ params }: { params: { circuit: string } }): ReactElement => {
   );
 };
 
-export default Circuit;
+export default CircuitPage;

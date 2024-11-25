@@ -24,10 +24,8 @@ const addTimeSchema = z.object({
 
 type AddTimeSchema = Omit<z.infer<typeof addTimeSchema>, "apikey">;
 
-export async function POST(
-  request: Request,
-  { params }: { params: AddTimeSchema }
-) {
+export async function POST(request: Request, props: { params: Promise<AddTimeSchema> }) {
+  const params = await props.params;
   const { searchParams } = new URL(request.url);
 
   const { gamertag } = params;

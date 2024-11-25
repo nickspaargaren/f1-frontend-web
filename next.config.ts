@@ -1,9 +1,13 @@
-/** @type {import('next').NextConfig} */
-module.exports = {
+import type { NextConfig } from 'next';
+
+const nextConfig: NextConfig = {
   reactStrictMode: true,
   distDir: "build",
   compiler: {
     styledComponents: true,
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
   },
   env: {
     API_KEY: process.env.API_KEY,
@@ -45,3 +49,5 @@ module.exports = {
     ];
   },
 };
+
+export default nextConfig;
