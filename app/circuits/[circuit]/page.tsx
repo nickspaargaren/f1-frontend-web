@@ -59,10 +59,10 @@ const NewTimeForm = styled.div`
 `;
 
 const TimeTable = styled.div<{
-  justifyContent: "space-between" | "space-around";
+  justifycontent: "space-between" | "space-around";
 }>`
   display: flex;
-  justify-content: ${({ justifyContent }) => justifyContent};
+  justify-content: ${({ justifycontent }) => justifycontent};
 
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 
@@ -127,7 +127,7 @@ const CircuitPage = (props: {
     >
       {winner ? (
         currentCircuit.times.map((item, key) => (
-          <TimeTable justifyContent="space-between" key={key}>
+          <TimeTable justifycontent="space-between" key={key}>
             <div>
               <TextButton
                 type="button"
@@ -140,7 +140,7 @@ const CircuitPage = (props: {
           </TimeTable>
         ))
       ) : (
-        <TimeTable justifyContent="space-around" data-cy="notimes">
+        <TimeTable justifycontent="space-around" data-cy="notimes">
           <div>{t("noTimesSet")}</div>
         </TimeTable>
       )}
