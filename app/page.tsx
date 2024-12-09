@@ -1,8 +1,7 @@
 "use client";
 
 import type { NextPage } from "next";
-import { ReactElement } from "react";
-import { useState } from "react";
+import { ReactElement, useState } from "react";
 
 import CircuitList from "@/components/CircuitList";
 import LatestTimeUpdate from "@/components/LatestTimeUpdate";
